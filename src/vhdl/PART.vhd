@@ -40,6 +40,6 @@ end PART;
 architecture Behavioral of PART is
 
 begin
-
+RGB_LED<="001";
 
 end Behavioral;
