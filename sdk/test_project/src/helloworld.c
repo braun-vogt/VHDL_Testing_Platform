@@ -53,29 +53,52 @@
 
 uint32_t const LED_MASK = 0x0000000F;
 unsigned int const LED_CHANNEL = 1;
+
+int GpioInputExample(u16 DeviceId, u32 *DataRead);
+
+
 int main()
 {
     init_platform();
 
     print("Hello World\n\r");
 
-    XGpio_Config * psGpioCfg = XGpio_LookupConfig(XPAR_AXI_GPIO_0_DEVICE_ID);
-    XGpio sGpio;
+    XGpio_Config * psGpioCfg_out = XGpio_LookupConfig(XPAR_AXI_GPIO_1_DEVICE_ID);
+    XGpio_Config * psGpioCfg_in = XGpio_LookupConfig(XPAR_AXI_GPIO_2_DEVICE_ID);
+    XGpio sGpio_out;
+    XGpio sGpio_in;
 
-    if (!psGpioCfg)
+    if (!psGpioCfg_out)
     {
-    	print("GPIO Config not found.\r\n");
+    	print("GPIO out Config not found.\r\n");
     	return 1;
     }
-    if (XST_SUCCESS != XGpio_CfgInitialize(&sGpio, psGpioCfg, psGpioCfg->BaseAddress))
+    if (!psGpioCfg_in)
+    {
+    	print("GPIO in Config not found.\r\n");
+    	return 1;
+    }
+    if (XST_SUCCESS != XGpio_CfgInitialize(&sGpio_out, psGpioCfg_out, psGpioCfg_out->BaseAddress))
+    {
+    	print("GPIO Driver failed to initialize.\r\n");
+    	return 1;
+    }
+    if (XST_SUCCESS != XGpio_CfgInitialize(&sGpio_in, psGpioCfg_in, psGpioCfg_in->BaseAddress))
     {
     	print("GPIO Driver failed to initialize.\r\n");
     	return 1;
     }
 
-    XGpio_SetDataDirection(&sGpio, LED_CHANNEL, 0xFFFFFFFF); //All input
-    XGpio_SetDataDirection(&sGpio, LED_CHANNEL, ~LED_MASK); //LEDS output
-    XGpio_DiscreteWrite(&sGpio, LED_CHANNEL, 0xA);
+	u32 InputData;
+
+	InputData = XGpio_DiscreteRead(&sGpio_in, LED_CHANNEL);
+
+	printf("Data read from GPIO Input is  0x%x \n\r", (int)InputData);
+
+
+    //XGpio_SetDataDirection(&sGpio, LED_CHANNEL, 0x00000000); //All input
+    //XGpio_SetDataDirection(&sGpio, LED_CHANNEL, ~LED_MASK); //LEDS output
+    //XGpio_DiscreteWrite(&sGpio, LED_CHANNEL, 0x0000000A);
 
     cleanup_platform();
     return 0;
