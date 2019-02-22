@@ -49,7 +49,7 @@
 #
 # CONFIG_busybox is not set
 # CONFIG_busybox-udhcpd is not set
-# CONFIG_busybox-httpd is not set
+CONFIG_busybox-httpd=y
 # CONFIG_busybox-dbg is not set
 # CONFIG_busybox-inetd is not set
 # CONFIG_busybox-dev is not set
