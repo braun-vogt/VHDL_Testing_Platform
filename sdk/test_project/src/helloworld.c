@@ -100,10 +100,10 @@ int main()
 
 	u32 InputData = 0;
 
-	//InputData = XGpio_DiscreteRead(&sGpio_in, LED_CHANNEL);
-	s32 test = XGpioPs_SelfTest(&sGpio_test);
-	s32 in = XGpioPs_SelfTest(&sGpio_in);
-	s32 out = XGpioPs_SelfTest(&sGpio_out);
+	InputData = XGpio_DiscreteRead(&sGpio_in, LED_CHANNEL);
+	//s32 test = XGpioPs_SelfTest(&sGpio_test);
+	//s32 in = XGpioPs_SelfTest(&sGpio_in);
+	//s32 out = XGpioPs_SelfTest(&sGpio_out);
 	//InputData = XGpioPs_ReadPin(&sGpio_in, 0x00000001);
 
 	printf("Data read from GPIO Input is  0x%x \n\r", (int)InputData);
