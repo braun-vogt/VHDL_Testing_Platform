@@ -4124,10 +4124,12 @@ CONFIG_bridge-utils=y
 #
 # CONFIG_gpio-demo is not set
 # CONFIG_peekpoke is not set
+CONFIG_testingPlatform=y
 
 #
 # user packages 
 #
+# CONFIG_myapp is not set
 
 #
 # PetaLinux RootFS Settings
