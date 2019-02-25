@@ -4122,8 +4122,8 @@ CONFIG_bridge-utils=y
 #
 # apps 
 #
-# CONFIG_gpio-demo is not set
-# CONFIG_peekpoke is not set
+CONFIG_gpio-demo=y
+CONFIG_peekpoke=y
 CONFIG_testingPlatform=y
 
 #
