@@ -4123,13 +4123,19 @@ CONFIG_bridge-utils=y
 # apps 
 #
 CONFIG_gpio-demo=y
+CONFIG_gpioutil=y
+CONFIG_kmsdemo=y
 CONFIG_peekpoke=y
+CONFIG_pwmdemo=y
 CONFIG_testingPlatform=y
 
 #
 # user packages 
 #
-# CONFIG_myapp is not set
+CONFIG_libgpio=y
+CONFIG_libpwm=y
+CONFIG_libuio=y
+CONFIG_libvrc=y
 
 #
 # PetaLinux RootFS Settings
