@@ -92,7 +92,7 @@
 		reg = <0x1a>;
 	};
 };
-/*
+
 &axi_gpio_0 {
 	compatible = "generic-uio";	
 };
@@ -102,4 +102,4 @@
 &axi_gpio_2 {
 	compatible = "generic-uio";
 };
-*/
+
