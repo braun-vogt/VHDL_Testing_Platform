@@ -14,6 +14,7 @@ set proj_name "Testing_Platform"
 set bd_name "bd_name"
 set part "xc7z020clg400-1"
 #Optional
+set brd_part "digilentinc.com:zybo-z7-20:part0:1.0"
 set board_part "digilentinc.com:zybo-z7-20:part0:1.0"
 
 # Set the reference directory for source file relative paths (by default the value is script directory path)
