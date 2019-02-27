@@ -85,9 +85,6 @@
 &axi_vdma_0 {
 	compatible = "generic-uio";	
 };
-&axi_gpio_0 {
-	compatible = "generic-uio";	
-};
 &i2c1 {
 	ssm2603: ssm2603@1a{
 		#sound-dai-cells = <0>;
@@ -95,13 +92,14 @@
 		reg = <0x1a>;
 	};
 };
-
+/*
+&axi_gpio_0 {
+	compatible = "generic-uio";	
+};
 &axi_gpio_1 {
 	compatible = "generic-uio";
 };
-
-
 &axi_gpio_2 {
 	compatible = "generic-uio";
 };
-
+*/
