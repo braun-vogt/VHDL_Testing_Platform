@@ -68,7 +68,7 @@
 		planes {
 			xlnx,pixel-format = "rgb888";
 			plane0 {
-				dmas = <&axi_vdma_1 0>;
+				dmas = <&axi_vdma_0 0>;
 				dma-names = "dma0";
 			};
 		};
@@ -79,64 +79,14 @@
 	#clock-cells = <0>;
 	clocks = <&clkc 15>;
 };
-&axi_vdma_1 {
-	dma-ranges = <0x00000000 0x00000000 0x40000000>;
-};
 &v_tc_0 {
 	compatible = "xlnx,v-tc-5.01.a";
 };
-
-
-
 &axi_vdma_0 {
 	compatible = "generic-uio";	
 };
 &axi_gpio_0 {
 	compatible = "generic-uio";	
-};
-
-
-&amba_pl {
-	i2s_clk: i2s_clk {
-		#clock-cells = <0>;
-		compatible = "fixed-clock";
-		clock-frequency = <12000000>;
-		clock-output-names = "i2s_clk";
-	};
-
-	sound {
-		compatible = "simple-audio-card";
-		simple-audio-card,name = "Zybo-Z7-Sound-Card";
-		simple-audio-card,format = "i2s";
-		simple-audio-card,bitclock-master = <&dailink0_master>;
-		simple-audio-card,frame-master = <&dailink0_master>;
-		simple-audio-card,widgets =
-			"Microphone", "Microphone Jack",
-			"Headphone", "Headphone Jack",
-			"Line", "Line In Jack";
-		simple-audio-card,routing =
-			"MICIN", "Microphone Jack",
-			"Headphone Jack", "LHPOUT",
-			"Headphone Jack", "RHPOUT",
-			"LLINEIN", "Line In Jack",
-			"RLINEIN", "Line In Jack";
-		dailink0_master: simple-audio-card,cpu {
-			clocks = <&i2s_clk>;
-			sound-dai = <&axi_i2s_adi_0>;
-		};
-		simple-audio-card,codec {
-			clocks = <&i2s_clk>;
-			sound-dai = <&ssm2603>;
-		};
-	};
-};
-&axi_i2s_adi_0 {
-	#sound-dai-cells = <0>;
-	compatible = "adi,axi-i2s-1.00.a";
-	clocks = <&clkc 15>, <&i2s_clk>;
-	clock-names = "axi", "ref";
-	dmas = <&dmac_s 0 &dmac_s 1>;
-	dma-names = "tx", "rx";
 };
 &i2c1 {
 	ssm2603: ssm2603@1a{
@@ -153,37 +103,5 @@
 
 &axi_gpio_2 {
 	compatible = "generic-uio";
-};
-
-&v_frmbuf_wr_0 {
-	#dma-cells = <1>;
-	compatible = "xlnx,axi-frmbuf-wr-v2";
-	clocks = <&clkc 15>;
-	clock-names = "axis";
-	reset-gpios = <&gpio0 54 GPIO_ACTIVE_LOW>;
-	xlnx,dma-addr-width = <32>;
-	xlnx,vid-formats = "yuyv", "uyvy", "nv16";
-	xlnx,pixels-per-clock = <1>;
-};
-
-&amba_pl {
-	video_cap {
-		compatible = "xlnx,video";
-		dmas = <&v_frmbuf_wr_0 0>;
-		dma-names = "port0";
-
-		ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			port@0 {
-				reg = <0>;
-				direction = "input";
-				vcap_in: endpoint {
-					remote-endpoint = <&mipi_csi2_out>;
-				};
-			};
-		};
-	};
 };
 
