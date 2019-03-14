@@ -170,9 +170,10 @@ set files [list \
 add_files -norecurse -fileset $obj $files
 
 # Add local files from the original project (-no_copy_sources specified)
-set files [list \
- "[file normalize "$origin_dir/Testing_Platform.srcs/sources_1/bd/bd_name/bd_name.bd"]"\
-]
+#set files [list \
+# "[file normalize "$origin_dir/Testing_Platform.srcs/sources_1/bd/bd_name/bd_name.bd"]"\
+#]
+source $origin_dir/../src/bd/bd_name.tcl
 set added_files [add_files -fileset sources_1 $files]
 
 # Set 'sources_1' fileset file properties for remote files
@@ -291,9 +292,9 @@ if {[string equal [get_filesets -quiet constrs_1] ""]} {
 set obj [get_filesets constrs_1]
 
 # Add/Import constrs file and set constrs file properties
-set file "[file normalize "$origin_dir/Testing_Platform.srcs/constrs_1/new/par.xdc"]"
+set file "[file normalize "$origin_dir/../src/constraints/par.xdc"]"
 set file_added [add_files -norecurse -fileset $obj $file]
-set file "new/par.xdc"
+#set file "$origin_dir/../src/constraints/par.xdc"
 set file_obj [get_files -of_objects [get_filesets constrs_1] [list "*$file"]]
 set_property -name "file_type" -value "XDC" -objects $file_obj
 set_property -name "is_enabled" -value "1" -objects $file_obj
@@ -382,7 +383,7 @@ set_property -name "module_name" -value "BLANK" -objects $obj
 set_property -name "name" -value "BLANK" -objects $obj
 
 set files [list \
- "[file normalize "$origin_dir/Testing_Platform.srcs/sources_1/new/BLANK.vhd"]"\
+ "[file normalize "$origin_dir/../src/hdl/BLANK.vhd"]"\
 ]
 add_files -norecurse -of_objects [get_reconfig_modules BLANK] $files
 
@@ -390,16 +391,16 @@ add_files -norecurse -of_objects [get_reconfig_modules BLANK] $files
 # None
 
 # Set 'BLANK' fileset file properties for local files
-set file "new/BLANK.vhd"
-set obj [get_files -of_objects [get_reconfig_modules BLANK] [list "*$file"]]
-set_property -name "file_type" -value "VHDL" -objects $obj
-set_property -name "is_enabled" -value "1" -objects $obj
-set_property -name "is_global_include" -value "0" -objects $obj
-set_property -name "library" -value "xil_defaultlib" -objects $obj
-set_property -name "path_mode" -value "RelativeFirst" -objects $obj
-set_property -name "used_in" -value "synthesis simulation" -objects $obj
-set_property -name "used_in_simulation" -value "1" -objects $obj
-set_property -name "used_in_synthesis" -value "1" -objects $obj
+#set file "$origin_dir/../src/hdl/BLANK.vhd"
+#set obj [get_files -of_objects [get_reconfig_modules BLANK] [list "*$file"]]
+#set_property -name "file_type" -value "VHDL" -objects $obj
+#set_property -name "is_enabled" -value "1" -objects $obj
+#set_property -name "is_global_include" -value "0" -objects $obj
+#set_property -name "library" -value "xil_defaultlib" -objects $obj
+#set_property -name "path_mode" -value "RelativeFirst" -objects $obj
+#set_property -name "used_in" -value "synthesis simulation" -objects $obj
+#set_property -name "used_in_simulation" -value "1" -objects $obj
+#set_property -name "used_in_synthesis" -value "1" -objects $obj
 
 
 # Create 'BLUE_LED' reconfigurable module
