@@ -93,13 +93,15 @@
 	};
 };
 
-&axi_gpio_0 {
+&axi_gpio_buttons {
 	compatible = "generic-uio";	
 };
-&axi_gpio_1 {
+&axi_gpio_led {
 	compatible = "generic-uio";
 };
-&axi_gpio_2 {
+&axi_gpio_video {
 	compatible = "generic-uio";
 };
-
+&PAR_TEST_GPIO {
+	compatible = "generic-uio";
+};
