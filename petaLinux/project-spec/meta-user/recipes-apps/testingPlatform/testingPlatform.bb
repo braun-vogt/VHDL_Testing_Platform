@@ -10,6 +10,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 SRC_URI = "file://testingPlatform \
            file://www/index.html \
            file://www/cgi-bin/gpio \
+           file://www/lang/b28n.js \
+           file://www/lang/webcam.js \
 	"
 
 S = "${WORKDIR}"
@@ -21,6 +23,9 @@ do_install() {
          install -m 0644 ${S}/www/index.html ${D}/srv/www
          install -d ${D}/srv/www/cgi-bin
          install -m 0755 ${S}/www/cgi-bin/gpio ${D}/srv/www/cgi-bin
+         install -d ${D}/srv/www/lang
+         install -m 0755 ${S}/www/lang/b28n.js ${D}/srv/www/lang
+         install -m 0755 ${S}/www/lang/webcam.js ${D}/srv/www/lang
 }
 
 FILES_${PN} += "srv/www/*"
