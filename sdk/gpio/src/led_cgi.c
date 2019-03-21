@@ -93,7 +93,7 @@ int get_led_val(char **getvars)
 
 	sscanf(getvars[0], "led%i", &number);
 	sscanf(getvars[1],"%i",&val);
-	printf("Pin Number: %d, Value: %d\n", number, val);
+	//printf("Pin Number: %d, Value: %d\n", number, val);
 	leds_val[number] = val;
 	set_led(number,val);
 
@@ -123,6 +123,9 @@ int led_cgi_page(char **getvars, int form_method)
 
 	printf("<p><p>\n");
 	printf("</form>\n");
+	printf("<div id=\"webcam\">");
+	printf("<img src=\"http://192.168.1.254/media/?action=snapshot\" alt=\"Live Video\" />");
+	printf("</div>");
 
 	return 0;
 }
