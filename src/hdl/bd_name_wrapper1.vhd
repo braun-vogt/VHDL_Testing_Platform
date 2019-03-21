@@ -37,8 +37,12 @@ entity bd_name_wrapper is
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
     FIXED_IO_ps_srstb : inout STD_LOGIC;
-    IIC_ZYNQ_scl_io : inout STD_LOGIC;
-    IIC_ZYNQ_sda_io : inout STD_LOGIC;
+    IIC_ZYNQ_sda_i : in STD_LOGIC;
+    IIC_ZYNQ_sda_o : out STD_LOGIC;
+    IIC_ZYNQ_sda_t : out STD_LOGIC;
+    IIC_ZYNQ_scl_i : in STD_LOGIC;
+    IIC_ZYNQ_scl_o : out STD_LOGIC;
+    IIC_ZYNQ_scl_t : out STD_LOGIC;
     LED_tri_o : out STD_LOGIC_VECTOR ( 3 downto 0 );
     UART_ZYNQ_rxd : in STD_LOGIC;
     UART_ZYNQ_txd : out STD_LOGIC;
@@ -91,35 +95,7 @@ architecture STRUCTURE of bd_name_wrapper is
     CLK_PLL : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
   end component bd_name;
-  component IOBUF is
-  port (
-    I : in STD_LOGIC;
-    O : out STD_LOGIC;
-    T : in STD_LOGIC;
-    IO : inout STD_LOGIC
-  );
-  end component IOBUF;
-  signal IIC_ZYNQ_scl_i : STD_LOGIC;
-  signal IIC_ZYNQ_scl_o : STD_LOGIC;
-  signal IIC_ZYNQ_scl_t : STD_LOGIC;
-  signal IIC_ZYNQ_sda_i : STD_LOGIC;
-  signal IIC_ZYNQ_sda_o : STD_LOGIC;
-  signal IIC_ZYNQ_sda_t : STD_LOGIC;
 begin
-IIC_ZYNQ_scl_iobuf: component IOBUF
-     port map (
-      I => IIC_ZYNQ_scl_o,
-      IO => IIC_ZYNQ_scl_io,
-      O => IIC_ZYNQ_scl_i,
-      T => IIC_ZYNQ_scl_t
-    );
-IIC_ZYNQ_sda_iobuf: component IOBUF
-     port map (
-      I => IIC_ZYNQ_sda_o,
-      IO => IIC_ZYNQ_sda_io,
-      O => IIC_ZYNQ_sda_i,
-      T => IIC_ZYNQ_sda_t
-    );
 bd_name_i: component bd_name
      port map (
       BUTTONS_tri_i(3 downto 0) => BUTTONS_tri_i(3 downto 0),
