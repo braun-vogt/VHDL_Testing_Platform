@@ -81,6 +81,7 @@ if(rst='1') then
 elsif(rising_edge(clk_mmc) )then
     addition<=to_integer(unsigned(GPIO_PART_INPUT(1 downto 0)))+to_integer(unsigned(GPIO_PART_INPUT(1 downto 0))); 
     GPIO_part_output(2 downto 0) <= std_logic_vector(to_unsigned(addition,3));
+    RGB_LED<=std_logic_vector(to_unsigned(addition,3));
 end if;
 
 end process;
