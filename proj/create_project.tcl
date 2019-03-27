@@ -47,6 +47,14 @@ if { [info exists ::user_project_name] } {
   set project_name $::user_project_name
 }
 
+set repo_dir [file normalize $origin_dir/repo]
+set_param board.repoPaths [list $repo_dir/vivado_boards/new/board_files]
+if { $board_part != "" } {
+   set_property -name "board_part" -value $board_part -objects $obj
+}
+set_property "ip_repo_paths" "[file normalize $repo_dir]" $obj
+update_ip_catalog -rebuild
+
 variable script_file
 set script_file "create_project.tcl"
 
