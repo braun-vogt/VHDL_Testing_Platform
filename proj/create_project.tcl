@@ -48,6 +48,7 @@ if { [info exists ::user_project_name] } {
 }
 
 #neu
+set obj [get_projects $project_name]
 set brd_part "digilentinc.com:zybo-z7-20:part0:1.0"
 set board_part "digilentinc.com:zybo-z7-20:part0:1.0"
 set repo_dir [file normalize $origin_dir/repo]
