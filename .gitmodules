@@ -3,4 +3,4 @@
 	url = https://github.com/Digilent/vivado-boards.git
 [submodule "petaLinux/project-spec/meta-user/recipes-apps/digilent-apps"]
 	path = petaLinux/project-spec/meta-user/recipes-apps/digilent-apps
-	url = git@github.com:Digilent/digilent-apps.git
+	url = https://github.com/Digilent/digilent-apps.git
