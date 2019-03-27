@@ -33,7 +33,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity PART is
     Port ( 
-                CLK_MMC : IN STD_LOGIC;
+                    CLK_MMC : IN STD_LOGIC;
                     CLK_PLL : IN STD_LOGIC;
                     RST : IN STD_LOGIC;
          

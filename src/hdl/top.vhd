@@ -130,6 +130,12 @@ ARCHITECTURE Behavioral OF top IS
 	SIGNAL IIC_ZYNQ_sda_o : STD_LOGIC;
 	SIGNAL IIC_ZYNQ_scl_i : STD_LOGIC;
 	SIGNAL IIC_ZYNQ_scl_o : STD_LOGIC;
+	
+	component OBUF
+    port (I : in STD_LOGIC; O : out STD_LOGIC);
+    end component ;
+
+	
 	COMPONENT BLANK IS
 		PORT (
 			CLK_MMC : IN STD_LOGIC;
@@ -178,6 +184,8 @@ ARCHITECTURE Behavioral OF top IS
 			IO : INOUT STD_LOGIC
 		);
 	END COMPONENT;
+
+	
 	SIGNAL PMOD_JB_IN : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL PMOD_JB_OUT : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL PMOD_JB_OE : STD_LOGIC_VECTOR(7 DOWNTO 0);
@@ -195,8 +203,28 @@ ARCHITECTURE Behavioral OF top IS
 	SIGNAL PMOD_JE_IN : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL PMOD_JE_OUT : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	SIGNAL PMOD_JE_OE : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	
+	SIGNAL RGB_LED_obuf :STD_LOGIC_VECTOR(2 downto 0);
  
 BEGIN
+
+    obuf0: OBUF
+    port map (
+        I=>RGB_LED_obuf(0),
+        O=>RGB_LED2(0)
+        );
+    obuf1: OBUF
+    port map (
+                I=>RGB_LED_obuf(1),
+                O=>RGB_LED2(1)
+                );
+    obuf2: OBUF
+    port map (
+                I=>RGB_LED_obuf(2),
+                O=>RGB_LED2(2)
+                );
+
+
 	IOBUF0 : IOBUF
 	PORT MAP(
 		I => PMOD_JB_OUT(0), 
@@ -463,7 +491,7 @@ BEGIN
 		rst => par_rst(0), 
 
 		RGB_LED => RGB_LED, 
-		RGB_LED2 => RGB_LED2, 
+		RGB_LED2 => RGB_LED_obuf, 
 		GPIO_PART_Input => gpio_o, 
 		GPIO_PART_Output => gpio_i, 
 
