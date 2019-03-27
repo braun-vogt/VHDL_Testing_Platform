@@ -56,6 +56,7 @@ entity adder is
                     PMOD_JE_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);    
                         
                     RGB_LED : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+                    RGB_LED2 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
                     
                     UART_ZYNQ_rxd : in STD_LOGIC;
                     UART_ZYNQ_txd : out STD_LOGIC;
