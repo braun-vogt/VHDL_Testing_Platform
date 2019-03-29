@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 15.02.2019 16:46:24
+-- Create Date: 21.03.2019 14:51:16
 -- Design Name: 
--- Module Name: PART2 - Behavioral
+-- Module Name: adder - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -24,16 +24,16 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx leaf cells in this code.
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity PART2 is
+entity adder is
     Port ( 
-                CLK_MMC : IN STD_LOGIC;
+                    CLK_MMC : IN STD_LOGIC;
                     CLK_PLL : IN STD_LOGIC;
                     RST : IN STD_LOGIC;
          
@@ -55,7 +55,6 @@ entity PART2 is
                     PMOD_JE_OUT : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); 
                     PMOD_JE_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);    
                         
-               
                     RGB_LED : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
                     RGB_LED2 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
                     
@@ -69,11 +68,23 @@ entity PART2 is
                     IIC_ZYNQ_sda_o : out STD_LOGIC;
                     IIC_ZYNQ_scl_i : in STD_LOGIC;
                     IIC_ZYNQ_scl_o : out STD_LOGIC);
-end PART2;
+end adder;
 
-architecture Behavioral of PART2 is
-
+architecture Behavioral of adder is
+signal addition : integer:=0;
 begin
-RGB_LED<="100";
+
+process (CLK_MMC,RST)
+begin
+
+if(rst='1') then 
+    addition<=0;
+elsif(rising_edge(clk_mmc) )then
+    addition<=to_integer(unsigned(GPIO_PART_INPUT(1 downto 0)))+to_integer(unsigned(GPIO_PART_INPUT(1 downto 0))); 
+    GPIO_part_output(2 downto 0) <= std_logic_vector(to_unsigned(addition,3));
+    RGB_LED<=std_logic_vector(to_unsigned(addition,3));
+end if;
+
+end process;
 
 end Behavioral;
