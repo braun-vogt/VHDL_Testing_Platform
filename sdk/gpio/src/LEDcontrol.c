@@ -24,7 +24,7 @@ int main() {
 		getvars = getGETvars();
 	}
 
-	htmlHeader("LED control web page");
+	htmlHeader("VHDL Testing Platform");
 	htmlBody();
 		
 	led_cgi_page(getvars, form_method);
