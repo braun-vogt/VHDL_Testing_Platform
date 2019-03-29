@@ -31,16 +31,22 @@ USE IEEE.STD_LOGIC_1164.ALL;
 
 ENTITY top IS
 	PORT (
+		--user pmod
 		PMOD_JB : INOUT STD_LOGIC_VECTOR(7 DOWNTO 0);
 		PMOD_JC : INOUT STD_LOGIC_VECTOR(7 DOWNTO 0);
 		PMOD_JD : INOUT STD_LOGIC_VECTOR(7 DOWNTO 0);
 		PMOD_JE : INOUT STD_LOGIC_VECTOR(7 DOWNTO 0);
- 
- 
+
+		--clk
 		sys_clock : IN STD_LOGIC;
+ 
+		--debug PROCESSOR
 		btns_4bits_tri_i : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
 		leds_4bits_tri_io : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+ 
+		--part RGB
 		RGB_LED : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+		RGB_LED2 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
 
 		DDR_addr : INOUT STD_LOGIC_VECTOR (14 DOWNTO 0);
 		DDR_ba : INOUT STD_LOGIC_VECTOR (2 DOWNTO 0);
@@ -106,7 +112,7 @@ ARCHITECTURE Behavioral OF top IS
 			IIC_ZYNQ_sda_t : OUT STD_LOGIC;
 			IIC_ZYNQ_scl_i : IN STD_LOGIC;
 			IIC_ZYNQ_scl_o : OUT STD_LOGIC;
-			IIC_ZYNQ_scl_t : OUT STD_LOGIC 
+			IIC_ZYNQ_scl_t : OUT STD_LOGIC
 		);
 	END COMPONENT;
 
@@ -116,55 +122,60 @@ ARCHITECTURE Behavioral OF top IS
 	SIGNAL par_rst : STD_LOGIC_VECTOR(0 DOWNTO 0);
 	SIGNAL CLK_MMC : STD_LOGIC_VECTOR(0 DOWNTO 0);
 	SIGNAL CLK_PLL : STD_LOGIC_VECTOR(0 DOWNTO 0);
- 
+
 	SIGNAL UART_ZYNQ_rxd : STD_LOGIC;
 	SIGNAL UART_ZYNQ_txd : STD_LOGIC;
- 
+
 	SIGNAL IIC_ZYNQ_sda_i : STD_LOGIC;
 	SIGNAL IIC_ZYNQ_sda_o : STD_LOGIC;
 	SIGNAL IIC_ZYNQ_scl_i : STD_LOGIC;
 	SIGNAL IIC_ZYNQ_scl_o : STD_LOGIC;
- 
+	
+	component OBUF
+    port (I : in STD_LOGIC; O : out STD_LOGIC);
+    end component ;
 
+	
 	COMPONENT BLANK IS
 		PORT (
 			CLK_MMC : IN STD_LOGIC;
 			CLK_PLL : IN STD_LOGIC;
 			RST : IN STD_LOGIC;
-            
-            PMOD_JB_IN : IN STD_LOGIC_VECTOR(7 DOWNTO 0); 
-            PMOD_JB_OUT : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); 
-            PMOD_JB_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);    
-            
-            PMOD_JC_IN : IN STD_LOGIC_VECTOR(7 DOWNTO 0); 
-            PMOD_JC_OUT : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); 
-            PMOD_JC_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);    
-                           
-                           
-            PMOD_JD_IN : IN STD_LOGIC_VECTOR(7 DOWNTO 0); 
-            PMOD_JD_OUT : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); 
-            PMOD_JD_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);    
-                                          
-                                          
-            PMOD_JE_IN : IN STD_LOGIC_VECTOR(7 DOWNTO 0); 
-            PMOD_JE_OUT : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); 
-            PMOD_JE_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);    
-			
-			RGB_LED : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
  
+			PMOD_JB_IN : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+			PMOD_JB_OUT : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+			PMOD_JB_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); 
+ 
+			PMOD_JC_IN : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+			PMOD_JC_OUT : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+			PMOD_JC_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); 
+ 
+ 
+			PMOD_JD_IN : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+			PMOD_JD_OUT : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+			PMOD_JD_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); 
+ 
+ 
+			PMOD_JE_IN : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+			PMOD_JE_OUT : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+			PMOD_JE_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); 
+ 
+			RGB_LED : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+			RGB_LED2 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+
 			UART_ZYNQ_rxd : IN STD_LOGIC;
 			UART_ZYNQ_txd : OUT STD_LOGIC;
 
 			GPIO_PART_Input : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
 			GPIO_PART_Output : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
- 
+
 			IIC_ZYNQ_sda_i : IN STD_LOGIC;
 			IIC_ZYNQ_sda_o : OUT STD_LOGIC;
 			IIC_ZYNQ_scl_i : IN STD_LOGIC;
 			IIC_ZYNQ_scl_o : OUT STD_LOGIC
 		);
 	END COMPONENT;
- 
+
 	COMPONENT IOBUF IS
 		PORT (
 			I : IN STD_LOGIC;
@@ -173,260 +184,337 @@ ARCHITECTURE Behavioral OF top IS
 			IO : INOUT STD_LOGIC
 		);
 	END COMPONENT;
+
+	
+	SIGNAL PMOD_JB_IN : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL PMOD_JB_OUT : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL PMOD_JB_OE : STD_LOGIC_VECTOR(7 DOWNTO 0);
+ 
+	SIGNAL PMOD_JC_IN : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL PMOD_JC_OUT : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL PMOD_JC_OE : STD_LOGIC_VECTOR(7 DOWNTO 0);
  
  
-	SIGNAL PMOD_JB_IN : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-	SIGNAL PMOD_JB_OUT : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-	SIGNAL PMOD_JB_OE : STD_LOGIC_VECTOR(7 DOWNTO 0); 
+	SIGNAL PMOD_JD_IN : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL PMOD_JD_OUT : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL PMOD_JD_OE : STD_LOGIC_VECTOR(7 DOWNTO 0);
+ 
+ 
+	SIGNAL PMOD_JE_IN : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL PMOD_JE_OUT : STD_LOGIC_VECTOR(7 DOWNTO 0);
+	SIGNAL PMOD_JE_OE : STD_LOGIC_VECTOR(7 DOWNTO 0);
 	
-	SIGNAL PMOD_JC_IN : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-    SIGNAL PMOD_JC_OUT : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-    SIGNAL PMOD_JC_OE : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-        
-        
-    SIGNAL PMOD_JD_IN : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-    SIGNAL PMOD_JD_OUT : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-    SIGNAL PMOD_JD_OE : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-            
-            
-    SIGNAL PMOD_JE_IN : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-    SIGNAL PMOD_JE_OUT : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-    SIGNAL PMOD_JE_OE : STD_LOGIC_VECTOR(7 DOWNTO 0); 
-	
+	SIGNAL RGB_LED_obuf :STD_LOGIC_VECTOR(2 downto 0);
+ 
 BEGIN
-	    IOBUF0 : IOBUF
-	    PORT MAP(
+
+    obuf0: OBUF
+    port map (
+        I=>RGB_LED_obuf(0),
+        O=>RGB_LED2(0)
+        );
+    obuf1: OBUF
+    port map (
+                I=>RGB_LED_obuf(1),
+                O=>RGB_LED2(1)
+                );
+    obuf2: OBUF
+    port map (
+                I=>RGB_LED_obuf(2),
+                O=>RGB_LED2(2)
+                );
+
+
+	IOBUF0 : IOBUF
+	PORT MAP(
 		I => PMOD_JB_OUT(0), 
 		O => PMOD_JB_IN(0), 
 		T => PMOD_JB_OE(0), 
-		IO => PMOD_JB(0));
-		
-		IOBUF1 : IOBUF PORT MAP(
+		IO => PMOD_JB(0)
+	);
+ 
+	IOBUF1 : IOBUF
+	PORT MAP(
 		I => PMOD_JB_OUT(1), 
 		O => PMOD_JB_IN(1), 
 		T => PMOD_JB_OE(1), 
-		IO => PMOD_JB(1));
-		
-		IOBUF2 : IOBUF PORT MAP(
+		IO => PMOD_JB(1)
+	);
+ 
+	IOBUF2 : IOBUF
+	PORT MAP(
 		I => PMOD_JB_OUT(2), 
 		O => PMOD_JB_IN(2), 
 		T => PMOD_JB_OE(2), 
-		IO => PMOD_JB(2));
-		
-		IOBUF3 : IOBUF PORT MAP(
+		IO => PMOD_JB(2)
+	);
+ 
+	IOBUF3 : IOBUF
+	PORT MAP(
 		I => PMOD_JB_OUT(3), 
 		O => PMOD_JB_IN(3), 
 		T => PMOD_JB_OE(3), 
-		IO => PMOD_JB(3));
-		
-		IOBUF4 : IOBUF PORT MAP(
+		IO => PMOD_JB(3)
+	);
+ 
+	IOBUF4 : IOBUF
+	PORT MAP(
 		I => PMOD_JB_OUT(4), 
 		O => PMOD_JB_IN(4), 
 		T => PMOD_JB_OE(4), 
-		IO => PMOD_JB(4));
-		
-		IOBUF5 : IOBUF PORT MAP(
+		IO => PMOD_JB(4)
+	);
+ 
+	IOBUF5 : IOBUF
+	PORT MAP(
 		I => PMOD_JB_OUT(5), 
 		O => PMOD_JB_IN(5), 
 		T => PMOD_JB_OE(5), 
-		IO => PMOD_JB(5));
-		
-		IOBUF6 : IOBUF PORT MAP(
+		IO => PMOD_JB(5)
+	);
+ 
+	IOBUF6 : IOBUF
+	PORT MAP(
 		I => PMOD_JB_OUT(6), 
 		O => PMOD_JB_IN(6), 
 		T => PMOD_JB_OE(6), 
-		IO => PMOD_JB(6));
-		
-		IOBUF7 : IOBUF PORT MAP(
-        I => PMOD_JB_OUT(7), 
-        O => PMOD_JB_IN(7), 
-        T => PMOD_JB_OE(7), 
-        IO => PMOD_JB(7));
-        
-        
-            IOBUF0C : IOBUF
-                PORT MAP(
-                I => PMOD_JC_OUT(0), 
-                O => PMOD_JC_IN(0), 
-                T => PMOD_JC_OE(0), 
-                IO => PMOD_JC(0));
-                
-                IOBUF1C : IOBUF PORT MAP(
-                I => PMOD_JC_OUT(1), 
-                O => PMOD_JC_IN(1), 
-                T => PMOD_JC_OE(1), 
-                IO => PMOD_JC(1));
-                
-                IOBUF2C : IOBUF PORT MAP(
-                I => PMOD_JC_OUT(2), 
-                O => PMOD_JC_IN(2), 
-                T => PMOD_JC_OE(2), 
-                IO => PMOD_JC(2));
-                
-                IOBUF3C : IOBUF PORT MAP(
-                I => PMOD_JC_OUT(3), 
-                O => PMOD_JC_IN(3), 
-                T => PMOD_JC_OE(3), 
-                IO => PMOD_JC(3));
-                
-                IOBUF4C : IOBUF PORT MAP(
-                I => PMOD_JC_OUT(4), 
-                O => PMOD_JC_IN(4), 
-                T => PMOD_JC_OE(4), 
-                IO => PMOD_JC(4));
-                
-                IOBUF5C : IOBUF PORT MAP(
-                I => PMOD_JC_OUT(5), 
-                O => PMOD_JC_IN(5), 
-                T => PMOD_JC_OE(5), 
-                IO => PMOD_JC(5));
-                
-                IOBUF6C : IOBUF PORT MAP(
-                I => PMOD_JC_OUT(6), 
-                O => PMOD_JC_IN(6), 
-                T => PMOD_JC_OE(6), 
-                IO => PMOD_JC(6));
-                
-                IOBUF7C : IOBUF PORT MAP(
-                I => PMOD_JC_OUT(7), 
-                O => PMOD_JC_IN(7), 
-                T => PMOD_JC_OE(7), 
-                IO => PMOD_JC(7));
-        
-
-            IOBUF0D : IOBUF
-                PORT MAP(
-                I => PMOD_JD_OUT(0), 
-                O => PMOD_JD_IN(0), 
-                T => PMOD_JD_OE(0), 
-                IO => PMOD_JD(0));
-                
-                IOBUF1D : IOBUF PORT MAP(
-                I => PMOD_JD_OUT(1), 
-                O => PMOD_JD_IN(1), 
-                T => PMOD_JD_OE(1), 
-                IO => PMOD_JD(1));
-                
-                IOBUF2D : IOBUF PORT MAP(
-                I => PMOD_JD_OUT(2), 
-                O => PMOD_JD_IN(2), 
-                T => PMOD_JD_OE(2), 
-                IO => PMOD_JD(2));
-                
-                IOBUF3D : IOBUF PORT MAP(
-                I => PMOD_JD_OUT(3), 
-                O => PMOD_JD_IN(3), 
-                T => PMOD_JD_OE(3), 
-                IO => PMOD_JD(3));
-                
-                IOBUF4D : IOBUF PORT MAP(
-                I => PMOD_JD_OUT(4), 
-                O => PMOD_JD_IN(4), 
-                T => PMOD_JD_OE(4), 
-                IO => PMOD_JD(4));
-                
-                IOBUF5D : IOBUF PORT MAP(
-                I => PMOD_JD_OUT(5), 
-                O => PMOD_JD_IN(5), 
-                T => PMOD_JD_OE(5), 
-                IO => PMOD_JD(5));
-                
-                IOBUF6D : IOBUF PORT MAP(
-                I => PMOD_JD_OUT(6), 
-                O => PMOD_JD_IN(6), 
-                T => PMOD_JD_OE(6), 
-                IO => PMOD_JD(6));
-                
-                IOBUF7D : IOBUF PORT MAP(
-                I => PMOD_JD_OUT(7), 
-                O => PMOD_JD_IN(7), 
-                T => PMOD_JD_OE(7), 
-                IO => PMOD_JD(7));
-        
-                    IOBUF0E : IOBUF
-                    PORT MAP(
-                    I => PMOD_JE_OUT(0), 
-                    O => PMOD_JE_IN(0), 
-                    T => PMOD_JE_OE(0), 
-                    IO => PMOD_JE(0));
-                    
-                    IOBUF1E : IOBUF PORT MAP(
-                    I => PMOD_JE_OUT(1), 
-                    O => PMOD_JE_IN(1), 
-                    T => PMOD_JE_OE(1), 
-                    IO => PMOD_JE(1));
-                    
-                    IOBUF2E : IOBUF PORT MAP(
-                    I => PMOD_JE_OUT(2), 
-                    O => PMOD_JE_IN(2), 
-                    T => PMOD_JE_OE(2), 
-                    IO => PMOD_JE(2));
-                    
-                    IOBUF3E : IOBUF PORT MAP(
-                    I => PMOD_JE_OUT(3), 
-                    O => PMOD_JE_IN(3), 
-                    T => PMOD_JE_OE(3), 
-                    IO => PMOD_JE(3));
-                    
-                    IOBUF4E : IOBUF PORT MAP(
-                    I => PMOD_JE_OUT(4), 
-                    O => PMOD_JE_IN(4), 
-                    T => PMOD_JE_OE(4), 
-                    IO => PMOD_JE(4));
-                    
-                    IOBUF5E : IOBUF PORT MAP(
-                    I => PMOD_JE_OUT(5), 
-                    O => PMOD_JE_IN(5), 
-                    T => PMOD_JE_OE(5), 
-                    IO => PMOD_JE(5));
-                    
-                    IOBUF6E : IOBUF PORT MAP(
-                    I => PMOD_JE_OUT(6), 
-                    O => PMOD_JE_IN(6), 
-                    T => PMOD_JE_OE(6), 
-                    IO => PMOD_JE(6));
-                    
-                    IOBUF7E : IOBUF PORT MAP(
-                    I => PMOD_JE_OUT(7), 
-                    O => PMOD_JE_IN(7), 
-                    T => PMOD_JE_OE(7), 
-                    IO => PMOD_JE(7));
-            
-            
-
-        
+		IO => PMOD_JB(6)
+	);
  
-		par : BLANK PORT MAP(
+	IOBUF7 : IOBUF
+	PORT MAP(
+		I => PMOD_JB_OUT(7), 
+		O => PMOD_JB_IN(7), 
+		T => PMOD_JB_OE(7), 
+		IO => PMOD_JB(7)
+	);
+ 
+ 
+	IOBUF0C : IOBUF
+	PORT MAP(
+		I => PMOD_JC_OUT(0), 
+		O => PMOD_JC_IN(0), 
+		T => PMOD_JC_OE(0), 
+		IO => PMOD_JC(0)
+	);
+ 
+	IOBUF1C : IOBUF
+	PORT MAP(
+		I => PMOD_JC_OUT(1), 
+		O => PMOD_JC_IN(1), 
+		T => PMOD_JC_OE(1), 
+		IO => PMOD_JC(1)
+	);
+ 
+	IOBUF2C : IOBUF
+	PORT MAP(
+		I => PMOD_JC_OUT(2), 
+		O => PMOD_JC_IN(2), 
+		T => PMOD_JC_OE(2), 
+		IO => PMOD_JC(2)
+	);
+ 
+	IOBUF3C : IOBUF
+	PORT MAP(
+		I => PMOD_JC_OUT(3), 
+		O => PMOD_JC_IN(3), 
+		T => PMOD_JC_OE(3), 
+		IO => PMOD_JC(3)
+	);
+ 
+	IOBUF4C : IOBUF
+	PORT MAP(
+		I => PMOD_JC_OUT(4), 
+		O => PMOD_JC_IN(4), 
+		T => PMOD_JC_OE(4), 
+		IO => PMOD_JC(4)
+	);
+ 
+	IOBUF5C : IOBUF
+	PORT MAP(
+		I => PMOD_JC_OUT(5), 
+		O => PMOD_JC_IN(5), 
+		T => PMOD_JC_OE(5), 
+		IO => PMOD_JC(5)
+	);
+ 
+	IOBUF6C : IOBUF
+	PORT MAP(
+		I => PMOD_JC_OUT(6), 
+		O => PMOD_JC_IN(6), 
+		T => PMOD_JC_OE(6), 
+		IO => PMOD_JC(6)
+	);
+ 
+	IOBUF7C : IOBUF
+	PORT MAP(
+		I => PMOD_JC_OUT(7), 
+		O => PMOD_JC_IN(7), 
+		T => PMOD_JC_OE(7), 
+		IO => PMOD_JC(7)
+	);
+ 
+
+	IOBUF0D : IOBUF
+	PORT MAP(
+		I => PMOD_JD_OUT(0), 
+		O => PMOD_JD_IN(0), 
+		T => PMOD_JD_OE(0), 
+		IO => PMOD_JD(0)
+	);
+ 
+	IOBUF1D : IOBUF
+	PORT MAP(
+		I => PMOD_JD_OUT(1), 
+		O => PMOD_JD_IN(1), 
+		T => PMOD_JD_OE(1), 
+		IO => PMOD_JD(1)
+	);
+ 
+	IOBUF2D : IOBUF
+	PORT MAP(
+		I => PMOD_JD_OUT(2), 
+		O => PMOD_JD_IN(2), 
+		T => PMOD_JD_OE(2), 
+		IO => PMOD_JD(2)
+	);
+ 
+	IOBUF3D : IOBUF
+	PORT MAP(
+		I => PMOD_JD_OUT(3), 
+		O => PMOD_JD_IN(3), 
+		T => PMOD_JD_OE(3), 
+		IO => PMOD_JD(3)
+	);
+ 
+	IOBUF4D : IOBUF
+	PORT MAP(
+		I => PMOD_JD_OUT(4), 
+		O => PMOD_JD_IN(4), 
+		T => PMOD_JD_OE(4), 
+		IO => PMOD_JD(4)
+	);
+ 
+	IOBUF5D : IOBUF
+	PORT MAP(
+		I => PMOD_JD_OUT(5), 
+		O => PMOD_JD_IN(5), 
+		T => PMOD_JD_OE(5), 
+		IO => PMOD_JD(5)
+	);
+ 
+	IOBUF6D : IOBUF
+	PORT MAP(
+		I => PMOD_JD_OUT(6), 
+		O => PMOD_JD_IN(6), 
+		T => PMOD_JD_OE(6), 
+		IO => PMOD_JD(6)
+	);
+ 
+	IOBUF7D : IOBUF
+	PORT MAP(
+		I => PMOD_JD_OUT(7), 
+		O => PMOD_JD_IN(7), 
+		T => PMOD_JD_OE(7), 
+		IO => PMOD_JD(7)
+	);
+ 
+	IOBUF0E : IOBUF
+	PORT MAP(
+		I => PMOD_JE_OUT(0), 
+		O => PMOD_JE_IN(0), 
+		T => PMOD_JE_OE(0), 
+		IO => PMOD_JE(0)
+	);
+ 
+	IOBUF1E : IOBUF
+	PORT MAP(
+		I => PMOD_JE_OUT(1), 
+		O => PMOD_JE_IN(1), 
+		T => PMOD_JE_OE(1), 
+		IO => PMOD_JE(1)
+	);
+ 
+	IOBUF2E : IOBUF
+	PORT MAP(
+		I => PMOD_JE_OUT(2), 
+		O => PMOD_JE_IN(2), 
+		T => PMOD_JE_OE(2), 
+		IO => PMOD_JE(2)
+	);
+ 
+	IOBUF3E : IOBUF
+	PORT MAP(
+		I => PMOD_JE_OUT(3), 
+		O => PMOD_JE_IN(3), 
+		T => PMOD_JE_OE(3), 
+		IO => PMOD_JE(3)
+	);
+ 
+	IOBUF4E : IOBUF
+	PORT MAP(
+		I => PMOD_JE_OUT(4), 
+		O => PMOD_JE_IN(4), 
+		T => PMOD_JE_OE(4), 
+		IO => PMOD_JE(4)
+	);
+ 
+	IOBUF5E : IOBUF
+	PORT MAP(
+		I => PMOD_JE_OUT(5), 
+		O => PMOD_JE_IN(5), 
+		T => PMOD_JE_OE(5), 
+		IO => PMOD_JE(5)
+	);
+ 
+	IOBUF6E : IOBUF
+	PORT MAP(
+		I => PMOD_JE_OUT(6), 
+		O => PMOD_JE_IN(6), 
+		T => PMOD_JE_OE(6), 
+		IO => PMOD_JE(6)
+	);
+ 
+	IOBUF7E : IOBUF
+	PORT MAP(
+		I => PMOD_JE_OUT(7), 
+		O => PMOD_JE_IN(7), 
+		T => PMOD_JE_OE(7), 
+		IO => PMOD_JE(7)
+	);
+ 
+
+	par : BLANK
+	PORT MAP(
 		CLK_mmc => CLK_MMC(0), 
 		CLK_PLL => CLK_PLL(0), 
 		rst => par_rst(0), 
- 
+
 		RGB_LED => RGB_LED, 
+		RGB_LED2 => RGB_LED_obuf, 
 		GPIO_PART_Input => gpio_o, 
 		GPIO_PART_Output => gpio_i, 
- 
+
 		--PMOD_JB=>PMOD_JB,
- 
+
 		PMOD_JB_IN => PMOD_JB_IN, 
 		PMOD_JB_OUT => PMOD_JB_OUT, 
 		PMOD_JB_OE => PMOD_JB_OE, 
- 
-		PMOD_JC_IN => PMOD_JC_IN, 
-        PMOD_JC_OUT => PMOD_JC_OUT,
-        PMOD_JC_OE => PMOD_JC_OE,
-        
-        PMOD_JD_IN => PMOD_JD_IN, 
-        PMOD_JD_OUT => PMOD_JD_OUT,
-        PMOD_JD_OE => PMOD_JD_OE,  
-        
-        PMOD_JE_IN => PMOD_JE_IN, 
-        PMOD_JE_OUT => PMOD_JE_OUT,
-        PMOD_JE_OE => PMOD_JE_OE, 
 
+		PMOD_JC_IN => PMOD_JC_IN, 
+		PMOD_JC_OUT => PMOD_JC_OUT, 
+		PMOD_JC_OE => PMOD_JC_OE, 
  
+		PMOD_JD_IN => PMOD_JD_IN, 
+		PMOD_JD_OUT => PMOD_JD_OUT, 
+		PMOD_JD_OE => PMOD_JD_OE, 
+ 
+		PMOD_JE_IN => PMOD_JE_IN, 
+		PMOD_JE_OUT => PMOD_JE_OUT, 
+		PMOD_JE_OE => PMOD_JE_OE, 
 		UART_ZYNQ_rxd => UART_ZYNQ_txd, 
 		UART_ZYNQ_txd => UART_ZYNQ_rxd, 
- 
+
 		IIC_ZYNQ_sda_i => IIC_ZYNQ_sda_o, 
 		IIC_ZYNQ_sda_o => IIC_ZYNQ_sda_i, 
 		IIC_ZYNQ_scl_i => IIC_ZYNQ_scl_o, 
@@ -470,15 +558,15 @@ BEGIN
 		par_rst => par_rst, 
 		CLK_MMC(0) => CLK_MMC(0), 
 		CLK_PLL(0) => CLK_PLL(0), 
- 
+
 		--uart
 		UART_ZYNQ_rxd => UART_ZYNQ_rxd, 
 		UART_ZYNQ_txd => UART_ZYNQ_txd, 
- 
+
 		--iic
 		IIC_ZYNQ_sda_i => IIC_ZYNQ_sda_i, 
 		IIC_ZYNQ_sda_o => IIC_ZYNQ_sda_o, 
 		IIC_ZYNQ_scl_i => IIC_ZYNQ_scl_i, 
-		IIC_ZYNQ_scl_o => IIC_ZYNQ_scl_o 
+		IIC_ZYNQ_scl_o => IIC_ZYNQ_scl_o
 	);
 END Behavioral;

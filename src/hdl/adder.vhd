@@ -56,6 +56,7 @@ entity adder is
                     PMOD_JE_OE : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);    
                         
                     RGB_LED : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+                    RGB_LED2 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
                     
                     UART_ZYNQ_rxd : in STD_LOGIC;
                     UART_ZYNQ_txd : out STD_LOGIC;
@@ -81,6 +82,7 @@ if(rst='1') then
 elsif(rising_edge(clk_mmc) )then
     addition<=to_integer(unsigned(GPIO_PART_INPUT(1 downto 0)))+to_integer(unsigned(GPIO_PART_INPUT(1 downto 0))); 
     GPIO_part_output(2 downto 0) <= std_logic_vector(to_unsigned(addition,3));
+    RGB_LED<=std_logic_vector(to_unsigned(addition,3));
 end if;
 
 end process;

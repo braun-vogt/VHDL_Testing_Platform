@@ -47,6 +47,8 @@ if { [info exists ::user_project_name] } {
   set project_name $::user_project_name
 }
 
+
+
 variable script_file
 set script_file "create_project.tcl"
 
@@ -124,6 +126,10 @@ set_property -name "simulator_language" -value "Mixed" -objects $obj
 set_property -name "target_language" -value "VHDL" -objects $obj
 set_property -name "xpm_libraries" -value "XPM_CDC XPM_FIFO XPM_MEMORY" -objects $obj
 
+
+
+
+
 # Create 'sources_1' fileset (if not found)
 if {[string equal [get_filesets -quiet sources_1] ""]} {
   create_fileset -srcset sources_1
@@ -132,6 +138,12 @@ if {[string equal [get_filesets -quiet sources_1] ""]} {
 # Set IP repository paths
 set obj [get_filesets sources_1]
 set_property "ip_repo_paths" "[file normalize "$origin_dir/../repo"] [file normalize "$origin_dir/../../../../axiio"]" $obj
+
+#neu
+set repo_dir [file normalize $origin_dir/repo]
+set_param board.repoPaths [list $repo_dir/vivado_boards/new/board_files]
+#end neu
+
 
 # Rebuild user ip_repo's index before adding any source files
 update_ip_catalog -rebuild
