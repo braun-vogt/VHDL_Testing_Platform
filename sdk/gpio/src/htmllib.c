@@ -6,16 +6,16 @@
 
 
 void htmlHeader(char *title) {
-	printf("Content-type: text/html\n\n<HTML><HEAD><TITLE>%s</TITLE></HEAD>",
+	printf("Content-type: text/html\n\n<html>\<head>\n<meta charset=\"UTF-8\">\n<TITLE>%s</TITLE>\n<script type=\"text/javascript\" src=\"/lang/b28n.js\">\n</script>\n<script type=\"text/javascript\" src=\"/lang/webcam.js\">\n</script>\n</head>",
 			title);
 }
 
 void htmlBody() {
-	printf("<BODY>");
+	printf("<body onload=\"page_init()\" oncontextmenu=\"return false;\">");
 }
 
 void htmlFooter() {
-	printf("</BODY></HTML>");
+	printf("</body></html>");
 }
 
 void addTitleElement(char *title) {

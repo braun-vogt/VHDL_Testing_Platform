@@ -14,29 +14,36 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 
-#define MAX(x,y) ((x)>(y)?(x):(y))
-#define MIN(x,y) ((x)<(y)?(x):(y))
+#include "libgpio.h"
+#include "libuio.h"
 
-#define TRIGGER(x) ((x)==LEDOFF?LEDON:LEDOFF)
+#define TRIGGER(x) ((x)==0?1:0)
+#define ONOFF(x) ((x)==0?"ON":"OFF")
 
-#define GPIO_ROOT "/sys/class/gpio"
 #define LEDNUM 8
-#define LEDON 0x0000ff00
-#define LEDOFF 0
 
-#define LEDHTML "<td><a href=gpio?ledgpio=%i&led0=%i&led1=%i&led2=%i&led3=%i&led4=%i&led5=%i&led6=%i&led7=%i>ON/OFF</a></td>\n"
-static char *led_name[] = {"led0", "led1", "led2", "led3",
-			   "led4", "led5", "led6", "led7"};
+#define GREEN 0x0000ff00
    
-static int led_html_color[] = {0, 0, 0, 0, 0, 0, 0, 0};
+static int leds_val[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-static int leds_val;
+int printButton(int i){
+	printf("<td><a href=gpio?led%i=%i>%s</a></td>\n", i, TRIGGER(leds_val[i]), ONOFF(leds_val[i]));
+	return 0;
+}
 
-#ifdef LEDGPIOBASE
-static int ledgpio=LEDGPIOBASE;
-#else
-static int ledgpio=0;
-#endif
+int get_leds(){
+	for(int i = 0; i < LEDNUM; i++) {
+		unsigned char readVal;
+
+		GPIO vm = GPIO_init(0, 0);
+		setPinMode(vm, 1, i + 1, INPUT);
+		readVal = digitalRead(vm, 1, i + 1);
+		GPIO_Close(vm);
+
+		leds_val[i] = readVal;
+	}
+    return 0;
+}
 
 int create_led_entry()
 {
@@ -47,51 +54,23 @@ int create_led_entry()
   
 	printf("<tr>\n"); 
 	for(i = 0; i < LEDNUM; i++) {
-		printf("<td>%s</td>\n", led_name[i]);
+		printf("<td>led%d</td>\n", i);
 	}
 	printf("</tr>\n");
   
 	printf("<tr height=40 pixel>\n");
 	for(i = 0; i < LEDNUM; i++) {
-		printf("<td bgcolor=#%06X>\n", led_html_color[i]);
+		printf("<td bgcolor=#%06X>\n", leds_val[i]?GREEN:0);
 		printf("<p><p>\n");
 		printf("</td>\n");
 	}
 	printf("</tr>\n");
   
-	printf("<tr>\n"); 
-	printf(LEDHTML, ledgpio,
-		TRIGGER(led_html_color[0]),led_html_color[1],led_html_color[2],
-		led_html_color[3],led_html_color[4], led_html_color[5],
-		led_html_color[6], led_html_color[7]);
-	printf(LEDHTML, ledgpio,
-		led_html_color[0], TRIGGER(led_html_color[1]),
-		led_html_color[2], led_html_color[3], led_html_color[4],
-		led_html_color[5], led_html_color[6], led_html_color[7]);
-	printf(LEDHTML, ledgpio,
-		led_html_color[0], led_html_color[1], 
-		TRIGGER(led_html_color[2]),led_html_color[3], 
-		led_html_color[4],led_html_color[5],led_html_color[6],led_html_color[7]);
-	printf(LEDHTML, ledgpio,
-		led_html_color[0], led_html_color[1], led_html_color[2],
-		TRIGGER(led_html_color[3]), led_html_color[4],led_html_color[5],
-		led_html_color[6], led_html_color[7]);
-	printf(LEDHTML, ledgpio,
-		led_html_color[0], led_html_color[1], led_html_color[2], 
-		led_html_color[3], TRIGGER(led_html_color[4]),
-		led_html_color[5], led_html_color[6], led_html_color[7]);
-	printf(LEDHTML, ledgpio,
-		led_html_color[0], led_html_color[1], led_html_color[2], 
-		led_html_color[3], led_html_color[4],TRIGGER(led_html_color[5]),
-		led_html_color[6], led_html_color[7]);
-	printf(LEDHTML, ledgpio,
-		led_html_color[0], led_html_color[1], led_html_color[2], 
-		led_html_color[3], led_html_color[4], led_html_color[5], 
-		TRIGGER(led_html_color[6]), led_html_color[7]);
-	printf(LEDHTML, ledgpio,
-		led_html_color[0], led_html_color[1], led_html_color[2], 
-		led_html_color[3], led_html_color[4], led_html_color[5], 
-		led_html_color[6], TRIGGER(led_html_color[7]));
+	printf("<tr>\n");
+	for(i = 0; i < LEDNUM; i++) {
+		printButton(i);
+	}
+
 	printf("</tr>\n");
 
 	printf("</table>\n");
@@ -99,49 +78,25 @@ int create_led_entry()
 	return 0;
 }
 
-int set_leds()
+int set_led(int pinNumber, int val)
 {
-	int nchannel = 0;
-
-	nchannel=open_gpio_channel(ledgpio);
-	if (nchannel <= 0)
-		return -1;
-	if (set_gpio_direction(ledgpio, nchannel, "out"))
-		return -1;
-	return set_gpio_value(ledgpio,nchannel, leds_val);
-
+    GPIO vm = GPIO_init(0, 0);
+	setPinMode(vm, 2, pinNumber + 1, OUTPUT);
+	digitalWrite(vm, 2, pinNumber + 1, val);
+    GPIO_Close(vm);
+    return 0;
 }
 
 int get_led_val(char **getvars)
 {
-	char *tmp;
-	int val;
-	int i, j;
+	int val = 0, number = 0;
 
-	for (j = 0; getvars[j]; j+= 2) {
-		if (!strcmp(getvars[j], "ledgpio")) {
-			sscanf(getvars[j+1], "%i", &ledgpio);
-		}
-	}
+	sscanf(getvars[0], "led%i", &number);
+	sscanf(getvars[1],"%i",&val);
+	//printf("Pin Number: %d, Value: %d\n", number, val);
+	leds_val[number] = val;
+	set_led(number,val);
 
-	leds_val = 0;
-	for (i = 0; i < 8; i++) {
-		tmp = 0;
-		for (j = 0; getvars[j]; j+= 2) {
-	
-			if(!strcmp(getvars[j], led_name[i])) {
-				tmp = getvars[j+1];
-			}
-		}
-	
-		if(tmp)
-			if(sscanf(tmp,"%i",&val)) {
-				led_html_color[i] = val;
-        			if (val != 0) {	
-					leds_val += (1 << i);
-				}
-			}
-	}
 	return 0;
 }
 
@@ -149,29 +104,28 @@ int led_cgi_page(char **getvars, int form_method)
 {
 	addTitleElement("Zybo LED Control");
 	
+	get_leds();
+
+	/* Drive the hardware */
 	if (getvars != 0) {
 		if(getvars[0] != 0){
 			get_led_val(getvars);
-		} 
+		}
 	}
-
-	/* Drive the hardware */
-
-	set_leds();
-
-	printf("<form ACTION=\"%s\" METHOD=\"GET\">\n", "/cgi-bin/gpio");
-	printf("<div><label>LED GPIO ID: <input name=\"ledgpio\" size=\"3\" value=\"%d\" ></label></div>",ledgpio);
-	printf("<div><P> To change LED GPIO, change the value in the \"LED GPIO ID\" box and press \"Clear\" button.</div>");
 
 	create_led_entry();
 
-	printf("<input type=\"Submit\" value=\"Clear\">\n");
+	printf("<form ACTION=\"%s\" METHOD=\"GET\">\n", "/cgi-bin/gpio");
+	//printf("<div><label>LED GPIO ID: <input name=\"ledgpio\" size=\"3\" value=\"%d\" ></label></div>",ledgpio);
+	//printf("<div><P> To change LED GPIO, change the value in the \"LED GPIO ID\" box and press \"Clear\" button.</div>");
+
+	printf("<input type=\"Submit\" value=\"UPDATE\">\n");
 
 	printf("<p><p>\n");
 	printf("</form>\n");
-
-	/* Drive the hardware */
-	set_leds();
+	printf("<div id=\"webcam\">");
+	printf("<img src=\"http://192.168.1.254/media/?action=snapshot\" alt=\"Live Video\" />");
+	printf("</div>");
 
 	return 0;
 }
