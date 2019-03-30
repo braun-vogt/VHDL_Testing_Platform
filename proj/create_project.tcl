@@ -112,6 +112,21 @@ set_msg_config  -ruleid {3}  -string {{[PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_
 set_msg_config  -ruleid {4}  -string {{[PSU-3]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value}}  -suppress  -source 16
 set_msg_config  -ruleid {5}  -string {{[PSU-4]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value}}  -suppress  -source 16
 
+#neu
+set repo_dir [file normalize $origin_dir/../repo]
+set_param board.repoPaths [list $origin_dir/../repo]
+#end neu
+
+
+# Set IP repository paths
+set obj [get_filesets sources_1]
+set_property "ip_repo_paths" "[file normalize "$origin_dir/../repo"] [file normalize "$origin_dir/../../../../axiio"]" $obj
+
+
+
+
+# Rebuild user ip_repo's index before adding any source files
+update_ip_catalog -rebuild
 
 # Set project properties
 set obj [current_project]
@@ -135,18 +150,6 @@ if {[string equal [get_filesets -quiet sources_1] ""]} {
   create_fileset -srcset sources_1
 }
 
-# Set IP repository paths
-set obj [get_filesets sources_1]
-set_property "ip_repo_paths" "[file normalize "$origin_dir/../repo"] [file normalize "$origin_dir/../../../../axiio"]" $obj
-
-#neu
-set repo_dir [file normalize $origin_dir/repo]
-set_param board.repoPaths [list $repo_dir/vivado_boards/new/board_files]
-#end neu
-
-
-# Rebuild user ip_repo's index before adding any source files
-update_ip_catalog -rebuild
 
 # Set 'sources_1' fileset object
 set obj [get_filesets sources_1]
