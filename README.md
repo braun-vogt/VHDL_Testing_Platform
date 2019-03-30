@@ -1,6 +1,5 @@
 # VHDL Testing Platform
 
-see instructions.md for more details.
+Have a look at our Instructables: https://www.instructables.com/
 
-TODO: 
-Add Content
+see instructions.md for more details.
