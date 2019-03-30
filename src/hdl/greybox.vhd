@@ -1,26 +1,24 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 13.03.2019 14:05:11
--- Design Name: 
--- Module Name: GPIO_TEST - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
+-- Company:
+-- Engineer:
+--
+-- Create Date: 11.03.2019 20:58:37
+-- Design Name:
+-- Module Name: BLANK - Behavioral
+-- Project Name:
+-- Target Devices:
+-- Tool Versions:
+-- Description:
+--
+-- Dependencies:
+--
 -- Revision:
 -- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+--
 ----------------------------------------------------------------------------------
-
-
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -31,8 +29,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity GPIO_TEST is
-  Port (    CLK_MMC : IN STD_LOGIC;
+ENTITY BLANK IS
+	PORT (
+                CLK_MMC : IN STD_LOGIC;
                 CLK_PLL : IN STD_LOGIC;
                 RST : IN STD_LOGIC;
      
@@ -67,14 +66,10 @@ entity GPIO_TEST is
                 IIC_ZYNQ_sda_i : in STD_LOGIC;
                 IIC_ZYNQ_sda_o : out STD_LOGIC;
                 IIC_ZYNQ_scl_i : in STD_LOGIC;
-                IIC_ZYNQ_scl_o : out STD_LOGIC); 
-end GPIO_TEST;
+                IIC_ZYNQ_scl_o : out STD_LOGIC
+	);
+END BLANK;
 
-architecture Behavioral of GPIO_TEST is
-
-begin
-Gpio_PART_output<=Gpio_Part_Input;
-RGB_LED<=GPIO_PART_Input(2 downto 0);
-
-RGB_LED2<=GPIO_PART_Input(5 downto 3);
-end Behavioral;
+ARCHITECTURE Behavioral OF BLANK IS
+BEGIN
+END Behavioral;
