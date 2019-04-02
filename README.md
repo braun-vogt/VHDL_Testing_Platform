@@ -30,7 +30,7 @@ petalinux-package --boot --fsbl image/linux/zynq.elf --fpga image/linux/top.bit 
 ```
 Copy BOOT.bin and image.db to the formatted SD Card and flash the filesystem.
 
-## Network Setup
+## Network Setup / Test
 1) Connect the Zybo and the IP Cam to a Network with DHCP. 
 2) Navigate to the IP of the Zybo. for example: http://192.168.1.2/cgi-bin/gpio
 3) Select a user with http://192.168.1.2/cgi-bin/gpio?user=philipp
