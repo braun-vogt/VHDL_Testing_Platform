@@ -8,6 +8,7 @@
 * Vivado 2017.4
 * Vivado Partial Reconfiguration Licence
 
+## Get the project
 After installing Vivado 2017.4 and Petalinux 2017.4, clone the project.
 
 ```
