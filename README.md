@@ -14,7 +14,7 @@ After installing Vivado 2017.4 and Petalinux 2017.4, clone the project.
 source /path/to/vivado/settings64.sh
 source /path/to/petalinux/settings64.sh
 
-git clone https://github.com/braun-vogt/VHDL_Testing_Platform.git
+git clone --recursive https://github.com/braun-vogt/VHDL_Testing_Platform.git
 ```
 
 ## Build Petalinux Image
