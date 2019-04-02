@@ -27,7 +27,3 @@ petalinux-build
 petalinux-package --boot --fsbl image/linux/zynq.elf --fpga image/linux/top.bit --u-boot
 ```
 Copy BOOT.bin and image.db to the formatted SD Card and flash the filesystem.
-
-TODO: Instructions
-
-see instructions.md for more details.
