@@ -34,3 +34,6 @@ Copy BOOT.bin and image.db to the formatted SD Card and flash the filesystem.
 1) Connect the Zybo and the IP Cam to a Network with DHCP. 
 2) Navigate to the IP of the Zybo. for example: http://192.168.1.2/cgi-bin/gpio
 3) Select a user with http://192.168.1.2/cgi-bin/gpio?user=philipp
+
+## Thanks to:
+* http://svenand.blogdrives.com/archive/197.html
