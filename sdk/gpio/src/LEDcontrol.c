@@ -9,7 +9,6 @@
 #include "htmllib.h"
 #include "led_cgi.h"
 
-
 int main() {
 	char **postvars = NULL; 	/* POST request data repository */
 	char **getvars = NULL; 		/* GET request data repository */

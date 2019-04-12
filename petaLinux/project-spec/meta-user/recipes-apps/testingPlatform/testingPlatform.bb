@@ -12,6 +12,8 @@ SRC_URI = "file://testingPlatform \
            file://www/cgi-bin/gpio \
            file://www/lang/b28n.js \
            file://www/lang/webcam.js \
+           file://www/js/bootstrap.bundle.min.js \
+           file://www/css/bootstrap.min.css \
 	"
 
 S = "${WORKDIR}"
@@ -26,6 +28,10 @@ do_install() {
          install -d ${D}/srv/www/lang
          install -m 0755 ${S}/www/lang/b28n.js ${D}/srv/www/lang
          install -m 0755 ${S}/www/lang/webcam.js ${D}/srv/www/lang
+         install -d ${D}/srv/www/js
+         install -m 0755 ${S}/www/js/bootstrap.bundle.min.js ${D}/srv/www/js
+         install -d ${D}/srv/www/css
+         install -m 0755 ${S}/www/css/bootstrap.min.css ${D}/srv/www/css
 }
 
 FILES_${PN} += "srv/www/*"
