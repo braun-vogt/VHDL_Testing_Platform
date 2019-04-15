@@ -27,6 +27,9 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="xilinx.gnu.compiler.option.optimization.level.1526831408" name="Optimization Level" superClass="xilinx.gnu.compiler.option.optimization.level" valueType="enumerated"/>
 								<option id="xilinx.gnu.compiler.option.debugging.level.187581417" name="Debug Level" superClass="xilinx.gnu.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="xilinx.gnu.compiler.misc.other.401022237" name="Other flags" superClass="xilinx.gnu.compiler.misc.other" value="-c -fmessage-length=0 -MT&quot;$@&quot; " valueType="string"/>
+								<option id="xilinx.gnu.compiler.dircategory.includes.810041387" name="Include Paths" superClass="xilinx.gnu.compiler.dircategory.includes" valueType="includePath">
+									<listOptionValue builtIn="false" value="/home/philipp/git/VHDL_Testing_Platform/petaLinux/build/tmp/sysroots/plnx_arm/usr/include"/>
+								</option>
 								<inputType id="xilinx.gnu.armv7.linux.c.compiler.input.1839688366" name="C source files" superClass="xilinx.gnu.armv7.linux.c.compiler.input"/>
 							</tool>
 							<tool id="xilinx.gnu.armv7.linux.cxx.toolchain.compiler.debug.1618014042" name="ARM v7 Linux g++ compiler" superClass="xilinx.gnu.armv7.linux.cxx.toolchain.compiler.debug">
@@ -35,8 +38,13 @@
 							</tool>
 							<tool id="xilinx.gnu.armv7.linux.toolchain.archiver.2139055618" name="ARM v7 Linux archiver" superClass="xilinx.gnu.armv7.linux.toolchain.archiver"/>
 							<tool id="xilinx.gnu.armv7.linux.c.toolchain.linker.debug.2100003758" name="ARM v7 Linux gcc linker" superClass="xilinx.gnu.armv7.linux.c.toolchain.linker.debug">
-								<option id="xilinx.gnu.c.link.option.paths.1987659234" name="Library search path (-L)" superClass="xilinx.gnu.c.link.option.paths" valueType="libPaths"/>
-								<option id="xilinx.gnu.c.link.option.libs.169993662" name="Libraries (-l)" superClass="xilinx.gnu.c.link.option.libs" valueType="libs"/>
+								<option id="xilinx.gnu.c.link.option.paths.1987659234" name="Library search path (-L)" superClass="xilinx.gnu.c.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="/home/philipp/git/VHDL_Testing_Platform/petaLinux/build/tmp/sysroots/plnx_arm/usr/lib"/>
+								</option>
+								<option id="xilinx.gnu.c.link.option.libs.169993662" name="Libraries (-l)" superClass="xilinx.gnu.c.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="json-c"/>
+								</option>
+								<option id="xilinx.gnu.c.link.option.ldflags.1982958611" name="Linker Flags" superClass="xilinx.gnu.c.link.option.ldflags" value="--sysroot=&quot;/home/philipp/git/VHDL_Testing_Platform/petaLinux/build/tmp/sysroots/plnx_arm&quot;" valueType="string"/>
 								<inputType id="xilinx.gnu.linker.input.622778748" superClass="xilinx.gnu.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

@@ -14,6 +14,8 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 
+#include <json-c/json.h>
+
 #include "libgpio.h"
 #include "libuio.h"
 
