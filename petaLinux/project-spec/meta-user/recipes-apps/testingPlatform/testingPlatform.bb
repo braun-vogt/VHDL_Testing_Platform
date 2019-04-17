@@ -14,6 +14,7 @@ SRC_URI = "file://testingPlatform \
            file://www/lang/webcam.js \
            file://www/js/bootstrap.bundle.min.js \
            file://www/css/bootstrap.min.css \
+           file://home/root/par/test.json \
 	"
 
 S = "${WORKDIR}"
@@ -32,6 +33,8 @@ do_install() {
          install -m 0755 ${S}/www/js/bootstrap.bundle.min.js ${D}/srv/www/js
          install -d ${D}/srv/www/css
          install -m 0755 ${S}/www/css/bootstrap.min.css ${D}/srv/www/css
+         install -d ${D}/home/root/par/
+         install -m 0644 ${S}/par/test.json ${D}/home/root/par
 }
 
 FILES_${PN} += "srv/www/*"
