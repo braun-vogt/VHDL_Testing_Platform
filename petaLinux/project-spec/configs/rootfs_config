@@ -2514,7 +2514,7 @@ CONFIG_udev-extraconf=y
 #
 # json-c 
 #
-# CONFIG_json-c is not set
+CONFIG_json-c=y
 # CONFIG_json-c-dbg is not set
 # CONFIG_json-c-dev is not set
 
@@ -4128,6 +4128,11 @@ CONFIG_kmsdemo=y
 CONFIG_peekpoke=y
 CONFIG_pwmdemo=y
 CONFIG_testingPlatform=y
+
+#
+# modules 
+#
+CONFIG_clk-xlnx-clock-wizard=y
 
 #
 # user packages 

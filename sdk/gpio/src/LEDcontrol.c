@@ -9,7 +9,6 @@
 #include "htmllib.h"
 #include "led_cgi.h"
 
-
 int main() {
 	char **postvars = NULL; 	/* POST request data repository */
 	char **getvars = NULL; 		/* GET request data repository */
@@ -24,7 +23,7 @@ int main() {
 		getvars = getGETvars();
 	}
 
-	htmlHeader("LED control web page");
+	htmlHeader("VHDL Testing Platform");
 	htmlBody();
 		
 	led_cgi_page(getvars, form_method);
