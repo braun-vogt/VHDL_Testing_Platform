@@ -1,0 +1,3 @@
+ 
+synth_design -flatten_hierarchy rebuilt 
+set_property HD.RECONFIGURABLE TRUE [get_cells par]
