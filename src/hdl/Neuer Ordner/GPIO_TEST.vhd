@@ -76,5 +76,5 @@ begin
 Gpio_PART_output<=Gpio_Part_Input;
 RGB_LED<=GPIO_PART_Input(2 downto 0);
 
-RGB_LED2<=GPIO_PART_Input(2 downto 0);
+RGB_LED2<=GPIO_PART_Input(5 downto 3);
 end Behavioral;
