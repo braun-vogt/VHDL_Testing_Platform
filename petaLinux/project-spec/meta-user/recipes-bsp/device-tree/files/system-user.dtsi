@@ -49,27 +49,33 @@
 &flash0 {
 	compatible = "micron,m25p80", "s25fl128s", "spi-flash";
 };
-
-&axi_gpio_0 {
-	compatible = "generic-uio";	
-};
-&axi_gpio_led {
+&PAR_TEST_GPIO0 {
 	compatible = "generic-uio";
 };
-&axi_gpio_buttons {
+&PAR_TEST_GPIO1 {
 	compatible = "generic-uio";
 };
-&PAR_TEST_GPIO {
+&PAR_TEST_GPIO2 {
 	compatible = "generic-uio";
 };
-&CLK_PLL {
-	#clock-cells = <1>;
-	reg = <0x43c00000 0x1000>;
-	compatible = "xlnx,clocking-wizard";
-	speed-grade = <1>;
-	clock-names = "clk_in1", "s_axi_aclk";
-	clocks = <&clkc 15>, <&clkc 15>;
-	clock-output-names = "clk_out1", "clk_out2",
-				         "clk_out3", "clk_out4", "clk_out5",
-                         "clk_out6", "clk_out7";
+&PAR_TEST_GPIO3 {
+	compatible = "generic-uio";
+};
+&PAR_TEST_GPIO4 {
+	compatible = "generic-uio";
+};
+&PAR_TEST_GPIO5 {
+	compatible = "generic-uio";
+};
+&PAR_TEST_GPIO6 {
+	compatible = "generic-uio";
+};
+&PAR_TEST_GPIO7 {
+	compatible = "generic-uio";
+};
+&MUX_GPIO {
+	compatible = "generic-uio";
+};
+&PAR_RESET {
+	compatible = "generic-uio";
 };

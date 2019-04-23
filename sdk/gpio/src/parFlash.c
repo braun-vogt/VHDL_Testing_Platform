@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+/*
+ * TODO add file when user visits for first time, then delete bit file
+ * */
+
 int flash_par_bitfile(char *name){
     char file_name[128];
     int fd;
@@ -12,7 +16,7 @@ int flash_par_bitfile(char *name){
 
     if (name != '\0') {
         // compose file name
-        sprintf(file_name, "/media/card/partial/%s", name);
+        sprintf(file_name, "/home/root/par/%s", name);
 
         // open partial bitfile
         fd = open(file_name, O_RDONLY);

@@ -25,20 +25,25 @@
 #define TRIGGER(x) ((x)==0?1:0)
 #define ONOFF(x) ((x)==0?"dark":"success")
 
-#define LEDNUM 32
+#define PINNUM 32
 
-#define GREEN 0x0000ff00
-   
+static char ip_cam[120] = "\"http://192.168.1.254/media/?action=snapshot\" alt=\"Live Video\"";
+
 static int output_vals[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static int input_vals[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 static char user[256] = "default";
 
-json_t config;
-char users[8][256] = {"admin"};
-char designs[8][256] = {"admin.vhd"};
-int pblocks[8] = {-1};
-int pins[8][32] = {{1,2,3,4,5,6,7,8,9,10}};
+json_t config = {
+		{"admin"},
+		{"admin.vhd"},
+		{0},
+		{{"led0", "led1"}},
+		{2},
+		{{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31}},
+		{32},
+		1
+};
 
 int printButton(int i){
 	printf("<a role=\"button\" href=gpio?user=%s&led%i=%i class=\"btn btn-%s\">PIN %d</a>\n", user, i, TRIGGER(output_vals[i]), ONOFF(output_vals[i]), i);
@@ -50,9 +55,9 @@ int printInput(int i){
 	return 0;
 }
 
-int get_leds(){
-	GPIO vm = GPIO_init(0, 0);
-	for(int i = 0; i < LEDNUM; i++) {
+int get_leds(int device){
+	GPIO vm = GPIO_init(device, 0);
+	for(int i = 0; i < PINNUM; i++) {
 
 		setPinMode(vm, 1, i + 1, INPUT);
 		setPinMode(vm, 2, i + 1, INPUT);
@@ -105,9 +110,9 @@ int create_led_entry()
 	return 0;
 }
 
-int set_led(int pinNumber, int val)
+int set_led(int device, int pinNumber, int val)
 {
-    GPIO vm = GPIO_init(0, 0);
+    GPIO vm = GPIO_init(device, 0);
 	setPinMode(vm, 2, pinNumber + 1, OUTPUT);
 	digitalWrite(vm, 2, pinNumber + 1, val);
     GPIO_Close(vm);
@@ -130,7 +135,7 @@ int get_cgi_led_val(char **getvars)
 					for(int j = 0; j < config.pin_count[i]; j++){
 						if(config.pins[i][j] == number){
 							output_vals[number] = val;
-							set_led(number,val);
+							set_led(config.pblocks[i]+2,number,val);
 						}
 					}
 				}
@@ -142,10 +147,13 @@ int get_cgi_led_val(char **getvars)
 
 int led_cgi_page(char **getvars, int form_method)
 {
-	//addTitleElement("Zybo LED Control");
 	parse_JSON(&config);
-	
-	get_leds();
+
+	for (int i = 0; i < config.length; i++){
+		if(!strcmp(user, config.users[i])){
+			get_leds(config.pblocks[i]+2);
+		}
+	}
 
 	/* Drive the hardware */
 	if (getvars != 0) {
@@ -154,14 +162,19 @@ int led_cgi_page(char **getvars, int form_method)
 		}
 	}
 
-	get_leds();
-
+	for (int i = 0; i < config.length; i++){
+		if(!strcmp(user, config.users[i])){
+			get_leds(config.pblocks[i]+2);
+		}
+	}
 	create_led_entry();
 
 	printf("<a role=\"button\" href=gpio?user=%s class=\"btn btn-primary\">Update</a>\n", user);
 
 	printf("<div id=\"webcam\">");
-	printf("<img src=\"http://192.168.1.254/media/?action=snapshot\" alt=\"Live Video\" />");
+	printf("<img src= ");
+	printf(ip_cam);
+	printf("/>\n");
 	printf("</div>");
 
 	return 0;
