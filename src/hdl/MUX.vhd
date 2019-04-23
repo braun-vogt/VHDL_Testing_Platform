@@ -229,18 +229,20 @@ entity MUX is
 end MUX;
 
 architecture Behavioral of MUX is
-	alias MUX_PMODB : std_logic_vector(3 downto 0) is MUX_GPIO(3 downto 0);
-	alias MUX_PMODC : std_logic_vector(3 downto 0) is MUX_GPIO(7 downto 4);
-	alias MUX_PMODD : std_logic_vector(3 downto 0) is MUX_GPIO(11 downto 8);
-	alias MUX_PMODE : std_logic_vector(3 downto 0) is MUX_GPIO(15 downto 12);
-	alias MUX_RGBLED1 : std_logic_vector(3 downto 0) is MUX_GPIO(19 downto 16);
-	alias MUX_RGBLED2 : std_logic_vector(3 downto 0) is MUX_GPIO(24 downto 20);
+    alias Enable :std_logic_vector (0 downto 0) is MUX_GPIO(0 downto 0);
+	alias MUX_PMODB : std_logic_vector(3 downto 0) is MUX_GPIO(4 downto 1);
+	alias MUX_PMODC : std_logic_vector(3 downto 0) is MUX_GPIO(8 downto 5);
+	alias MUX_PMODD : std_logic_vector(3 downto 0) is MUX_GPIO(12 downto 9);
+	alias MUX_PMODE : std_logic_vector(3 downto 0) is MUX_GPIO(16 downto 13);
+	alias MUX_RGBLED1 : std_logic_vector(3 downto 0) is MUX_GPIO(20 downto 17);
+	alias MUX_RGBLED2 : std_logic_vector(3 downto 0) is MUX_GPIO(24 downto 21);
 	alias MUX_LEDS : std_logic_vector(3 downto 0) is MUX_GPIO(28 downto 25); 
  
 begin
 	process (SYSCLK_125MHZ)
 	begin
 		if (rising_edge(SYSCLK_125MHZ)) then
+		  if(Enable="1") then
 			case MUX_PMODB is
 				when "0000" => 
 					PMOD_JB_IN_0 <= PMOD_JB_IN;
@@ -459,7 +461,8 @@ begin
 				when others => 
 					LEDS <= (others => '0');
 			end case;
- 
+			
+            end if;
 		end if;
 	end process;
 end Behavioral;
