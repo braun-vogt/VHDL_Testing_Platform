@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
---Date        : Tue Apr 16 22:24:38 2019
+--Date        : Tue Apr 23 12:01:20 2019
 --Host        : localhost.localdomain running 64-bit unknown
 --Command     : generate_target bd_name_wrapper.bd
 --Design      : bd_name_wrapper
@@ -13,7 +13,6 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity bd_name_wrapper is
   port (
-    CLK_125MHZ : out STD_LOGIC_VECTOR ( 0 to 0 );
     CLK_MMC : out STD_LOGIC_VECTOR ( 0 to 0 );
     CLK_PLL : out STD_LOGIC_VECTOR ( 0 to 0 );
     DDR_addr : inout STD_LOGIC_VECTOR ( 14 downto 0 );
@@ -37,6 +36,7 @@ entity bd_name_wrapper is
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
     FIXED_IO_ps_srstb : inout STD_LOGIC;
+    MUX_GPO : out STD_LOGIC_VECTOR ( 28 downto 0 );
     PAR_TEST_GPIO0_IN : in STD_LOGIC_VECTOR ( 31 downto 0 );
     PAR_TEST_GPIO0_OUT : out STD_LOGIC_VECTOR ( 31 downto 0 );
     PAR_TEST_GPIO1_IN : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -55,8 +55,7 @@ entity bd_name_wrapper is
     PAR_TEST_GPIO7_OUT : out STD_LOGIC_VECTOR ( 31 downto 0 );
     UART_ZYNQ_rxd : in STD_LOGIC;
     UART_ZYNQ_txd : out STD_LOGIC;
-    reset_par : out STD_LOGIC_VECTOR ( 15 downto 0 );
-    sys_clock : in STD_LOGIC
+    reset_par : out STD_LOGIC_VECTOR ( 15 downto 0 )
   );
 end bd_name_wrapper;
 
@@ -86,11 +85,7 @@ architecture STRUCTURE of bd_name_wrapper is
     FIXED_IO_ps_porb : inout STD_LOGIC;
     UART_ZYNQ_txd : out STD_LOGIC;
     UART_ZYNQ_rxd : in STD_LOGIC;
-    sys_clock : in STD_LOGIC;
-    CLK_MMC : out STD_LOGIC_VECTOR ( 0 to 0 );
-    CLK_PLL : out STD_LOGIC_VECTOR ( 0 to 0 );
     reset_par : out STD_LOGIC_VECTOR ( 15 downto 0 );
-    CLK_125MHZ : out STD_LOGIC_VECTOR ( 0 to 0 );
     PAR_TEST_GPIO0_IN : in STD_LOGIC_VECTOR ( 31 downto 0 );
     PAR_TEST_GPIO0_OUT : out STD_LOGIC_VECTOR ( 31 downto 0 );
     PAR_TEST_GPIO1_IN : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -106,13 +101,15 @@ architecture STRUCTURE of bd_name_wrapper is
     PAR_TEST_GPIO5_OUT : out STD_LOGIC_VECTOR ( 31 downto 0 );
     PAR_TEST_GPIO6_OUT : out STD_LOGIC_VECTOR ( 31 downto 0 );
     PAR_TEST_GPIO7_OUT : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    PAR_TEST_GPIO4_OUT : out STD_LOGIC_VECTOR ( 31 downto 0 )
+    PAR_TEST_GPIO4_OUT : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    MUX_GPO : out STD_LOGIC_VECTOR ( 28 downto 0 );
+    CLK_PLL : out STD_LOGIC_VECTOR ( 0 to 0 );
+    CLK_MMC : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
   end component bd_name;
 begin
 bd_name_i: component bd_name
      port map (
-      CLK_125MHZ(0) => CLK_125MHZ(0),
       CLK_MMC(0) => CLK_MMC(0),
       CLK_PLL(0) => CLK_PLL(0),
       DDR_addr(14 downto 0) => DDR_addr(14 downto 0),
@@ -136,6 +133,7 @@ bd_name_i: component bd_name
       FIXED_IO_ps_clk => FIXED_IO_ps_clk,
       FIXED_IO_ps_porb => FIXED_IO_ps_porb,
       FIXED_IO_ps_srstb => FIXED_IO_ps_srstb,
+      MUX_GPO(28 downto 0) => MUX_GPO(28 downto 0),
       PAR_TEST_GPIO0_IN(31 downto 0) => PAR_TEST_GPIO0_IN(31 downto 0),
       PAR_TEST_GPIO0_OUT(31 downto 0) => PAR_TEST_GPIO0_OUT(31 downto 0),
       PAR_TEST_GPIO1_IN(31 downto 0) => PAR_TEST_GPIO1_IN(31 downto 0),
@@ -154,7 +152,6 @@ bd_name_i: component bd_name
       PAR_TEST_GPIO7_OUT(31 downto 0) => PAR_TEST_GPIO7_OUT(31 downto 0),
       UART_ZYNQ_rxd => UART_ZYNQ_rxd,
       UART_ZYNQ_txd => UART_ZYNQ_txd,
-      reset_par(15 downto 0) => reset_par(15 downto 0),
-      sys_clock => sys_clock
+      reset_par(15 downto 0) => reset_par(15 downto 0)
     );
 end STRUCTURE;
