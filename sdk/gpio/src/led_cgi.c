@@ -55,7 +55,7 @@ int printInput(int i){
 	return 0;
 }
 
-int get_leds(int device){
+int get_pins(int device){
 	GPIO vm = GPIO_init(device, 0);
 	for(int i = 0; i < PINNUM; i++) {
 
@@ -70,7 +70,7 @@ int get_leds(int device){
     return 0;
 }
 
-int create_led_entry()
+int create_pin_entry()
 {
 	printf("<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n");
 	printf("<div class=\"container-fluid\">\n");
@@ -110,16 +110,16 @@ int create_led_entry()
 	return 0;
 }
 
-int set_led(int device, int pinNumber, int val)
+int set_pin(int device,int channel, int pinNumber, int val)
 {
     GPIO vm = GPIO_init(device, 0);
-	setPinMode(vm, 2, pinNumber + 1, OUTPUT);
-	digitalWrite(vm, 2, pinNumber + 1, val);
+	setPinMode(vm, channel, pinNumber + 1, OUTPUT);
+	digitalWrite(vm, channel, pinNumber + 1, val);
     GPIO_Close(vm);
     return 0;
 }
 
-int get_cgi_led_val(char **getvars)
+int get_cgi_pin_val(char **getvars)
 {
 	int val = 0, number = 0;
 
@@ -135,7 +135,7 @@ int get_cgi_led_val(char **getvars)
 					for(int j = 0; j < config.pin_count[i]; j++){
 						if(config.pins[i][j] == number){
 							output_vals[number] = val;
-							set_led(config.pblocks[i]+2,number,val);
+							set_pin(config.pblocks[i]+2, 2,number,val);
 						}
 					}
 				}
@@ -147,27 +147,31 @@ int get_cgi_led_val(char **getvars)
 
 int led_cgi_page(char **getvars, int form_method)
 {
+	//printf("START\n");
+	//fflush(stdout);
 	parse_JSON(&config);
-
-	for (int i = 0; i < config.length; i++){
-		if(!strcmp(user, config.users[i])){
-			get_leds(config.pblocks[i]+2);
-		}
-	}
 
 	/* Drive the hardware */
 	if (getvars != 0) {
 		if(getvars[0] != 0){
-			get_cgi_led_val(getvars);
+			get_cgi_pin_val(getvars);
 		}
 	}
 
 	for (int i = 0; i < config.length; i++){
 		if(!strcmp(user, config.users[i])){
-			get_leds(config.pblocks[i]+2);
+			flash_par_bitfile(config.designs[i]);
+			set_pin(1, 1, config.pblocks[i], 1);
+			set_pin(1, 1, config.pblocks[i], 0);
 		}
 	}
-	create_led_entry();
+
+	for (int i = 0; i < config.length; i++){
+		if(!strcmp(user, config.users[i])){
+			get_pins(config.pblocks[i]+2);
+		}
+	}
+	create_pin_entry();
 
 	printf("<a role=\"button\" href=gpio?user=%s class=\"btn btn-primary\">Update</a>\n", user);
 
@@ -175,7 +179,7 @@ int led_cgi_page(char **getvars, int form_method)
 	printf("<img src= ");
 	printf(ip_cam);
 	printf("/>\n");
-	printf("</div>");
+	printf("</div>\n");
 
 	return 0;
 }

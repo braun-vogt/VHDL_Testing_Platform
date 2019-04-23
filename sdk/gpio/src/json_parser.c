@@ -6,7 +6,7 @@
 
 void parse_JSON(json_t *config){
 	FILE *fp;
-	char buffer[1024];
+	char buffer[2048];
 	struct json_object *parsed_json;
 	struct json_object *users;
 	struct json_object *user;
@@ -21,7 +21,7 @@ void parse_JSON(json_t *config){
 	int n_pins;
 
 	fp = fopen("/home/root/par/test.json","r");
-	fread(buffer, 1024, 1, fp);
+	fread(buffer, 2048, 1, fp);
 	fclose(fp);
 
 	parsed_json = json_tokener_parse(buffer);
