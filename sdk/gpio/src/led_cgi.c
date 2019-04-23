@@ -31,6 +31,7 @@ static char ip_cam[120] = "\"http://192.168.1.254/media/?action=snapshot\" alt=\
 
 static int output_vals[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static int input_vals[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+static int reset = 0;
 
 static char user[256] = "default";
 
@@ -46,7 +47,7 @@ json_t config = {
 };
 
 int printButton(int i){
-	printf("<a role=\"button\" href=gpio?user=%s&led%i=%i class=\"btn btn-%s\">PIN %d</a>\n", user, i, TRIGGER(output_vals[i]), ONOFF(output_vals[i]), i);
+	printf("<a role=\"button\" href=gpio?user=%s&pin%i=%i class=\"btn btn-%s\">PIN %d</a>\n", user, i, TRIGGER(output_vals[i]), ONOFF(output_vals[i]), i);
 	return 0;
 }
 
@@ -65,6 +66,16 @@ int get_pins(int device){
 		output_vals[i] = digitalRead(vm, 2, i + 1);
 
 	}
+	GPIO_Close(vm);
+
+    return 0;
+}
+
+int get_reset(int user){
+	GPIO vm = GPIO_init(1, 0);
+	setPinMode(vm, 1, user + 1, INPUT);
+	reset = digitalRead(vm, 1, user + 1);
+
 	GPIO_Close(vm);
 
     return 0;
@@ -102,6 +113,8 @@ int create_pin_entry()
 			for(int j = 0; j < config.pin_count[i]; j++){
 				printButton(config.pins[i][j]);
 			}
+			printf("<a role=\"button\" href=gpio?user=%s&reset=%i class=\"btn btn-%s\">RESET</a>\n", user, TRIGGER(reset), ONOFF(reset));
+
 		}
 	}
 
@@ -128,7 +141,7 @@ int get_cgi_pin_val(char **getvars)
 			sscanf(getvars[j+1],"%s",&user);
 		}
 
-		if(sscanf(getvars[j], "led%i", &number)){
+		if(sscanf(getvars[j], "pin%i", &number)){
 			sscanf(getvars[j+1],"%i",&val);
 			for (int i = 0; i < config.length; i++){
 				if(!strcmp(user, config.users[i])){
@@ -141,6 +154,17 @@ int get_cgi_pin_val(char **getvars)
 				}
 			}
 		}
+
+		if(!strcmp(getvars[j], "reset")){
+			sscanf(getvars[j+1],"%i",&val);
+			for (int i = 0; i < config.length; i++){
+				if(!strcmp(user, config.users[i])){
+					reset = val;
+					set_pin(1, 1,i,val);
+				}
+			}
+		}
+
 	}
 	return 0;
 }
@@ -169,6 +193,8 @@ int led_cgi_page(char **getvars, int form_method)
 	for (int i = 0; i < config.length; i++){
 		if(!strcmp(user, config.users[i])){
 			get_pins(config.pblocks[i]+2);
+			get_reset(i);
+
 		}
 	}
 	create_pin_entry();

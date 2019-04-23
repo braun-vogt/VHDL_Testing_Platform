@@ -37,27 +37,27 @@ int flash_par_bitfile(char *name){
 
         // close file handle
         close(fd);
-    }
 
-    // Set is_partial_bitfile device attribute
-    fd = open("/sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream", O_RDWR);
-    if (fd < 0) {
-        printf("failed to set xdevcfg attribute 'is_partial_bitstream'\n");
-        fflush(stdout);
-        return -1;
-    }
-    write(fd, "1", 2);
-    close(fd);
+		// Set is_partial_bitfile device attribute
+		fd = open("/sys/devices/soc0/amba/f8007000.devcfg/is_partial_bitstream", O_RDWR);
+		if (fd < 0) {
+			printf("failed to set xdevcfg attribute 'is_partial_bitstream'\n");
+			fflush(stdout);
+			return -1;
+		}
+		write(fd, "1", 2);
+		close(fd);
 
-    // Write partial bitfile to xdevcfg device
-    fd = open("/dev/xdevcfg", O_RDWR);
-    if (fd < 0) {
-        printf("failed to open xdevcfg device\n");
-        fflush(stdout);
-        return -1;
+		// Write partial bitfile to xdevcfg device
+		fd = open("/dev/xdevcfg", O_RDWR);
+		if (fd < 0) {
+			printf("failed to open xdevcfg device\n");
+			fflush(stdout);
+			return -1;
+		}
+		write(fd, buffer, size);
+		close(fd);
     }
-    write(fd, buffer, size);
-    close(fd);
 
     return 0;
 }
