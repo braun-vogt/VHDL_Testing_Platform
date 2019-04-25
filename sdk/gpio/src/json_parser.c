@@ -4,9 +4,9 @@
 
 #include"json_parser.h"
 
-void parse_JSON(json_t *config){
+void parse_JSON(const char *file, json_t *config){
 	FILE *fp;
-	char buffer[2048];
+	char buffer[9999];
 	struct json_object *parsed_json;
 	struct json_object *users;
 	struct json_object *user;
@@ -20,8 +20,8 @@ void parse_JSON(json_t *config){
 	struct json_object *pin;
 	int n_pins;
 
-	fp = fopen("/home/root/par/test.json","r");
-	fread(buffer, 2048, 1, fp);
+	fp = fopen(file,"r");
+	fread(buffer, 9999, 1, fp);
 	fclose(fp);
 
 	parsed_json = json_tokener_parse(buffer);

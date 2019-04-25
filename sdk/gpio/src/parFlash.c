@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 /*
- * TODO add file when user visits for first time, then delete bit file
+ * TODO delete bit file, when done
  * */
 
 int flash_par_bitfile(char *name){

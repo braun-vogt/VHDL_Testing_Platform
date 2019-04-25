@@ -19,6 +19,6 @@ typedef struct json_s {
 	int length;
 } json_t;
 
-void parse_JSON(json_t *config);
+void parse_JSON(const char *file, json_t *config);
 
 #endif /* SRC_JSON_PARSER_H_ */
