@@ -66,6 +66,20 @@ int set_pin(int device,int channel, int pinNumber, int val){
     return 0;
 }
 
+int set_mux_pins(int startPin, int val[4]){
+    GPIO vm = GPIO_init(0, 0);
+	setPinMode(vm, 1, startPin + 1, OUTPUT);
+	setPinMode(vm, 1, startPin + 2, OUTPUT);
+	setPinMode(vm, 1, startPin + 3, OUTPUT);
+	setPinMode(vm, 1, startPin + 4, OUTPUT);
+	digitalWrite(vm, 1, startPin + 1, val[0]);
+	digitalWrite(vm, 1, startPin + 2, val[1]);
+	digitalWrite(vm, 1, startPin + 3, val[2]);
+	digitalWrite(vm, 1, startPin + 4, val[3]);
+    GPIO_Close(vm);
+    return 0;
+}
+
 int get_pins(int device){
 	GPIO vm = GPIO_init(device, 0);
 	for(int i = 0; i < PINNUM; i++) {
@@ -154,40 +168,19 @@ int set_mux(int pblock, const char peripherals[7][256]){
 	set_pin(0, 1, 0, 1);
 	for(int i = 0; i < 7; i++){
 		if(!strcmp(peripherals[i], "pmodb")){
-			set_pin(0, 1, 1, pblock_mux[0]);
-			set_pin(0, 1, 2, pblock_mux[1]);
-			set_pin(0, 1, 3, pblock_mux[2]);
-			set_pin(0, 1, 4, pblock_mux[3]);
+			set_mux_pins(1, pblock_mux);
 		}else if(!strcmp(peripherals[i], "pmodc")){
-			set_pin(0, 1, 5, pblock_mux[0]);
-			set_pin(0, 1, 6, pblock_mux[1]);
-			set_pin(0, 1, 7, pblock_mux[2]);
-			set_pin(0, 1, 8, pblock_mux[3]);
+			set_mux_pins(5, pblock_mux);
 		}else if(!strcmp(peripherals[i], "pmodd")){
-			set_pin(0, 1, 9, pblock_mux[0]);
-			set_pin(0, 1, 10, pblock_mux[1]);
-			set_pin(0, 1, 11, pblock_mux[2]);
-			set_pin(0, 1, 12, pblock_mux[3]);
+			set_mux_pins(9, pblock_mux);
 		}else if(!strcmp(peripherals[i], "pmode")){
-			set_pin(0, 1, 13, pblock_mux[0]);
-			set_pin(0, 1, 14, pblock_mux[1]);
-			set_pin(0, 1, 15, pblock_mux[2]);
-			set_pin(0, 1, 16, pblock_mux[3]);
+			set_mux_pins(13, pblock_mux);
 		}else if(!strcmp(peripherals[i], "rgbled1")){
-			set_pin(0, 1, 17, pblock_mux[0]);
-			set_pin(0, 1, 18, pblock_mux[1]);
-			set_pin(0, 1, 19, pblock_mux[2]);
-			set_pin(0, 1, 20, pblock_mux[3]);
+			set_mux_pins(17, pblock_mux);
 		}else if(!strcmp(peripherals[i], "rgbled2")){
-			set_pin(0, 1, 21, pblock_mux[0]);
-			set_pin(0, 1, 22, pblock_mux[1]);
-			set_pin(0, 1, 23, pblock_mux[2]);
-			set_pin(0, 1, 24, pblock_mux[3]);
+			set_mux_pins(21, pblock_mux);
 		}else if(!strcmp(peripherals[i], "leds")){
-			set_pin(0, 1, 25, pblock_mux[0]);
-			set_pin(0, 1, 26, pblock_mux[1]);
-			set_pin(0, 1, 27, pblock_mux[2]);
-			set_pin(0, 1, 28, pblock_mux[3]);
+			set_mux_pins(25, pblock_mux);
 		}
 	}
 	return 0;
@@ -263,7 +256,7 @@ int get_cgi_pin_val(char **getvars)
 			for (int i = 0; i < config.length; i++){
 				if(!strcmp(user, config.users[i])){
 					reset = val;
-					set_pin(1, 1,i,val);
+					set_pin(1, 1,config.pblocks[i],val);
 				}
 			}
 		}
@@ -290,15 +283,17 @@ int led_cgi_page(char **getvars, int form_method)
 			flash_par_bitfile(config.designs[i]);
 			set_mux(i, config.peripherals[i]);
 			set_pin(1, 1, config.pblocks[i], 1);
-			set_pin(1, 1, config.pblocks[i], 0);
+			set_pin(1, 1, config.pblocks[i], reset);
+			break;
 		}
 	}
 
+	fflush(stdout);
+
 	for (int i = 0; i < config.length; i++){
 		if(!strcmp(user, config.users[i])){
+			get_reset(config.pblocks[i]);
 			get_pins(config.pblocks[i]+2);
-			get_reset(i);
-
 		}
 	}
 	create_pin_entry();
