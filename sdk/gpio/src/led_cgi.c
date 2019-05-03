@@ -35,6 +35,8 @@ static int output_vals[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 static int input_vals[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static int reset = 0;
 
+static int firstFlash = 0;
+
 static char user[256] = "default";
 
 json_t config = {
@@ -280,7 +282,11 @@ int led_cgi_page(char **getvars, int form_method)
 
 	for (int i = 0; i < config.length; i++){
 		if(!strcmp(user, config.users[i])){
-			flash_par_bitfile(config.designs[i]);
+			if(flash_par_bitfile(config.designs[i]) == 0){
+				firstFlash = 1;
+			}else{
+				firstFlash = 0;
+			}
 			set_mux(i, config.peripherals[i]);
 			set_pin(1, 1, config.pblocks[i], 1);
 			set_pin(1, 1, config.pblocks[i], reset);
@@ -297,6 +303,8 @@ int led_cgi_page(char **getvars, int form_method)
 		}
 	}
 	create_pin_entry();
+
+	printf("<h6>%s </h6>\n", firstFlash ? "Wellcome!" : "Wellcome Back!");
 
 	printf("<a role=\"button\" href=gpio?user=%s class=\"btn btn-primary\">Update</a>\n", user);
 

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -6,6 +7,10 @@
 /*
  * TODO delete bit file, when done
  * */
+
+#define PATH "/home/root/par/%s"
+#define OLD "/home/root/par/old/%s"
+
 
 int flash_par_bitfile(char *name){
     char file_name[256];
@@ -16,12 +21,12 @@ int flash_par_bitfile(char *name){
 
     if (name != '\0') {
         // compose file name
-        sprintf(file_name, "/home/root/par/%s", name);
+        sprintf(file_name, PATH, name);
 
         // open partial bitfile
         fd = open(file_name, O_RDONLY);
         if (fd < 0) {
-            printf("failed to open partial bitfile %s\n", file_name);
+            //printf("failed to open partial bitfile %s\n", file_name);
             fflush(stdout);
             return -1;
         }
@@ -56,6 +61,10 @@ int flash_par_bitfile(char *name){
 			return -1;
 		}
 		write(fd, buffer, size);
+
+		char temp[256];
+		sprintf(temp, OLD, name);
+		rename(file_name, temp);
 		close(fd);
     }
 
