@@ -185,8 +185,6 @@ int set_mux(int pblock, const char peripherals[7][256]){
 			set_mux_pins(25, pblock_mux);
 		}
 	}
-	printf("pblock: %d; %d %d %d %d\n", pblock, pblock_mux[0], pblock_mux[1], pblock_mux[2], pblock_mux[3]);
-	fflush(stdout);
 	return 0;
 }
 
@@ -305,10 +303,10 @@ int led_cgi_page(char **getvars, int form_method)
 	}
 	create_pin_entry();
 
-	printf("<h6>%s </h6>\n", firstFlash ? "Wellcome!" : "Wellcome Back!");
+	printf("<h6>%s </h6>\n", firstFlash ? "Welcome!" : "Welcome Back!");
 
 	printf("<a role=\"button\" href=gpio?user=%s class=\"btn btn-primary\">Update</a>\n", user);
-
+	printf("<iframe width=\"640\" height=\"480\" src=\"http://ictsrv012.ict.tuwien.ac.at/videostream.cgi?user=admin&pwd=\" frameborder=\"0\" allowfullscreen></iframe>\n");
 	printf("<div id=\"webcam\">");
 	printf("<img src= ");
 	printf(ip_cam);
