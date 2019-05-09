@@ -1,0 +1,119 @@
+# depslib dependency file v1.0
+1556193196 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/main.cpp
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/fileset.h"
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/tcl.h"
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/schedule.h"
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/vivado_log_parser.h"
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/json.h"
+	<unistd.h>
+	<pthread.h>
+
+1556192862 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/cpp/fileset.cpp
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/fileset.h"
+
+1556191990 /home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1556094752 /home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1556101898 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/cpp/tcl.cpp
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/tcl.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1556191990 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1556094752 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1556100347 /home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/schedule.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1556100341 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/cpp/schedule.cpp
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/schedule.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+
+1556100077 /home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1556100525 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/source/vivado_log_parser.cpp
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/vivado_log_parser.h"
+
+1556109846 /home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/jason.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<json-c/json.h>
+
+1556107421 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/jason.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<json-c/json.h>
+
+1556106751 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/cpp/jason.cpp
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/jason.h"
+
+1556191934 /home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/json.h
+
+1556192657 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/cpp/json.cpp
+	<stdio.h>
+	<json-c/json.h>
+	<string.h>
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/json.h"
+
+1556191934 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/json.h
+

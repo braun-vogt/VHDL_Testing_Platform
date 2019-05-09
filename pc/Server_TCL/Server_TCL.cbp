@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Server_TCL" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Server_TCL" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="/home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/proj/ /home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/proj/oproduct/   /home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/src/hdl/files/ /home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/src/hdl/files" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-lpthread -ljson-c" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Server_TCL" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="main.cpp" />
+		<Unit filename="source/cpp/fileset.cpp" />
+		<Unit filename="source/cpp/json.cpp" />
+		<Unit filename="source/cpp/schedule.cpp" />
+		<Unit filename="source/cpp/tcl.cpp" />
+		<Unit filename="source/header/fileset.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="source/header/json.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="source/header/schedule.h">
+			<Option compile="1" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="source/header/tcl.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="source/header/vivado_log_parser.h">
+			<Option compile="1" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="source/source/vivado_log_parser.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
