@@ -43,7 +43,7 @@ json_t config = {
 		{"admin"},
 		{"admin.vhd"},
 		{0},
-		{{"rgbled1", "rgbled2"}},
+		{{"RGB_LED", "RGB_LED2"}},
 		{2},
 		{{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31}},
 		{32},
@@ -185,6 +185,8 @@ int set_mux(int pblock, const char peripherals[7][256]){
 			set_mux_pins(25, pblock_mux);
 		}
 	}
+	printf("pblock: %d; %d %d %d %d\n", pblock, pblock_mux[0], pblock_mux[1], pblock_mux[2], pblock_mux[3]);
+	fflush(stdout);
 	return 0;
 }
 
@@ -286,7 +288,7 @@ int led_cgi_page(char **getvars, int form_method)
 			}else{
 				firstFlash = 0;
 			}
-			set_mux(i, config.peripherals[i]);
+			set_mux(config.pblocks[i], config.peripherals[i]);
 			set_pin(1, 1, config.pblocks[i], 1);
 			set_pin(1, 1, config.pblocks[i], reset);
 			break;
