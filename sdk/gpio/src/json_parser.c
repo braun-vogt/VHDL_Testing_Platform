@@ -24,6 +24,9 @@ void parse_JSON(const char *file, json_t *config){
 	fread(buffer, 9999, 1, fp);
 	fclose(fp);
 
+	//printf("JSON file parsed\n");
+	//fflush(stdout);
+
 	parsed_json = json_tokener_parse(buffer);
 
     json_object_object_get_ex(parsed_json, "users", &users);

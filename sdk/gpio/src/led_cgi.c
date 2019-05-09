@@ -169,19 +169,19 @@ int set_mux(int pblock, const char peripherals[7][256]){
 
 	set_pin(0, 1, 0, 1);
 	for(int i = 0; i < 7; i++){
-		if(!strcmp(peripherals[i], "pmodb")){
+		if(!strcmp(peripherals[i], "PMOD_JB")){
 			set_mux_pins(1, pblock_mux);
-		}else if(!strcmp(peripherals[i], "pmodc")){
+		}else if(!strcmp(peripherals[i], "PMOD_JC")){
 			set_mux_pins(5, pblock_mux);
-		}else if(!strcmp(peripherals[i], "pmodd")){
+		}else if(!strcmp(peripherals[i], "PMOD_JD")){
 			set_mux_pins(9, pblock_mux);
-		}else if(!strcmp(peripherals[i], "pmode")){
+		}else if(!strcmp(peripherals[i], "PMOD_JE")){
 			set_mux_pins(13, pblock_mux);
-		}else if(!strcmp(peripherals[i], "rgbled1")){
+		}else if(!strcmp(peripherals[i], "RGB_LED")){
 			set_mux_pins(17, pblock_mux);
-		}else if(!strcmp(peripherals[i], "rgbled2")){
+		}else if(!strcmp(peripherals[i], "RGB_LED2")){
 			set_mux_pins(21, pblock_mux);
-		}else if(!strcmp(peripherals[i], "leds")){
+		}else if(!strcmp(peripherals[i], "LEDS")){
 			set_mux_pins(25, pblock_mux);
 		}
 	}
@@ -190,14 +190,6 @@ int set_mux(int pblock, const char peripherals[7][256]){
 
 int create_pin_entry()
 {
-	printf("<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n");
-	printf("<div class=\"container-fluid\">\n");
-	printf("<span class=\"navbar-brand mb-0 h1\">VHDL Testing Platform</span>\n");
-	printf("<ul class=\"nav navbar-nav navbar-right\">\n");
-    printf("<li>User: <a data-toggle=\"modal\" href=\"#userModal\">%s</a></li>\n</ul>\n", user);
-	printf("</div>\n</nav>\n");
-
-
 	printf("<div class=\"btn-toolbar\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">\n"
            "<div class=\"btn-group mr-2\" role=\"group\" aria-label=\"First group\">\n");
 
@@ -269,8 +261,15 @@ int get_cgi_pin_val(char **getvars)
 
 int led_cgi_page(char **getvars, int form_method)
 {
-	//printf("START\n");
-	//fflush(stdout);
+
+	printf("<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n");
+	printf("<div class=\"container-fluid\">\n");
+	printf("<span class=\"navbar-brand mb-0 h1\">VHDL Testing Platform</span>\n");
+	printf("<ul class=\"nav navbar-nav navbar-right\">\n");
+    printf("<li>User: <a data-toggle=\"modal\" href=\"#userModal\">%s</a></li>\n</ul>\n", user);
+	printf("</div>\n</nav>\n");
+	fflush(stdout);
+
 	parse_JSON(JSON_FILE, &config);
 
 	/* Drive the hardware */
