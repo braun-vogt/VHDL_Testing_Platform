@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <json-c/json.h>
 #include <string.h>
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/json.h"
+#include "../header/json.h"
 
 void addconnections(json_t *config,char connections[][256],int concount)
 {
@@ -9,7 +9,7 @@ void addconnections(json_t *config,char connections[][256],int concount)
     for(int i=0;i<concount;i++)
     {
         printf("\n Connections : \n %s",connections[i]);
-        if(strcmp(connections[i],"CLK_MMC")==0 || strcmp(connections[i],"CLK_PLL")==0 || strcmp(connections[i],"RGB_LED")==0 || strcmp(connections[i],"RGB_LED2")==0)
+        if(strcmp(connections[i],"CLK_MMC")==0 || strcmp(connections[i],"CLK_PLL")==0 || strcmp(connections[i],"RGB_LED1")==0 || strcmp(connections[i],"RGB_LED2")==0 || strcmp(connections[i],"LEDS")==0)
         {
             printf("\n %s \n",connections[i]);
             strcpy(config->peripheral[hilf],connections[i]);
@@ -87,6 +87,7 @@ void parse_json(json_t content[8], const char *file){
     }
 }
 
+
 void add_user_json(json_t new_user, const char *file){
 	FILE *fp;
 	char buffer[9999];
@@ -134,6 +135,7 @@ void add_user_json(json_t new_user, const char *file){
         json_object_object_add(jobj, "users", users);
     }
 
+
 	user = json_object_new_object();
 
 	json_object_object_add(user, "user", json_object_new_string(new_user.user));
@@ -165,4 +167,53 @@ void add_user_json(json_t new_user, const char *file){
 	fclose(fp);
 
     json_object_put(jobj); // Delete the json object
+}
+
+void add_new_json(json_t new_user, const char *file){
+
+	struct json_object *jobj;
+	struct json_object *users;
+	struct json_object *user;
+	struct json_object *peripherals;
+	struct json_object *pins_Array;
+
+	jobj = json_object_new_object();
+
+	users = json_object_new_array();
+
+	user = json_object_new_object();
+
+	json_object_object_add(user, "user", json_object_new_string(new_user.user));
+	json_object_object_add(user, "design", json_object_new_string(new_user.design));
+	json_object_object_add(user, "pblock", json_object_new_int(new_user.pblock));
+
+	peripherals = json_object_new_array();
+
+	for(int i = 0; i < new_user.peripheral_count; i++){
+        json_object_array_add(peripherals, json_object_new_string(new_user.peripheral[i]));
+    }
+
+    json_object_object_add(user, "peripherals", peripherals);
+
+	pins_Array = json_object_new_array();
+
+	for(int i = 0; i < new_user.pin_count; i++){
+        json_object_array_add(pins_Array, json_object_new_int(new_user.pins[i]));
+	}
+
+	json_object_object_add(user, "pins", pins_Array);
+
+	json_object_array_add(users, user);
+
+	json_object_object_add(jobj, "users", users);
+
+    //printf("%s\n", json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
+
+    FILE *fp;
+    fp = fopen(file,"w");
+    fprintf(fp, "%s\n", json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
+	fclose(fp);
+
+    json_object_put(jobj); // Delete the json object
+
 }

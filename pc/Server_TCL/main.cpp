@@ -4,23 +4,24 @@
 #include <string.h>
 #include <iostream>
 #include <stddef.h>
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/fileset.h"
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/tcl.h"
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/schedule.h"
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/vivado_log_parser.h"
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/json.h"
+#include "./source/header/fileset.h"
+#include "./source/header/tcl.h"
+#include "./source/header/schedule.h"
+#include "./source/header/vivado_log_parser.h"
+#include "./source/header/json.h"
 #include <unistd.h>
 #include <pthread.h>
+#define constrainpath /home/
+
+
 //#define create_products
 /*
 arguments
-
 /home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/proj/                   //tcl
 /home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/proj/oproduct/          //tclzielpfad
 /home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/src/hdl/files/          //fileset
 /home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/src/hdl/files          //finishedfiles
 */
-
 
 
 void *inputhandling(void *in)
@@ -39,7 +40,7 @@ void *inputhandling(void *in)
 
 int main(int argc, char* argv[])
 {
-
+    char fset=true;
     if(argc==1)
     {
         printf("Übergabeparameter:\n");
@@ -70,18 +71,25 @@ int main(int argc, char* argv[])
     }
 
     //project initialisation
+#define lol
 #ifdef init
-    char hilf[256]="cd ";
-    strcat(hilf,argv[2]);
+    //system("/bin/bash -i");
 
-    strcat(hilf,"&& ls && source /home/pfirsichgnom/Programme/XILINX/2017.4/Vivado/2017.4/settings64.sh && vivado -source  ");
-    strcat(hilf,argv[2]);
+    char hilf[500]="bash -c 'cd /home/fbraun-lokal/git/VHDL_Testing_Platform/proj/ ";
+    strcat(hilf,argv[1]);
+
+    strcat(hilf," && ls && source /home/fbraun-lokal/Xilinx/Vivado/2017.4/settings64.sh && vivado -source ");
+    strcat(hilf,"/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/");
     strcat(hilf,"create_project.tcl ");
-    strcat(hilf,argv[2]);
-    strcat(hilf,"dynparrec.tcl");
+    strcat(hilf,argv[1]);
+    strcat(hilf,"dynparrec.tcl \n '");
 
 
+    printf("%s", hilf);
     system(hilf);
+
+    getchar();
+    getchar();
 #endif // init
 
     if(init_files(&fileset,argv[3],argv[4])!=success)
@@ -99,7 +107,7 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    printf("Included ports\n");
+    printf("\nIncluded ports\n");
     for(int i=0; i<fileset.portsnum; i++)
     {
         printf("%s\n",fileset.ports[i]);
@@ -110,6 +118,8 @@ int main(int argc, char* argv[])
     {
         printf("%s\n",fileset.file[i]);
     }
+    printf("\n\n");
+
 
     int input=0;
 
@@ -131,21 +141,26 @@ int main(int argc, char* argv[])
     /////////////////////////////////////
     //Start main loop
     ////////////,////////////////
-
+    char usedpars[8];
+    for(int i=0;i<8;i++)
+    {
+        usedpars[i]=-1;
+    }
+    int used=0;
     do
     {
         for(int i=0; i<fileset.filenum; i++)
         {
 
             modifypartcl(&tcl,fileset.file[i],argv[3],argv[2],parnum);
-
+#define create_products
 #ifdef create_products
-            char cop[256]="cd ";
-            strcat(cop,argv[2]);
+            char cop[256]=" bash -c 'cd /home/fbraun-lokal/git/VHDL_Testing_Platform/proj/";
+            //strcat(cop,argv[1]);
 
-            strcat(cop,"&& ls && source /home/pfirsichgnom/Programme/XILINX/2017.4/Vivado/2017.4/settings64.sh && vivado -source  ");
-            strcat(cop,argv[2]);
-            strcat(cop,"sspar.tcl ");
+            strcat(cop," && source /home/fbraun-lokal/Xilinx/Vivado/2017.4/settings64.sh && vivado -mode batch -source  ");
+            strcat(cop,argv[1]);
+            strcat(cop,"sspar.tcl '");
             system(cop);
 #endif // create_products
             if(parselog(&res,argv[1],&parnum)==-1)
@@ -161,6 +176,17 @@ int main(int argc, char* argv[])
             {
                 for(int a=0; a<8; a++)
                 {
+                   if(usedpars[a]==parnum)
+                   {
+                        parnum=changeparnum(parnum);
+                        a=0;
+                   }
+                }
+                usedpars[used]=parnum;
+                used++;
+
+                /*for(int a=0; a<8; a++)
+                {
                     if(usedpar(&schedule,parnum))
                     {
                         parnum=changeparnum(parnum);
@@ -169,24 +195,20 @@ int main(int argc, char* argv[])
                             printf("Unroutable");
                         }
                     }
-                }
-
+                }*/
                 modifywholetcl(&tcl,fileset.file[i],argv[3],argv[2],parnum);
                 scheduler(&schedule,argv[2],fileset.file[i],parnum);
                 printf("\n\n USER :%s  \n DESIGN %s \n, parnum %d\n",fileset.file[i],fileset.file[i],parnum);
 
-
 #ifdef create_products
-                char cop[256]="cd ";
-                strcat(cop,argv[2]);
+                char cop[256]="bash -c 'cd ";
+                strcat(cop,argv[1]);
 
-                strcat(cop,"&& ls && source /home/pfirsichgnom/Programme/XILINX/2017.4/Vivado/2017.4/settings64.sh && vivado -source  ");
-                strcat(cop,argv[2]);
-                strcat(cop,"sswhole.tcl ");
+                strcat(cop," && source /home/fbraun-lokal/Xilinx/Vivado/2017.4/settings64.sh && vivado -mode batch -source  ");
+                strcat(cop,argv[1]);
+                strcat(cop,"sswhole.tcl '");
                 system(cop);
 #endif // create_products
-
-
 
                 char hilf[256];
                 strcpy(hilf,fileset.file[i]);
@@ -195,9 +217,27 @@ int main(int argc, char* argv[])
                 strcat(hilf,".bit");
                 strcpy(new_user.design,hilf);
 
+                ////bitfiles transver
+
+                char hilf2 [500]= "scp /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/predefined_tcl/";
+                strcat(hilf2, hilf);
+                strcat(hilf2, " root@ictsrv002.ict.tuwien.ac.at:/home/root/par/");
+                system(hilf2);
+
+                char hilfhilf[256]="rm /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/predefined_tcl/";
+                strcat(hilfhilf,hilf);
+                system(hilfhilf);
+
+                int user=0;
+                sscanf(hilf,"%*[^0-9]%d",&user);
+                char name[256];
+                sprintf(name,"%d",user);
+
+
                 pointer=strstr(hilf,"_");
                 *pointer='\0';
-                strcpy(new_user.user,hilf);
+
+                strcpy(new_user.user,name);
                 ports_file(&fileset,i,&ports,argv[3],portsnames);
 
                 printf("\n PORTNUM %d",ports);
@@ -206,8 +246,31 @@ int main(int argc, char* argv[])
 
                 strcpy(hilf,argv[2]);
                 strcat(hilf,"users.json");
-                add_user_json(new_user, hilf);
+
+
+
+
+                printf("%s",hilf);
+                fflush(stdout);
+
+                if(fset)
+                {
+                    add_new_json(new_user, hilf);
+                    fset=false;
+
+                }
+                else
+                {
+                    add_user_json(new_user, hilf);
+                }
+
+
                 parse_json(data, hilf);
+
+                strcpy(hilf2, "scp ");
+                strcat(hilf2, hilf);
+                strcat(hilf2, " root@ictsrv002.ict.tuwien.ac.at:/home/root/par/");
+                system(hilf2);
 
                 char mv[256]="mv ";
                 strcat(mv,argv[3]);
@@ -216,23 +279,40 @@ int main(int argc, char* argv[])
                 strcat(mv, argv[3]);
                 strcat(mv,"fertig/");
                 system(mv);
+
+                strcpy(mv,"mv /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/tclziel/");
+                strcat(mv,fileset.file[i]);
+                char *hpointer=strstr(mv,".");
+                *hpointer='\0';
+                strcat(mv,".dcp /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/tclziel/fertig/");
+                system(mv);
+
+                strcpy(mv,"mv /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/tclziel/");
+                strcat(mv,fileset.file[i]);
+                hpointer=strstr(mv,".");
+                *hpointer='\0';
+                strcat(mv,"_routed.dcp /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/tclziel/fertig/");
+                system(mv);
             }
         }
 
+
+
         sleep(5);
 
+        for(int i=0;i<8;i++)
+        {
+            usedpars[i]=-1;
+        }
 
 
         free_fileset(&fileset);
-
-
 
         if(init_fileset(&fileset)!=success)
         {
             printf("error malloc");
             return error_malloc;
         }
-
 
         if(init_files(&fileset,argv[3],argv[4])!=success)
         {
@@ -247,6 +327,7 @@ int main(int argc, char* argv[])
             printf("error :%d",init_portset(&fileset,argv[3]));
             return -1;
         }
+        fset=true;
 
     }
     while(input!='e');

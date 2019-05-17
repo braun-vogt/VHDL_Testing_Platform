@@ -1,4 +1,4 @@
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/fileset.h"
+#include "../header/fileset.h"
 
 
 char init_fileset(files_t *fileset)
@@ -237,7 +237,6 @@ char resize_portset(files_t *fileset, char *portname,char *file)
 
                 if(strstr(fileset->file[i],file))
                 {
-                    printf("%s %ld",fileset->file[i],fileset->filenum);
                     fflush(stdout);
                     remove_element(fileset, i);
                 }
@@ -337,17 +336,17 @@ char *analyce_ports(char* portline)
         strcpy(portline,"PMOD_JE_OE");
         return portline;
     }
-    else if(strstr(portline,"RGB_LED : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)"))
-    {
-        strcpy(portline,"RGB_LED");
-        return portline;
-    }
     else if(strstr(portline,"RGB_LED2 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)"))
     {
         strcpy(portline,"RGB_LED2");
         return portline;
     }
-    else if(strstr(portline,"LEDS : OUT STD_LOGIC_VECTOR(3 DOWNTO 0)"))
+     else if(strstr(portline,"RGB_LED : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)"))
+    {
+        strcpy(portline,"RGB_LED1");
+        return portline;
+    }
+    else if(strstr(portline,"LEDS : OUT STD_LOGIC_VECTOR (3 DOWNTO 0)"))
     {
         strcpy(portline,"LEDS");
         return portline;

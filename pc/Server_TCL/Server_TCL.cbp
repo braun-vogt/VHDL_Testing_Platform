@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="/home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/proj/ /home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/proj/oproduct/   /home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/src/hdl/files/ /home/pfirsichgnom/Dokumente/git/VHDL_Testing_Platform/src/hdl/files" />
+				<Option parameters="/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/predefined_tcl/ /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/tclziel/   /mnt/vels2vtp/ /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/finished_files" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>

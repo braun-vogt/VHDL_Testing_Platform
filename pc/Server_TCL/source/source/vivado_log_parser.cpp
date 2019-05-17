@@ -1,4 +1,4 @@
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/vivado_log_parser.h"
+#include "../header/vivado_log_parser.h"
 //           LUTS SLICE RAM DSP
 parres_t par6= {2400,4800,0,0};
 
@@ -17,6 +17,7 @@ char parsices[8]= {6,4,5,2,0,1,3,7};
 
 char parselog(resources_t *res,char *logpath, char *parnum)
 {
+    printf("\n Logpath :%s\n",logpath);
     printf("\n logpath %s\n ",logpath);
     FILE *LOGFILE;
     char log[500]="";
@@ -120,6 +121,7 @@ char changeparnum(char parnum)
     {
         if(parnum==parsices[i])
         {
+            printf("parsice equals %d",parnum);
             break;
         }
     }

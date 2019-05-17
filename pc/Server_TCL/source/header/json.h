@@ -13,3 +13,5 @@ void parse_json(json_t content[8], const char *file);
 void add_user_json(json_t new_user, const char *file);
 
 void addconnections(json_t *config,char connections[][256],int concount);
+
+void add_new_json(json_t new_user, const char *file);

@@ -1,4 +1,4 @@
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/tcl.h"
+#include "../header/tcl.h"
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,6 +6,7 @@
 #include <iostream>
 #include <stddef.h>
 
+//char parsices[8]= {6,4,5,2,0,1,3,7};
 static char pars[8][256]= {"par0pm","par1pm","par2pm","par3pm","par4pm","par5pm","par6pm","par7pm"};
 
 char init_tclfiles(tclfiles_t *tcl,char *mpath,char *spath)
@@ -74,6 +75,7 @@ char modifypartcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath, 
     static char par45=0;
     static char par20=0;
     static char par13=0;
+    fflush(stdout);
 
     fseek(tcl->slave,0,SEEK_SET);
     fseek(tcl->master,0,SEEK_SET);
@@ -83,18 +85,20 @@ char modifypartcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath, 
         //constrins unused
         if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/src/constraints/final.xdc")) //TO change
         {
-
+            scriptline[10]='\0';
+            strcat(scriptline,"/home/fbraun-lokal/git/VHDL_Testing_Platform/src/constraints/final.xdc\n");
         }
         if(strstr(scriptline,"get_files ./Dokumente/git/VHDL_Testing_Platform/src/constraints/final.xdc")) //TO change
         {
-
+            scriptline[10]='\0';
+            strcat(scriptline,"/home/fbraun-lokal/git/VHDL_Testing_Platform/src/constraints/final.xdc\n");
         }
 
 
         if(strstr(scriptline,"report_utilization -file ./Dokumente/git/VHDL_Testing_Platform/proj/part.dcp")) //TO change
         {
             scriptline[25]='\0';
-            strcat(scriptline,destpath);
+            strcat(scriptline,"/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/predefined_tcl/");
             strcat(scriptline,"report.txt\n");
         }
 
@@ -108,14 +112,14 @@ char modifypartcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath, 
             strcat(scriptline,"dcp");
             strcat(scriptline,"\n");
         }
-        if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/proj/static.dcp")) //TO change
+        if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/proj/static.dcp"))
         {
             scriptline[10]='\0';
             strcat(scriptline,destpath);
             strcat(scriptline,"static.dcp");
             strcat(scriptline,"\n");
         }
-        if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/src/hdl/PART1.vhd")) //TO change
+        if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/src/hdl/PART1.vhd"))
         {
             scriptline[10]='\0';
             strcat(scriptline,filepath);
@@ -181,7 +185,7 @@ char modifypartcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath, 
             strcpy(scriptline,"set_property top ");
             strcat(scriptline,filepath);
             strcat(scriptline,filename);
-            strcat(scriptline,"\n");
+            strcat(scriptline," [current_fileset] \n");
         }
         else if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/proj/part.dcp")) //to change
         {
@@ -199,6 +203,11 @@ char modifypartcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath, 
     }
     return tcl_success;
 }
+
+
+//////////
+//Fixpaths
+///////
 char modifywholetcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath, char parnum)
 {
     char scriptline[256*2];
@@ -206,47 +215,57 @@ char modifywholetcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath
     static char par20=0;
     static char par13=0;
 
+    printf("PARNUM AUSWAHL %d\n",parnum);
+
     fseek(tcl->slave2,0,SEEK_SET);
     fseek(tcl->master2,0,SEEK_SET);
     while(fgets(scriptline,256*2,tcl->master2)!=0)
     {
 
+        printf("%s",scriptline);
         //constrins unused
         if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/src/constraints/final.xdc")) //TO change
         {
-
+            scriptline[10]='\0';
+            strcat(scriptline,"/home/fbraun-lokal/git/VHDL_Testing_Platform/src/constraints/final.xdc\n");
         }
-        if(strstr(scriptline,"get_files ./Dokumente/git/VHDL_Testing_Platform/src/constraints/final.xdc")) //TO change
+        else if(strstr(scriptline,"set_property USED_IN {implementation} [get_files ./Dokumente/git/VHDL_Testing_Platform/src/constraints/final.xdc]"))
         {
-
+            printf("Drinnen \n\n");
+            scriptline[49]='\0';
+            strcat(scriptline,"/home/fbraun-lokal/git/VHDL_Testing_Platform/src/constraints/final.xdc]\n");
         }
-
-
-        if(strstr(scriptline,"report_utilization -file ./Dokumente/git/VHDL_Testing_Platform/proj/part.dcp")) //TO change
+        else if(strstr(scriptline,"get_files ./Dokumente/git/VHDL_Testing_Platform/src/constraints/final.xdc")) //TO change
+        {
+            scriptline[10]='\0';
+            strcat(scriptline,"/home/fbraun-lokal/git/VHDL_Testing_Platform/src/constraints/final.xdc\n");
+        }
+        else if(strstr(scriptline,"report_utilization -file ./Dokumente/git/VHDL_Testing_Platform/proj/part.dcp")) //TO change
         {
             scriptline[25]='\0';
             strcat(scriptline,destpath);
             strcat(scriptline,"report.txt\n");
         }
 
-        if(strstr(scriptline,"write_checkpoint –force ./Dokumente/git/VHDL_Testing_Platform/proj/part_routed.dcp")) //TO change
+        else if(strstr(scriptline,"write_checkpoint –force ./Dokumente/git/VHDL_Testing_Platform/proj/part_routed.dcp")) //TO change
         {
-            scriptline[26]='\0';
+            scriptline[17]='\0';
             strcat(scriptline,destpath);
             strcat(scriptline,filename);
-            char* pointer=strstr(scriptline,"vhd");
+            char* pointer=strstr(scriptline,".vhd");
             *pointer='\0';
+            strcat(scriptline,"_routed.");
             strcat(scriptline,"dcp");
             strcat(scriptline,"\n");
         }
-        if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/proj/static.dcp")) //TO change
+        else if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/proj/static.dcp")) //TO change
         {
             scriptline[10]='\0';
-            strcat(scriptline,destpath);
+            strcat(scriptline,"/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/");
             strcat(scriptline,"static.dcp");
             strcat(scriptline,"\n");
         }
-        if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/src/hdl/PART1.vhd")) //TO change
+        else if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/src/hdl/PART1.vhd")) //TO change
         {
             scriptline[10]='\0';
             strcat(scriptline,destpath);
@@ -268,8 +287,9 @@ char modifywholetcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath
             scriptline[17]='\0';
             strcat(scriptline,destpath);
             strcat(scriptline,filename);
-            char* pointer=strstr(scriptline,"vhd");
+            char* pointer=strstr(scriptline,".vhd");
             *pointer='\0';
+            strcat(scriptline,"_routed.");
             strcat(scriptline,"dcp");
             strcat(scriptline,"\n");
         }
@@ -277,7 +297,9 @@ char modifywholetcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath
         {
             scriptline[48]='\0';
             strcat(scriptline,pars[(int)parnum]);
-            strcat(scriptline,"}-part xc7z020clg400-1 -top top");
+
+            printf("\n\n\n\n\n\n PARNUM + PAR AUSWAHL %s %d",pars[(int)parnum],parnum);
+            strcat(scriptline,"} -part xc7z020clg400-1 -top top");
             strcat(scriptline,"\n\0");
         }
         else if(strstr(scriptline,"set_property HD.RECONFIGURABLE 1 [get_cells par]"))   //TO change
@@ -287,15 +309,22 @@ char modifywholetcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath
             strcat(scriptline,"]");
             strcat(scriptline,"\n\0");
         }
-        else if(strstr(scriptline,"write_bitstream par"))   //TO change
+        else if(strstr(scriptline,"write_bitstream -cell par"))   //TO change
         {
-            scriptline[16]='\0';
+            scriptline[22]='\0';
             strcat(scriptline,pars[(int)parnum]);
-            strcat(scriptline,"\n\0");
+            strcat(scriptline," ");
+            strcat(scriptline,filename);
+            char* pointer=strstr(scriptline,"vhd");
+            *pointer='\0';
+            strcat(scriptline,"bit");
+            strcat(scriptline,"\n");
         }
         else if(strstr(scriptline,"set_property SCOPED_TO_CELLS {par} [get_files ./Dokumente/git/VHDL_Testing_Platform/proj/part.dcp]")) //to change
         {
             strcpy(scriptline,"set_property SCOPED_TO_CELLS {");
+
+            /*
             if(par45==0)
             {
                 par45++;
@@ -324,11 +353,11 @@ char modifywholetcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath
             {
                 parnum=0;
                 par13=0;
-            }
+            }*/
 
             strcat(scriptline,pars[(int)parnum]);
             strcat(scriptline,"} [get_files ");
-            scriptline[46]='\0';
+            //scriptline[46]='\0';
             strcat(scriptline,destpath);
             strcat(scriptline,filename);
             char* pointer=strstr(scriptline,"vhd");
@@ -337,11 +366,15 @@ char modifywholetcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath
             strcat(scriptline,"\n");
 
         }
+
+
+
         else if(strstr(scriptline,"set_property top PART1.vhd [current_fileset]")) //to change
         {
             strcpy(scriptline,"set_property top ");
             strcat(scriptline,filepath);
             strcat(scriptline,filename);
+            strcat(scriptline,"[current_fileset]");
             strcat(scriptline,"\n");
         }
         else if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/proj/part.dcp")) //to change
@@ -354,7 +387,7 @@ char modifywholetcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath
             strcat(scriptline,"dcp");
             strcat(scriptline,"\n");
         }
-
+        printf("%s \n", scriptline);
         fprintf(tcl->slave2,"%s",scriptline);
         fflush(tcl->slave2);
     }

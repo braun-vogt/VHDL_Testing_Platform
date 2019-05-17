@@ -1,4 +1,4 @@
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/schedule.h"
+#include "../header/schedule.h"
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -67,9 +67,12 @@ char usedpar (schedule_t *schedule,char parnum)
     {
         if(schedule->par[i]==parnum)
         {
+            printf("\n\nPAr sind gleich  %d %d\n ",schedule->par[i],parnum);
             return true;
         }
+
     }
+    printf("\n\nPAr sind nicht gleich   %d\n ",parnum);
     return false;
 }
 
