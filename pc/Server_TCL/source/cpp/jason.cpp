@@ -1,4 +1,4 @@
-#include "/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/jason.h"
+#include "../header/json.h"
 
 /*
 typedef struct json_s {
@@ -11,7 +11,10 @@ typedef struct json_s {
 	int pin_count;
 } json_t;
 */
-
+#include <json-c/json.h>
+#include <json-c/json_config.h>
+#include <json-c/json_inttypes.h>
+#include <json/json.h>
 jasonf_t file;
 
 void addconnections(json_t *config,char **connections,int concount)

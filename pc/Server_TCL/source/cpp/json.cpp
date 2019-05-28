@@ -1,27 +1,135 @@
-#include <stdio.h>
-#include <json-c/json.h>
-#include <string.h>
 #include "../header/json.h"
 
-void addconnections(json_t *config,char connections[][256],int concount)
+void filljson(configpath_s *config, files_t *fileset,json_t *new_user, int currentfile, char *fset, char parnum)
+{
+    json_t data[8];
+    int user=0;
+    char name[256];
+    char hilf[500];
+    int pinnum[32];
+    int anzahl=0;
+    char portsnames[40][256];
+    int ports=0;
+    char *pointer;
+    for(int i=0;i<32;i++)
+    {
+        pinnum[i]=-1;
+    }
+
+    //Get username  id
+    sscanf(fileset->file[currentfile],"%*[^0-9]%d",&user);
+    sprintf(name,"%d",user);
+    //pointer=strstr(hilf,"_");
+    //printf("%c",*pointer);
+    //*pointer='\0';
+    strcpy(new_user->user,name);
+
+    if(config->verbose)
+    {
+        printf("\n User: %s \n",name);
+    }
+    //analys used ports
+    ports_file_num(fileset,currentfile,&ports,config,portsnames,pinnum,&anzahl);
+
+    if(config->verbose)
+    {
+        printf("\n pinscount :%d \n", anzahl);
+    }
+    new_user->pin_count=anzahl;
+
+    for(int b=0; b<32; b++)
+    {
+        if(config->verbose)
+        {
+            printf("\n pinnum %d",pinnum[b]);
+        }
+        if(pinnum[b]!=-1)
+        {
+            new_user->pins[b]=pinnum[b];
+        }
+
+    }
+
+    if(config->verbose)
+    {
+        printf("\n PORTNUM %d",ports);
+    }
+
+    addconnections(new_user,portsnames,ports,*config);
+    new_user->pblock=parnum;
+
+    if(config->verbose)
+    {
+        printf("hilf variable in filljson\n %s",hilf);
+    }
+    strcpy(hilf,config->jsonpath);
+    strcat(hilf,"users.json");
+    char hilf2[500];
+    strcpy(hilf2, "scp ");
+    strcat(hilf2, hilf);
+    strcat(hilf2, " ");
+    strcat(hilf2,config->scpbitdestpath);
+    system(hilf2);
+
+    strcpy(hilf,fileset->file[currentfile]);
+    pointer=strstr(hilf,".vhd");
+    *pointer='\0';
+    strcat(hilf,".bit");
+    strcpy(new_user->design,hilf);
+
+    if(config->verbose)
+    {
+        printf("\n design: %s \n",hilf);
+        printf("\n new user %s\n",new_user->design);
+    }
+
+    strcpy(hilf,config->jsonpath);
+    strcat(hilf,"users.json");
+    if(*fset)
+    {
+        add_new_json(*new_user, hilf);
+        *fset=false;
+    }
+    else
+    {
+        add_user_json(*new_user, hilf);
+    }
+
+
+    parse_json(data, hilf);
+}
+void addconnections(json_t *config,char connections[][256],int concount,configpath_s conf)
 {
     int hilf=0;
     for(int i=0;i<concount;i++)
     {
-        printf("\n Connections : \n %s",connections[i]);
+        if(conf.verbose)
+        {
+            printf("\n Connections : \n %s",connections[i]);
+        }
+
         if(strcmp(connections[i],"CLK_MMC")==0 || strcmp(connections[i],"CLK_PLL")==0 || strcmp(connections[i],"RGB_LED1")==0 || strcmp(connections[i],"RGB_LED2")==0 || strcmp(connections[i],"LEDS")==0)
         {
-            printf("\n %s \n",connections[i]);
+
             strcpy(config->peripheral[hilf],connections[i]);
+            if(conf.verbose)
+            {
+                printf("\n %s \n",connections[i]);
+            }
             hilf++;
         }
-        else if(strcmp(connections[i],"PMOD_JB_OUT")==0 || strcmp(connections[i],"PMOD_JC_OUT")==0 || strcmp(connections[i],"PMOD_JD_OUT")==0 || strcmp(connections[i],"PMOD_JE_OUT")==0)
+        if(strcmp(connections[i],"PMOD_JB_OUT")==0 || strcmp(connections[i],"PMOD_JC_OUT")==0 || strcmp(connections[i],"PMOD_JD_OUT")==0 || strcmp(connections[i],"PMOD_JE_OUT")==0)
         {
             char cpy[256];
             strcpy(cpy,connections[i]);
             cpy[7]='\0';
             strcpy(config->peripheral[hilf],cpy);
+            if(conf.verbose)
+            {
+                printf("\n %s \n",connections[i]);
+            }
             hilf++;
+
         }
     }
     config->peripheral_count=hilf;
@@ -86,7 +194,6 @@ void parse_json(json_t content[8], const char *file){
         json_object_put(parsed_json); // Delete the json object
     }
 }
-
 
 void add_user_json(json_t new_user, const char *file){
 	FILE *fp;
