@@ -1,0 +1,13 @@
+{
+   "users": [
+     {
+       "user": "3",
+       "design": "VHDLHWTesting_beh_3.bit",
+       "pblock": 6,
+       "peripherals": [
+       ],
+       "pins": [
+       ]
+     }
+   ]
+ }
