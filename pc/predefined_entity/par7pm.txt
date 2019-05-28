@@ -1,0 +1,40 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+entity Par is
+  Port ( 
+               CLK_125MHZ : in STD_LOGIC;
+               CLK_MMC : in STD_LOGIC_VECTOR ( 0 to 0 );
+               CLK_PLL : in STD_LOGIC_VECTOR ( 0 to 0 );
+               
+               reset : in STD_LOGIC;
+               
+               PAR_TEST_GPIO0_IN : in STD_LOGIC_VECTOR ( 31 downto 0 );
+               PAR_TEST_GPIO0_OUT : out STD_LOGIC_VECTOR ( 31 downto 0 );
+               
+               PMOD_JB_IN : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+               PMOD_JB_OUT : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+               PMOD_JB_OE : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                
+               PMOD_JC_IN : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+               PMOD_JC_OUT : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+               PMOD_JC_OE : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                
+               PMOD_JD_IN : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+               PMOD_JD_OUT : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+               PMOD_JD_OE : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                 
+               PMOD_JE_IN : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+               PMOD_JE_OUT : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+               PMOD_JE_OE : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);   
+              
+               leds : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+
+	       UART_ZYNQ_txd : in STD_LOGIC;
+               UART_ZYNQ_rxd : out STD_LOGIC;
+               
+               RGB_LED : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+               RGB_LED2 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0)
+
+  );
+end Par;

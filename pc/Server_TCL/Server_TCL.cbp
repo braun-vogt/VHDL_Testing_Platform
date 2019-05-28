@@ -37,31 +37,42 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="main.cpp" />
+		<Unit filename="source/cpp/config.cpp" />
 		<Unit filename="source/cpp/fileset.cpp" />
 		<Unit filename="source/cpp/json.cpp" />
+		<Unit filename="source/cpp/managefiles.cpp" />
 		<Unit filename="source/cpp/schedule.cpp" />
 		<Unit filename="source/cpp/tcl.cpp" />
+		<Unit filename="source/cpp/vivado.cpp" />
+		<Unit filename="source/cpp/vivado_log_parser.cpp" />
+		<Unit filename="source/header/config.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="source/header/fileset.h">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="source/header/json.h">
 			<Option compile="1" />
 		</Unit>
+		<Unit filename="source/header/managefiles.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="source/header/schedule.h">
 			<Option compile="1" />
-			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="source/header/tcl.h">
 			<Option compile="1" />
 		</Unit>
+		<Unit filename="source/header/vivado.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="source/header/vivado_log_parser.h">
 			<Option compile="1" />
-			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="source/source/vivado_log_parser.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

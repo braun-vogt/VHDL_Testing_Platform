@@ -1,0 +1,15 @@
+#ifndef FILESET_INCLUDED
+#define FILESET_INCLUDED
+
+typedef struct file_s
+{
+    char** file;
+    long filenum;
+    char** ports;
+    long portsnum;
+    FILE *vhd;
+
+} files_t;
+
+
+#endif // FILESET_INCLUDED

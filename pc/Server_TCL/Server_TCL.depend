@@ -14,8 +14,12 @@
 	<unistd.h>
 	<pthread.h>
 
+1558777492 >
+
 1556192862 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/cpp/fileset.cpp
 	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/fileset.h"
+
+1556192862 rsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/fileset.h"
 
 1556191990 /home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/fileset.h
 	<dirent.h>
@@ -24,6 +28,8 @@
 	<string.h>
 	<iostream>
 	<stddef.h>
+
+1557242719 
 
 1556094752 /home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/tcl.h
 	<dirent.h>
@@ -86,6 +92,8 @@
 1556100525 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/source/vivado_log_parser.cpp
 	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/vivado_log_parser.h"
 
+1556100525 rsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/vivado_log_parser.h"
+
 1556109846 /home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/jason.h
 	<dirent.h>
 	<stdio.h>
@@ -94,6 +102,8 @@
 	<iostream>
 	<stddef.h>
 	<json-c/json.h>
+
+1556107421 on.h>
 
 1556107421 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/jason.h
 	<dirent.h>
@@ -107,6 +117,8 @@
 1556106751 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/cpp/jason.cpp
 	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/jason.h"
 
+1557239119 rsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/jason.h"
+
 1556191934 /home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/json.h
 
 1556192657 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/cpp/json.cpp
@@ -115,31 +127,42 @@
 	<string.h>
 	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/json.h"
 
+1556192657 rsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/json.h"
+
 1556191934 source:/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/json.h
 
-1557421131 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/main.cpp
+1558693018 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/main.cpp
 	<dirent.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<iostream>
 	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+	"./source/header/config.h"
 	"./source/header/fileset.h"
 	"./source/header/tcl.h"
 	"./source/header/schedule.h"
 	"./source/header/vivado_log_parser.h"
 	"./source/header/json.h"
-	<unistd.h>
-	<pthread.h>
+	"./source/header/managefiles.h"
+	"./source/header/vivado.h"
 
-1557415053 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/fileset.cpp
+1558778498 header/vivado.h"
+
+1558692608 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/fileset.cpp
 	"../header/fileset.h"
 
-1557410103 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/json.cpp
+1558776567 /fileset.h"
+
+1557423481 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/json.cpp
 	<stdio.h>
 	<json-c/json.h>
 	<string.h>
 	"../header/json.h"
+
+1558776648 /json.h"
 
 1557417770 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/schedule.cpp
 	"../header/schedule.h"
@@ -151,7 +174,7 @@
 	<stddef.h>
 	<unistd.h>
 
-1557422108 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/tcl.cpp
+1558697887 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/tcl.cpp
 	"../header/tcl.h"
 	<dirent.h>
 	<stdio.h>
@@ -163,39 +186,53 @@
 1557417747 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/source/vivado_log_parser.cpp
 	"../header/vivado_log_parser.h"
 
-1557239119 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
+1558598055 /vivado_log_parser.h"
+
+1558545219 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
 	<dirent.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<iostream>
 	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/config.h"
+
+1558550540 /config.h"
 
 1557409658 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
 
-1557239119 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
+1558546201 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
 	<dirent.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<iostream>
 	<stddef.h>
+	"../header/config.h"
 
-1557239119 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
+1558545219 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
 	<dirent.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<iostream>
 	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/config.h"
 
-1557239119 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
+1558546201 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
 	<dirent.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<iostream>
 	<stddef.h>
+	"../header/config.h"
 
 1557239119 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/schedule.h
 	<dirent.h>
@@ -205,12 +242,953 @@
 	<iostream>
 	<stddef.h>
 
-1557239119 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado_log_parser.h
+1558546940 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1557409658 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
+
+1558695935 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/config.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+
+1558695935 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/config.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+
+1558695940 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/config.cpp
+	"../header/config.h"
+
+1558594455 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/vivado_log_parser.cpp
+	"../header/vivado_log_parser.h"
+
+1558549588 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/main.cpp
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+	"./source/header/config.h"
+	"./source/header/fileset.h"
+	"./source/header/tcl.h"
+	"./source/header/schedule.h"
+	"./source/header/vivado_log_parser.h"
+	"./source/header/json.h"
+
+1558549588 header/json.h"
+
+1558545219 /home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/config.h"
+
+1558546201 /home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1557239119 /home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/header/schedule.h
+	<dirent.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<iostream>
 	<stddef.h>
 
-1557409658 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
+1558546940 /home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1557409658 /home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
+
+1558550023 /home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/header/config.h
+
+1558543033 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/config.cpp
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"../header/config.h"
+
+1558548574 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/fileset.cpp
+	"../header/fileset.h"
+
+1557423481 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/json.cpp
+	<stdio.h>
+	<json-c/json.h>
+	<string.h>
+	"../header/json.h"
+
+1557417770 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/schedule.cpp
+	"../header/schedule.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+
+1558547010 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/vivado_log_parser.cpp
+	"../header/vivado_log_parser.h"
+
+1558537475 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/header/config.h
+
+1558545219 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/config.h"
+
+1557409658 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
+
+1558546227 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/tcl.cpp
+	"../header/tcl.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558546201 source:/home/pfirsichgnom/Dokumente/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558696035 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/managefiles.cpp
+	"../header/managefiles.h"
+
+1558699635 /managefiles.h"
+
+1558593186 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/managefiles.h
+	"../header/fileset.h"
+	"../header/config.h"
+
+1558593186 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/managefiles.h
+	"../header/fileset.h"
+	"../header/config.h"
+
+1558593524 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../header/config.h"
+
+1558594904 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/vivado.cpp
+	"../header/vivado.h"
+
+1558598504 /vivado.h"
+
+1558593524 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../header/config.h"
+
+1557239119 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/jason.cpp
+	"/home/pfirsichgnom/Dokumente/Codeblocks/Server_TCL/source/header/jason.h"
+
+1557239119 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/schedule.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558546940 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558774173 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/config.cpp
+	"../header/config.h"
+
+1558773892 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/config.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+
+1558692608 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/fileset.cpp
+	"../header/fileset.h"
+
+1558774838 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/config.h"
+
+1558773048 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/json.cpp
+	"../header/json.h"
+
+1558772967 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
+	<stdlib.h>
+	<stdio.h>
+	<json-c/json.h>
+	<string.h>
+	"../header/config.h"
+	"../header/fileset.h"
+
+1558696035 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/managefiles.cpp
+	"../header/managefiles.h"
+
+1558593186 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/managefiles.h
+	"../header/fileset.h"
+	"../header/config.h"
+
+1557417770 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/schedule.cpp
+	"../header/schedule.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+
+1557239119 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/schedule.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558697887 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/tcl.cpp
+	"../header/tcl.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558546201 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558594904 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/vivado.cpp
+	"../header/vivado.h"
+
+1558593524 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../header/config.h"
+
+1558594455 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/vivado_log_parser.cpp
+	"../header/vivado_log_parser.h"
+
+1558546940 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558773892 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/config.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+
+1558545219 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/config.h"
+
+1558593186 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/managefiles.h
+	"../header/fileset.h"
+	"../header/config.h"
+
+1557239119 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/schedule.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558546201 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558593524 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../header/config.h"
+
+1558546940 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558772461 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/main.cpp
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+	"./source/header/config.h"
+	"./source/header/fileset.h"
+	"./source/header/tcl.h"
+	"./source/header/schedule.h"
+	"./source/header/vivado_log_parser.h"
+	"./source/header/json.h"
+	"./source/header/managefiles.h"
+	"./source/header/vivado.h"
+
+1558772967 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
+	<stdlib.h>
+	<stdio.h>
+	<json-c/json.h>
+	<string.h>
+	"../header/config.h"
+	"../header/fileset.h"
+
+1558778498 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\main.cpp
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+	"./source/header/config.h"
+	"./source/header/fileset.h"
+	"./source/header/tcl.h"
+	"./source/header/schedule.h"
+	"./source/header/vivado_log_parser.h"
+	"./source/header/json.h"
+	"./source/header/managefiles.h"
+	"./source/header/vivado.h"
+
+1558777492 f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\config.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+
+1558778438 f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/config.h"
+
+1558549801 f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1557242719 f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\schedule.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558550540 f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558776567 f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\json.h
+	<stdlib.h>
+	<stdio.h>
+	<json-c/json.h>
+	<string.h>
+	"../header/config.h"
+	"../header/fileset.h"
+
+1558596786 f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\managefiles.h
+	"../header/fileset.h"
+	"../header/config.h"
+
+1558597124 f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\vivado.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../header/config.h"
+
+1558777773 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\cpp\config.cpp
+	"../header/config.h"
+
+1558778417 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\cpp\fileset.cpp
+	"../header/fileset.h"
+
+1558776648 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\cpp\json.cpp
+	"../header/json.h"
+
+1558699635 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\cpp\managefiles.cpp
+	"../header/managefiles.h"
+
+1557421370 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\cpp\schedule.cpp
+	"../header/schedule.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+
+1558701487 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\cpp\tcl.cpp
+	"../header/tcl.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558598504 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\cpp\vivado.cpp
+	"../header/vivado.h"
+
+1558598055 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\cpp\vivado_log_parser.cpp
+	"../header/vivado_log_parser.h"
+
+1558777492 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\config.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+
+1558778438 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/config.h"
+
+1558776567 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\json.h
+	<stdlib.h>
+	<stdio.h>
+	<json-c/json.h>
+	<string.h>
+	"../header/config.h"
+	"../header/fileset.h"
+
+1558596786 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\managefiles.h
+	"../header/fileset.h"
+	"../header/config.h"
+
+1557242719 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\schedule.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558549801 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558597124 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\vivado.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../header/config.h"
+
+1558550540 source:f:\24_05_19\vhdl_testing_platform\pc\server_tcl\source\header\vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558977296 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/main.cpp
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+	"./source/header/config.h"
+	"./source/header/fileset.h"
+	"./source/header/tcl.h"
+	"./source/header/schedule.h"
+	"./source/header/vivado_log_parser.h"
+	"./source/header/json.h"
+	"./source/header/managefiles.h"
+	"./source/header/vivado.h"
+
+1558773892 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/config.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+
+1558977322 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/tcl.h"
+	"../header/config.h"
+
+1558977387 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1557239119 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/schedule.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558546940 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558772967 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
+	<stdlib.h>
+	<stdio.h>
+	<json-c/json.h>
+	<string.h>
+	"../header/config.h"
+	"../header/fileset.h"
+
+1558593186 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/managefiles.h
+	"../header/fileset.h"
+	"../header/config.h"
+
+1558593524 /run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../header/config.h"
+
+1558774173 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/config.cpp
+	"../header/config.h"
+
+1558773048 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/json.cpp
+	"../header/json.h"
+
+1558696035 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/managefiles.cpp
+	"../header/managefiles.h"
+
+1557417770 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/schedule.cpp
+	"../header/schedule.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+
+1558594904 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/vivado.cpp
+	"../header/vivado.h"
+
+1558594455 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/vivado_log_parser.cpp
+	"../header/vivado_log_parser.h"
+
+1558977457 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/fileset.cpp
+	"../header/fileset.h"
+
+1558976990 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/tcl.cpp
+	"../header/tcl.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558773892 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/config.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+
+1558977322 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/tcl.h"
+	"../header/config.h"
+
+1558772967 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
+	<stdlib.h>
+	<stdio.h>
+	<json-c/json.h>
+	<string.h>
+	"../header/config.h"
+	"../header/fileset.h"
+
+1558593186 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/managefiles.h
+	"../header/fileset.h"
+	"../header/config.h"
+
+1557239119 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/schedule.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558593524 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../header/config.h"
+
+1558546940 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558977003 source:/run/media/pfirsichgnom/WIN 10/24_05_19/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1559040990 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/main.cpp
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+	"./source/header/config.h"
+	"./source/header/fileset.h"
+	"./source/header/tcl.h"
+	"./source/header/schedule.h"
+	"./source/header/vivado_log_parser.h"
+	"./source/header/json.h"
+	"./source/header/managefiles.h"
+	"./source/header/vivado.h"
+
+1559036404 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/config.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+
+1558977322 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/tcl.h"
+	"../header/config.h"
+
+1558977387 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1557239119 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/schedule.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558546940 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1559035091 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
+	<stdlib.h>
+	<stdio.h>
+	<json-c/json.h>
+	<string.h>
+	"../header/config.h"
+	"../header/fileset.h"
+
+1558593186 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/managefiles.h
+	"../header/fileset.h"
+	"../header/config.h"
+
+1558593524 /home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../header/config.h"
+
+1559040958 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/config.cpp
+	"../header/config.h"
+
+1559041418 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/fileset.cpp
+	"../header/fileset.h"
+
+1559041330 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/json.cpp
+	"../header/json.h"
+
+1558696035 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/managefiles.cpp
+	"../header/managefiles.h"
+
+1557417770 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/schedule.cpp
+	"../header/schedule.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+
+1559039673 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/tcl.cpp
+	"../header/tcl.h"
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1559041637 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/vivado.cpp
+	"../header/vivado.h"
+
+1558594455 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/cpp/vivado_log_parser.cpp
+	"../header/vivado_log_parser.h"
+
+1559036404 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/config.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<unistd.h>
+	<pthread.h>
+
+1558977322 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/fileset.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	<dirent.h>
+	<stddef.h>
+	<unistd.h>
+	"../header/tcl.h"
+	"../header/config.h"
+
+1559035091 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/json.h
+	<stdlib.h>
+	<stdio.h>
+	<json-c/json.h>
+	<string.h>
+	"../header/config.h"
+	"../header/fileset.h"
+
+1558593186 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/managefiles.h
+	"../header/fileset.h"
+	"../header/config.h"
+
+1557239119 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/schedule.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+
+1558977387 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/tcl.h
+	<dirent.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
+
+1558593524 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../header/config.h"
+
+1558546940 source:/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/Server_TCL/source/header/vivado_log_parser.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<stddef.h>
+	"../header/config.h"
 

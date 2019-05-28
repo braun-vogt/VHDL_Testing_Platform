@@ -1,0 +1,51 @@
+#Set Verbosity Level
+
+verbose=1
+
+#path to predefined minimal entity and complete entitys for all pblocks
+entitypath=/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/predefined_entity
+
+#Set Path to User JSON File, which contains user information
+jsonpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/json
+
+#path of the fpga board
+scpbitdestpath=root@ictsrv002.ict.tuwien.ac.at:/home/root/par
+
+#path to the constrain file
+constrainpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/src/constraints
+
+#path to the vivado install dir (settings.64sh has to be there)
+vivadopath=/home/fbraun-lokal/Xilinx/Vivado/2017.4
+
+#path where the makeproject file is located 
+projectpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj
+
+#path where the recieved(files which should be implemented) vhdl files are
+vhdlinpath=/mnt/vels2vtp
+
+#path where de implemented files should be stored
+vhdloutpath=/mnt/vels2vtp/fertig
+
+#path where are the predefined tcl files are located
+tclinpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/pc/predefined_tcl
+
+#path where are the new generated tcl files should be stored
+tcloutpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/tcl
+
+#path for the read dcp files(normaly equals store path)
+dcpinpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/dcp
+
+#path for the storage of dcp files
+dcpoutpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/dcp
+
+#path where the dcps get finaly stored
+dcpsavpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/dcp/finished
+
+#path where the report files are located(normaly equals store path)
+reportinpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/report
+
+#path where the report files will be stored
+reportoutpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/report
+
+#output path for the bitfiles
+bitoutpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/bit
