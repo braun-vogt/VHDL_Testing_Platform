@@ -5,8 +5,32 @@
        "design": "VHDLHWTesting_beh_3.bit",
        "pblock": 6,
        "peripherals": [
+         "PMOD_JB",
+         "RGB_LED1",
+         "RGB_LED2"
        ],
        "pins": [
+         0,
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10,
+         11,
+         12,
+         13,
+         14,
+         15,
+         16,
+         17,
+         18,
+         19,
+         20
        ]
      }
    ]

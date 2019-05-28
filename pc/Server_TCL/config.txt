@@ -1,5 +1,7 @@
-#Set Verbosity Level
+#set logfile location
+#logpathfd=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/log
 
+#Set Verbosity Level
 verbose=1
 
 #path to predefined minimal entity and complete entitys for all pblocks
