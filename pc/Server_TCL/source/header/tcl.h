@@ -1,24 +1,24 @@
 #ifndef TCL_H_INCLUDED
 #define TCL_H_INCLUDED
+
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
 #include <stddef.h>
+#include "../header/config.h"
+
 typedef struct tclfiles_s
 {
-    FILE *master;
-    char mpath[256];
+    FILE *inpar;
+    FILE *inwho;
+    char tclinpath[256];
 
-    FILE *master2;
-    char mpath2[256];
+    FILE *outpar;
+    FILE *outwho;
+    char tcloutpath[256];
 
-    FILE *slave;
-    char spath[256];
-
-    FILE *slave2;
-    char spath2[256];
 } tclfiles_t;
 
 enum
@@ -27,10 +27,10 @@ enum
     failture_open
 };
 
-char init_tclfiles(tclfiles_t *tcl,char *mpath,char *spath);
+char init_tclfiles(tclfiles_t *tcl,configpath_s *config);
 char close_tclfiles(tclfiles_t *tcl);
-char modifypartcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath, char parnum);
-char modifywholetcl(tclfiles_t *tcl,char *filename,char *filepath,char *destpath, char parnum);
+char modifypartcl(tclfiles_t *tcl,char *filename,configpath_s *config);
+char modifywholetcl(tclfiles_t *tcl,char *filename,configpath_s *config, char parnum);
 
 
 #endif // TCL_H_INCLUDED

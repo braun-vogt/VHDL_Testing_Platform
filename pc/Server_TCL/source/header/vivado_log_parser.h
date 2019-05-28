@@ -5,6 +5,7 @@
 #include <string.h>
 #include <iostream>
 #include <stddef.h>
+#include "../header/config.h"
 
 typedef struct parres_s
 {
@@ -24,7 +25,7 @@ typedef struct resources_s
 } resources_t;
 
 void selectpar(resources_t *res,char *parnum);
-char parselog(resources_t *res,char *logpath, char *parnum);
+char parselog(resources_t *res,configpath_s *config, char *parnum);
 char changeparnum(char parnum);
 
 #endif // VIVADO_LOG_PARSER_H_INCLUDED
