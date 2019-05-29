@@ -51,10 +51,10 @@ char managebitfiles(configpath_s *config, files_t *fileset, int currentfile)
     strcat(hilf2,hilf);
     if(config->verbose)
     {
-        printf("scp bitfile path %s",hilf2);
-        fflush(stdout);
+        fprintf(config->log,"scp bitfile path %s",hilf2);
+        fflush(config->log);
     }
-    //system(hilf2);
+    system(hilf2);
 
     for(int i=0; i<500; i++)
     {

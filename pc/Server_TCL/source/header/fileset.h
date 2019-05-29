@@ -33,12 +33,12 @@ enum
     error_openfile
 };
 
-
+char resize_portset(files_t *fileset, char *portname,char *file, configpath_s *config);
 
 char init_fileset(files_t *fileset);
 char init_files(files_t *fileset, configpath_s *config);
 char init_portset(files_t *fileset, configpath_s *config);
-char resize_fileset(files_t *fileset,char* dirname);
+char resize_fileset(files_t *fileset,char* dirname, configpath_s config);
 
 char ports_file(files_t *fileset,int filenum,int *portnum, configpath_s *config, char ports[][256]);
 char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *config, char ports[][256],int *pinnum,int *anzahl);
@@ -46,7 +46,6 @@ char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *con
 char containsport(files_t *fileset,const char *port);
 void free_fileset(files_t *fileset );
 char *analyce_ports(char* portline);
-char resize_portset(files_t *fileset, char *portname,char *file);
 char remove_element(files_t *fileset, int i);
 
 
