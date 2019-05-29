@@ -27,9 +27,9 @@
 
 #define PINNUM 32
 
-#define JSON_FILE "/home/root/par/test.json"
+#define JSON_FILE "/home/root/par/users.json"
 
-static char ip_cam[120] = "\"http://192.168.1.254/media/?action=snapshot\" alt=\"Live Video\"";
+static char ip_cam[120] = "\"http://ictsrv012.ict.tuwien.ac.at/media/?action=snapshot\" alt=\"Live Video\"";
 
 static int output_vals[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static int input_vals[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -43,7 +43,7 @@ json_t config = {
 		{"admin"},
 		{"admin.vhd"},
 		{0},
-		{{"RGB_LED", "RGB_LED2"}},
+		{{"RGB_LED1", "RGB_LED2"}},
 		{2},
 		{{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31}},
 		{32},
@@ -51,12 +51,12 @@ json_t config = {
 };
 
 int printButton(int i){
-	printf("<a role=\"button\" href=gpio?user=%s&pin%i=%i class=\"btn btn-%s\">PIN %d</a>\n", user, i, TRIGGER(output_vals[i]), ONOFF(output_vals[i]), i);
+	printf("<a role=\"button\" href=gpio?user=%s&pin%i=%i class=\"btn btn-%s\">Write %d</a>\n", user, i, TRIGGER(output_vals[i]), ONOFF(output_vals[i]), i);
 	return 0;
 }
 
 int printInput(int i){
-	printf("<a role=\"button\" href=# class=\"btn btn-%s\">IN %d</a>\n", ONOFF(input_vals[i]), i);
+	printf("<a role=\"button\" href=# class=\"btn btn-%s\">Read %d</a>\n", ONOFF(input_vals[i]), i);
 	return 0;
 }
 
@@ -177,7 +177,7 @@ int set_mux(int pblock, const char peripherals[7][256]){
 			set_mux_pins(9, pblock_mux);
 		}else if(!strcmp(peripherals[i], "PMOD_JE")){
 			set_mux_pins(13, pblock_mux);
-		}else if(!strcmp(peripherals[i], "RGB_LED")){
+		}else if(!strcmp(peripherals[i], "RGB_LED1")){
 			set_mux_pins(17, pblock_mux);
 		}else if(!strcmp(peripherals[i], "RGB_LED2")){
 			set_mux_pins(21, pblock_mux);
@@ -266,8 +266,6 @@ int led_cgi_page(char **getvars, int form_method)
 	printf("<div class=\"container-fluid\">\n");
 	printf("<span class=\"navbar-brand mb-0 h1\">VHDL Testing Platform</span>\n");
 	printf("<ul class=\"nav navbar-nav navbar-right\">\n");
-    printf("<li>User: <a data-toggle=\"modal\" href=\"#userModal\">%s</a></li>\n</ul>\n", user);
-	printf("</div>\n</nav>\n");
 	fflush(stdout);
 
 	parse_JSON(JSON_FILE, &config);
@@ -278,6 +276,10 @@ int led_cgi_page(char **getvars, int form_method)
 			get_cgi_pin_val(getvars);
 		}
 	}
+
+    printf("<li>User: <a data-toggle=\"modal\" href=\"#userModal\">%s</a></li>\n</ul>\n", user);
+	printf("</div>\n</nav>\n");
+	fflush(stdout);
 
 	for (int i = 0; i < config.length; i++){
 		if(!strcmp(user, config.users[i])){
