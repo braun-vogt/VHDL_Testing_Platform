@@ -26,14 +26,16 @@ void filljson(configpath_s *config, files_t *fileset,json_t *new_user, int curre
 
     if(config->verbose)
     {
-        printf("\n User: %s \n",name);
+        fprintf(config->log,"\nUser: %s \n",name);
+
     }
     //analys used ports
+
     ports_file_num(fileset,currentfile,&ports,config,portsnames,pinnum,&anzahl);
 
     if(config->verbose)
     {
-        printf("\n pinscount :%d \n", anzahl);
+        fprintf(config->log,"\n pinscount :%d \n", anzahl);
     }
     new_user->pin_count=anzahl;
 
@@ -41,7 +43,7 @@ void filljson(configpath_s *config, files_t *fileset,json_t *new_user, int curre
     {
         if(config->verbose)
         {
-            printf("\n pinnum %d",pinnum[b]);
+            fprintf(config->log,"\n pinnum %d",pinnum[b]);
         }
         if(pinnum[b]!=-1)
         {
@@ -52,16 +54,13 @@ void filljson(configpath_s *config, files_t *fileset,json_t *new_user, int curre
 
     if(config->verbose)
     {
-        printf("\n PORTNUM %d",ports);
+        fprintf(config->log,"\n PORTNUM %d",ports);
+        fflush(config->log);
     }
 
     addconnections(new_user,portsnames,ports,*config);
     new_user->pblock=parnum;
 
-    if(config->verbose)
-    {
-        printf("hilf variable in filljson\n %s",hilf);
-    }
     strcpy(hilf,config->jsonpath);
     strcat(hilf,"users.json");
     char hilf2[500];
@@ -79,8 +78,9 @@ void filljson(configpath_s *config, files_t *fileset,json_t *new_user, int curre
 
     if(config->verbose)
     {
-        printf("\n design: %s \n",hilf);
-        printf("\n new user %s\n",new_user->design);
+        fprintf(config->log,"\ndesign: %s \n",hilf);
+        fprintf(config->log,"\nnew user %s\n",new_user->design);
+        fflush(config->log);
     }
 
     strcpy(hilf,config->jsonpath);
@@ -105,7 +105,8 @@ void addconnections(json_t *config,char connections[][256],int concount,configpa
     {
         if(conf.verbose)
         {
-            printf("\n Connections : \n %s",connections[i]);
+            fprintf(conf.log,"\n Connections : \n %s",connections[i]);
+            fflush(conf.log);
         }
 
         if(strcmp(connections[i],"CLK_MMC")==0 || strcmp(connections[i],"CLK_PLL")==0 || strcmp(connections[i],"RGB_LED1")==0 || strcmp(connections[i],"RGB_LED2")==0 || strcmp(connections[i],"LEDS")==0)
@@ -114,7 +115,8 @@ void addconnections(json_t *config,char connections[][256],int concount,configpa
             strcpy(config->peripheral[hilf],connections[i]);
             if(conf.verbose)
             {
-                printf("\n %s \n",connections[i]);
+                fprintf(conf.log,"\n %s \n",connections[i]);
+                fflush(conf.log);
             }
             hilf++;
         }
@@ -126,7 +128,8 @@ void addconnections(json_t *config,char connections[][256],int concount,configpa
             strcpy(config->peripheral[hilf],cpy);
             if(conf.verbose)
             {
-                printf("\n %s \n",connections[i]);
+                fprintf(conf.log,"\n %s \n",connections[i]);
+                fflush(conf.log);
             }
             hilf++;
 

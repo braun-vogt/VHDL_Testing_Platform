@@ -22,7 +22,7 @@ char parselog(resources_t *res,configpath_s *config, char *parnum)
 
     if(config->verbose)
     {
-        fprintf(config->log,"\n Logpath :%s\n",config->reportinpath);
+        fprintf(config->log,"\nLogpath :%s\n",config->reportinpath);
         fflush(config->log);
     }
 
@@ -95,7 +95,8 @@ char parselog(resources_t *res,configpath_s *config, char *parnum)
         return -1;
     }
 
-    printf("Partieles file %d \n",*parnum);
+    fprintf(config->log,"Partieles file %d \n",*parnum);
+    fflush(config->log);
     return 1;
 }
 

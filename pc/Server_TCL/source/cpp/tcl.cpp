@@ -84,9 +84,9 @@ char modifypartcl(tclfiles_t *tcl,char *filename,configpath_s *config)
             strcat(scriptline,config->constrainpath);
             strcat(scriptline,"final.xdc\n");
         }
-        else if(strstr(scriptline,"write_edif ./Dokumente/git/VHDL_Testing_Platform/proj/part.edif")) //TO change
+        else if(strstr(scriptline,"write_edif -force ./Dokumente/git/VHDL_Testing_Platform/proj/part.edif")) //TO change
         {
-            scriptline[11]='\0';
+            scriptline[18]='\0';
             strcat(scriptline,config->dcpoutpath);
             strcat(scriptline,filename);
             char* pointer=strstr(scriptline,"vhd");
@@ -107,9 +107,9 @@ char modifypartcl(tclfiles_t *tcl,char *filename,configpath_s *config)
             strcat(scriptline,filename);
             strcat(scriptline,"\n");
         }
-        else if(strstr(scriptline,"write_checkpoint ./Dokumente/git/VHDL_Testing_Platform/proj/part.dcp"))   //TO change
+        else if(strstr(scriptline,"write_checkpoint -force ./Dokumente/git/VHDL_Testing_Platform/proj/part.dcp"))   //TO change
         {
-            scriptline[17]='\0';
+            scriptline[24]='\0';
             strcat(scriptline,config->dcpoutpath);
             strcat(scriptline,filename);
             char* pointer=strstr(scriptline,"vhd");
@@ -134,8 +134,8 @@ char modifypartcl(tclfiles_t *tcl,char *filename,configpath_s *config)
 char modifywholetcl(tclfiles_t *tcl,char *filename,configpath_s *config, char parnum)
 {
     char scriptline[256*2];
-
-    fprintf(config->log,"PARNUM AUSWAHL %d\n",parnum);
+    fprintf(config->log,"Beginning of modifywholetcl\n\n");
+    fprintf(config->log,"\nPARNUM AUSWAHL %d\n",parnum);
     fflush(config->log);
 
     fseek(tcl->outwho,0,SEEK_SET);

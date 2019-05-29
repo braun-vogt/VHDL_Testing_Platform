@@ -188,7 +188,7 @@ char ports_file(files_t *fileset,int filenum,int *portnum, configpath_s *config,
 char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *config, char ports[][256],int *pinnum,int *anzahl)
 {
     char home[256];
-    strcat(home,config->vhdloutpath);
+    strcpy(home,config->vhdloutpath);
     strcat(home,fileset->file[filenum]);
 
     strtok(home,".");
@@ -201,19 +201,24 @@ char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *con
     fileset->vhd=fopen(home,"r");
     if(fileset->vhd==0)
     {
-        fprintf(config->log,"error init fileset %s", strerror(errno));
+        fprintf(config->log,"error init portfile %s", strerror(errno));
         fprintf(config->log,"%s",home);
         fflush(config->log);
         return error_openfile;
     }
     while(fgets(portsread,256,fileset->vhd)!=0)
     {
-        if(strstr(portsread,"PAR_TEST_GPIO0_IN : in STD_LOGIC_VECTOR")!=0)
+        for(int i=0;i<256*2;i++)
+        {
+            portsread[i] = toupper(portsread[i]);
+        }
+        if(strstr(portsread,"PAR_TEST_GPIO0_IN : IN STD_LOGIC_VECTOR")!=0)
         {
             int from=0,to=0;
             char temp[256];
             sscanf(portsread,"%*[^0-9]%d %s %d ",&to,temp,&from);
-
+            fprintf(config->log,"GPIO IN from: %d to %d\n",from,to);
+            fflush(config->log);
 
             if(to<from)
             {
@@ -249,13 +254,15 @@ char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *con
 
             }
         }
-        else if(strstr(portsread,"PAR_TEST_GPIO0_OUT : out STD_LOGIC_VECTOR")!=0)
+        else if(strstr(portsread,"PAR_TEST_GPIO0_OUT : OUT STD_LOGIC_VECTOR")!=0)
         {
             int from=0,to=0 ;
 
             fprintf(config->log,"DRINNEN GPIO_OUT\n");
             fflush(config->log);
             sscanf(portsread,"%*[^0-9]%d %*[^0-9]%d ",&to,&from);
+            fprintf(config->log,"GPIO OUT from: %d to %d\n",from,to);
+            fflush(config->log);
 
             if(to<from)
             {
@@ -553,7 +560,7 @@ char modifyentity(files_t *fileset, int currentfile, configpath_s config)
 
     if(config.verbose)
     {
-        fprintf(config.log,"input file modent :%s \n",fileset->file[currentfile]);
+        fprintf(config.log,"\nInput File for Modify entity :%s \n",fileset->file[currentfile]);
     }
 
     if(inputfile==0)
@@ -618,11 +625,6 @@ char modifyentity(files_t *fileset, int currentfile, configpath_s config)
 
         if(strstr(hilf,"END"))
         {
-            if(config.verbose)
-            {
-                fprintf(config.log,"End of Entity\n");
-            }
-
             startwriting=true;
         }
     }
@@ -645,7 +647,7 @@ char modifyentity(files_t *fileset, int currentfile, configpath_s config)
 
     if(config.verbose)
     {
-        fprintf(config.log,"CPY COMMAND : %s\n",hilf);
+        fprintf(config.log,"Writing copy from original to : %s\n",hilf);
         fflush(config.log);
     }
     system(hilf);

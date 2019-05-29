@@ -147,7 +147,7 @@ int main(int argc, char* argv[])
 
                 if(config.verbose)
                 {
-                    fprintf(config.log,"File before filljson :%s \n",fileset.file[i]);
+                    fprintf(config.log,"\nFile before filljson :%s \n",fileset.file[i]);
                     fflush(config.log);
                 }
                 filljson(&config, &fileset,&new_user, i, &fset, parnum);
@@ -214,16 +214,16 @@ char reinitfileset(files_t *fileset,configpath_s *config)
             fflush(config->log);
             for(int i=0; i<fileset->portsnum; i++)
             {
-                printf("%s\n",fileset->ports[i]);
+                fprintf(config->log,"%s\n",fileset->ports[i]);
             }
 
             fprintf(config->log,"Included files\n");
             fflush(config->log);
             for(int i=0; i<fileset->filenum; i++)
             {
-                printf("%s\n",fileset->file[i]);
+                fprintf(config->log,"%s\n",fileset->file[i]);
             }
-            printf("\n\n");
+            fprintf(config->log,"\n\n");
         }
 
         return 0;
@@ -293,10 +293,11 @@ char init(configpath *config, files_t *fileset,tclfiles_t *tcl,pthread_t *userin
         fflush(config->log);
         for(int i=0; i<fileset->portsnum; i++)
         {
-            printf("%s\n",fileset->ports[i]);
+            fprintf(config->log,"%s\n",fileset->ports[i]);
+            fflush(config->log);
         }
 
-        fprintf(config->log,"Included files\n");
+        fprintf(config->log,"\nIncluded files\n");
         fflush(config->log);
         for(int i=0; i<fileset->filenum; i++)
         {
@@ -317,7 +318,7 @@ char init(configpath *config, files_t *fileset,tclfiles_t *tcl,pthread_t *userin
 
     if(config->verbose)
     {
-        fprintf(config->log,"\n Thread created successfully\n");
+        fprintf(config->log,"Thread created successfully\n\n");
         fflush(config->log);
     }
 
