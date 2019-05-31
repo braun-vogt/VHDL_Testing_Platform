@@ -16,6 +16,7 @@
 #include "./source/header/json.h"
 #include "./source/header/managefiles.h"
 #include "./source/header/vivado.h"
+#include "./source/header/waiter.h"
 
 //#define create_products
 
@@ -155,7 +156,11 @@ int main(int argc, char* argv[])
             }
         }
 
-        sleep(5);
+        if(waitfornewfiles(config)==-1)
+        {
+            fprintf(config.log,"inotifywait watch wurde beendet oder war nicht erfolgreich\n");
+            return 0;
+        }
 
         for(int i=0; i<8; i++)
         {
@@ -333,6 +338,7 @@ void *inputhandling(void *in)
         scanf("%c",input);
         if(*input=='e')
         {
+            removewatch();
             pthread_exit(0);
         }
     }
