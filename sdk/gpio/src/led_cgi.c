@@ -282,6 +282,20 @@ int led_cgi_page(char **getvars, int form_method)
 	}
     printf("<li>User: <a data-toggle=\"modal\" href=\"#userModal\">%s</a></li>\n</ul>\n", user);
 	printf("</div>\n</nav>\n");
+
+	if(strcmp("welcome", user) == 0){
+		addUserModal("userModal","WELCOME!!!111!");
+	}else if(strcmp("3", user) == 0){
+		addUserModal("userModal","PHILIPP IST DER BESTE!");
+	}else if(strcmp("4", user) == 0){
+		addUserModal("userModal","FELIX IST DER BESTE!");
+	}else if(strcmp("logout", user) == 0){
+		addUserModal("userModal","Your time has come...");
+	}else{
+		char temp[256] = "User: ";
+		strcat(temp, user);
+		addUserModal("userModal", temp);
+	}
 	fflush(stdout);
 
 	for (int i = 0; i < config.length; i++){
