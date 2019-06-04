@@ -275,7 +275,8 @@ int led_cgi_page(char **getvars, int form_method)
 		}
 	}
 
-	printf("<li>Timer: <p id=\"timer\">EXPIRED</p></li>\n");
+	printf("<li><a data-toggle=\"modal\" href=\"#timerModal\">Timer</a>: <p id=\"timer\">EXPIRED</p></li>\n");
+	addModal("timerModal", "Timer", "You get 5 mins of playtime, but don't worry. After every reload the timer resets.");
 	if(strcmp("logout", user)){
 		//timerScript(2019, (6-1), 4, 15, 4, 0);
 		timerScriptSeconds(300);
@@ -284,17 +285,18 @@ int led_cgi_page(char **getvars, int form_method)
 	printf("</div>\n</nav>\n");
 
 	if(strcmp("welcome", user) == 0){
-		addUserModal("userModal","WELCOME!!!111!");
+		addModal("userModal","TOP SECRET","WELCOME!!!111!");
 	}else if(strcmp("3", user) == 0){
-		addUserModal("userModal","PHILIPP IST DER BESTE!");
+		addModal("userModal","TOP SECRET", "PHILIPP IST DER BESTE!");
 	}else if(strcmp("4", user) == 0){
-		addUserModal("userModal","FELIX IST DER BESTE!");
+		addModal("userModal","TOP SECRET","FELIX IST DER BESTE!");
 	}else if(strcmp("logout", user) == 0){
-		addUserModal("userModal","Your time has come...");
+		addModal("userModal","TOP SECRET","Your time has come...");
 	}else{
 		char temp[256] = "User: ";
 		strcat(temp, user);
-		addUserModal("userModal", temp);
+		strcat(temp, "\nYou found the secret!");
+		addModal("userModal","TOP SECRET", temp);
 	}
 	fflush(stdout);
 
@@ -327,11 +329,6 @@ int led_cgi_page(char **getvars, int form_method)
 
 	printf("<a role=\"button\" href=gpio?user=%s class=\"btn btn-primary\">Update</a>\n", user);
 	printf("<iframe width=\"660\" height=\"500\" src=\"http://ictsrv012.ict.tuwien.ac.at/videostream.cgi?user=view&pwd=\" frameborder=\"0\" allowfullscreen></iframe>\n");
-	//printf("<div id=\"webcam\">");
-	//printf("<img src= ");
-	//printf(ip_cam);
-	//printf("/>\n");
-	//printf("</div>\n");
 
 	return 0;
 }

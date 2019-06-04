@@ -9,34 +9,32 @@ void htmlHeader(char *title) {
 	printf("Content-type: text/html\n\n"
 			"<html>\<head>\n<meta charset=\"UTF-8\">\n<TITLE>%s</TITLE>\n"
 			"<link rel=\"stylesheet\" href=\"../css/bootstrap.min.css\">\n"
-			"<script type=\"text/javascript\" src=\"/lang/b28n.js\">\n</script>\n"
-			"<script type=\"text/javascript\" src=\"/lang/webcam.js\">\n</script>\n"
 			"</head>",
 			title);
 	printf("<script src=\"../js/jquery-3.4.1.min.js\">\n</script>\n");
 	printf("<script src=\"../js/bootstrap.bundle.min.js\">\n</script>\n");
 }
 
-void addUserModal(char *id, char *secret){
+void addModal(char *id, char *title, char *msg){
 	printf("<!-- Modal --> "
 "<div class=\"modal fade\" id=\"%s\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"userModalLabel\" aria-hidden=\"true\"> "
 "  <div class=\"modal-dialog\" role=\"document\"> "
 "    <div class=\"modal-content\"> "
 "      <div class=\"modal-header\"> "
-"        <h5 class=\"modal-title\" id=\"userModalLabel\">TOP SECRET</h5> "
+"        <h5 class=\"modal-title\" id=\"userModalLabel\">%s</h5> "
 "        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"> "
 "          <span aria-hidden=\"true\">&times;</span> "
 "        </button> "
 "      </div> "
 "      <div class=\"modal-body\"> "
-"        You found the secret site.\n %s "
+"        %s "
 "      </div> "
 "      <div class=\"modal-footer\"> "
 "        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button> "
 "      </div> "
 "    </div> "
 "  </div> "
-"</div>", id, secret);
+"</div>", id, title, msg);
 }
 
 void timerScriptSeconds(long seconds){
