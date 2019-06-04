@@ -29,7 +29,7 @@
 
 #define JSON_FILE "/home/root/par/users.json"
 
-static char ip_cam[120] = "\"http://ictsrv012.ict.tuwien.ac.at/media/?action=snapshot\" alt=\"Live Video\"";
+//static char ip_cam[120] = "\"http://ictsrv012.ict.tuwien.ac.at/media/?action=snapshot\" alt=\"Live Video\"";
 
 static int output_vals[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static int input_vals[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -62,18 +62,20 @@ int printInput(int i){
 
 int set_pin(int device,int channel, int pinNumber, int val){
     GPIO vm = GPIO_init(device, 0);
-	setPinMode(vm, channel, pinNumber + 1, OUTPUT);
 	digitalWrite(vm, channel, pinNumber + 1, val);
     GPIO_Close(vm);
     return 0;
 }
 
+int reset_channel(int device,int channel){
+	GPIO vm = GPIO_init(device, 0);
+	setChannelValue(vm, 0x00, channel);
+	GPIO_Close(vm);
+	return 0;
+}
+
 int set_mux_pins(int startPin, int val[4]){
     GPIO vm = GPIO_init(0, 0);
-	setPinMode(vm, 1, startPin + 1, OUTPUT);
-	setPinMode(vm, 1, startPin + 2, OUTPUT);
-	setPinMode(vm, 1, startPin + 3, OUTPUT);
-	setPinMode(vm, 1, startPin + 4, OUTPUT);
 	digitalWrite(vm, 1, startPin + 1, val[0]);
 	digitalWrite(vm, 1, startPin + 2, val[1]);
 	digitalWrite(vm, 1, startPin + 3, val[2]);
@@ -85,9 +87,6 @@ int set_mux_pins(int startPin, int val[4]){
 int get_pins(int device){
 	GPIO vm = GPIO_init(device, 0);
 	for(int i = 0; i < PINNUM; i++) {
-
-		setPinMode(vm, 1, i + 1, INPUT);
-		setPinMode(vm, 2, i + 1, INPUT);
 		input_vals[i] =  digitalRead(vm, 1, i + 1);
 		output_vals[i] = digitalRead(vm, 2, i + 1);
 
@@ -99,7 +98,6 @@ int get_pins(int device){
 
 int get_reset(int user){
 	GPIO vm = GPIO_init(1, 0);
-	setPinMode(vm, 1, user + 1, INPUT);
 	reset = digitalRead(vm, 1, user + 1);
 
 	GPIO_Close(vm);
@@ -277,6 +275,8 @@ int led_cgi_page(char **getvars, int form_method)
 		}
 	}
 
+	printf("<li>Timer: <p id=\"timer\"></p></li>\n");
+	timerScript(2019, (6-1), 4, 15, 4, 0);
     printf("<li>User: <a data-toggle=\"modal\" href=\"#userModal\">%s</a></li>\n</ul>\n", user);
 	printf("</div>\n</nav>\n");
 	fflush(stdout);
@@ -285,12 +285,13 @@ int led_cgi_page(char **getvars, int form_method)
 		if(!strcmp(user, config.users[i])){
 			if(flash_par_bitfile(config.designs[i]) == 0){
 				firstFlash = 1;
+				set_mux(config.pblocks[i], config.peripherals[i]);
+				set_pin(1, 1, config.pblocks[i], 1);
+				set_pin(1, 1, config.pblocks[i], 0);
+				reset_channel(config.pblocks[i]+2, 2);
 			}else{
 				firstFlash = 0;
 			}
-			set_mux(config.pblocks[i], config.peripherals[i]);
-			set_pin(1, 1, config.pblocks[i], 1);
-			set_pin(1, 1, config.pblocks[i], reset);
 			break;
 		}
 	}
@@ -308,12 +309,12 @@ int led_cgi_page(char **getvars, int form_method)
 	printf("<h6>%s </h6>\n", firstFlash ? "Welcome!" : "Welcome Back!");
 
 	printf("<a role=\"button\" href=gpio?user=%s class=\"btn btn-primary\">Update</a>\n", user);
-	printf("<iframe width=\"640\" height=\"480\" src=\"http://ictsrv012.ict.tuwien.ac.at/videostream.cgi?user=admin&pwd=\" frameborder=\"0\" allowfullscreen></iframe>\n");
-	printf("<div id=\"webcam\">");
-	printf("<img src= ");
-	printf(ip_cam);
-	printf("/>\n");
-	printf("</div>\n");
+	printf("<iframe width=\"660\" height=\"500\" src=\"http://ictsrv012.ict.tuwien.ac.at/videostream.cgi?user=view&pwd=\" frameborder=\"0\" allowfullscreen></iframe>\n");
+	//printf("<div id=\"webcam\">");
+	//printf("<img src= ");
+	//printf(ip_cam);
+	//printf("/>\n");
+	//printf("</div>\n");
 
 	return 0;
 }
