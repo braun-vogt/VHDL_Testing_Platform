@@ -24,21 +24,48 @@ void addUserModal(char *id){
   <div class=\"modal-dialog\" role=\"document\"> \
     <div class=\"modal-content\"> \
       <div class=\"modal-header\"> \
-        <h5 class=\"modal-title\" id=\"userModalLabel\">Modal title</h5> \
+        <h5 class=\"modal-title\" id=\"userModalLabel\">TOP SECRET</h5> \
         <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"> \
           <span aria-hidden=\"true\">&times;</span> \
         </button> \
       </div> \
       <div class=\"modal-body\"> \
-        BLA \
+        You found the secret site. \
       </div> \
       <div class=\"modal-footer\"> \
         <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button> \
-        <button type=\"button\" class=\"btn btn-primary\">Save changes</button> \
       </div> \
     </div> \
   </div> \
 </div>", id);
+}
+
+void timerScriptSeconds(long seconds){
+	printf("<script>");
+	printf("var countDownDate = new Date().getTime() + %ld;", seconds*1000);
+
+	printf("var x = setInterval(function() { \
+\
+  var now = new Date().getTime(); \
+\
+  var distance = countDownDate - now;\
+\
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24)); \
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); \
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); \
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000); \
+\
+  document.getElementById(\"timer\").innerHTML = days + \"d \" + hours + \"h \" \
+  + minutes + \"m \" + seconds + \"s \"; \
+\
+  if (distance < 0) { \
+    clearInterval(x); \
+    document.getElementById(\"timer\").innerHTML = \"EXPIRED\"; \
+	window.location = \"?user=logout\"; \
+  } \
+}, 1000); \
+</script>");
+
 }
 
 void timerScript(int year, int month, int day, int hour, int minute, int second){
@@ -62,7 +89,7 @@ void timerScript(int year, int month, int day, int hour, int minute, int second)
   if (distance < 0) { \
     clearInterval(x); \
     document.getElementById(\"timer\").innerHTML = \"EXPIRED\"; \
-	alert(\"LOGOUT!\");\
+	window.location = \"?user=logout\"; \
   } \
 }, 1000); \
 </script>");

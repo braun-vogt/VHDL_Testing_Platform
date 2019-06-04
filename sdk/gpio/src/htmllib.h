@@ -10,5 +10,6 @@ void htmlFooter();
 void addTitleElement(char *title);
 void addUserModal(char *id);
 void timerScript(int year, int month, int day, int hour, int minute, int second);
+void timerScriptSeconds(long seconds);
 
 #endif	/* !_HTMLLIB_H*/

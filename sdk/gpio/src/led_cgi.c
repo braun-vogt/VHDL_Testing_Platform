@@ -275,8 +275,11 @@ int led_cgi_page(char **getvars, int form_method)
 		}
 	}
 
-	printf("<li>Timer: <p id=\"timer\"></p></li>\n");
-	timerScript(2019, (6-1), 4, 15, 4, 0);
+	printf("<li>Timer: <p id=\"timer\">EXPIRED</p></li>\n");
+	if(strcmp("logout", user)){
+		//timerScript(2019, (6-1), 4, 15, 4, 0);
+		timerScriptSeconds(300);
+	}
     printf("<li>User: <a data-toggle=\"modal\" href=\"#userModal\">%s</a></li>\n</ul>\n", user);
 	printf("</div>\n</nav>\n");
 	fflush(stdout);
