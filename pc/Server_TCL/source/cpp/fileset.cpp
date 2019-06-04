@@ -28,7 +28,7 @@ char init_files(files_t *fileset, configpath_s *config)
     {
         while ((dir = readdir(d)) != NULL)
         {
-            errorcode=resize_fileset(fileset,dir->d_name);
+            errorcode=resize_fileset(fileset,dir->d_name,*config);
             if(errorcode!=success)
             {
                 closedir(d);
@@ -39,7 +39,8 @@ char init_files(files_t *fileset, configpath_s *config)
     }
     if(0 != access(config->vhdloutpath, F_OK))
     {
-        printf("erzeuge ordner für abgearbeitete datein");
+        fprintf(config->log,"erzeuge ordner für abgearbeitete datein");
+        fflush(config->log);
 
         char hilf[256]="cd ";
         strcat(hilf,config->vhdloutpath);
@@ -50,10 +51,12 @@ char init_files(files_t *fileset, configpath_s *config)
 
     if(config->verbose)
     {
-        printf("input fileset:\n");
+        fprintf(config->log,"input fileset:\n");
+        fflush(config->log);
         for(int i=0; i<fileset->filenum; i++)
         {
-            printf("%s\n",fileset->file[i]);
+            fprintf(config->log,"%s\n",fileset->file[i]);
+            fflush(config->log);
             fflush(stdout);
         }
         printf("\n");
@@ -61,7 +64,7 @@ char init_files(files_t *fileset, configpath_s *config)
     return success;
 }
 
-char resize_fileset(files_t *fileset,char* dirname)
+char resize_fileset(files_t *fileset,char* dirname, configpath_s config)
 {
 
     files_t hilf;
@@ -79,7 +82,8 @@ char resize_fileset(files_t *fileset,char* dirname)
             hilf.file=(char**)realloc(fileset->file,fileset->filenum*sizeof(char*));
             if(hilf.file==0)
             {
-                printf("lost remalloc");
+                fprintf(config.log,"lost remalloc");
+                fflush(config.log);
                 return error_realloc;
             }
             else
@@ -89,7 +93,8 @@ char resize_fileset(files_t *fileset,char* dirname)
             hilfc=(char*)malloc(fnlm*sizeof(char));
             if(hilf.file==0)
             {
-                printf("lost malloc");
+                fprintf(config.log,"lost malloc");
+                fflush(config.log);
                 return error_malloc;
             }
             else
@@ -119,15 +124,16 @@ char init_portset(files_t *fileset, configpath_s *config)
         fileset->vhd=fopen(strcat(home,fileset->file[i]),"r");
         if(fileset->vhd==0)
         {
-            perror("error fileset");
-            printf("%s",home);
+            fprintf(config->log,"error init fileset %s", strerror(errno));
+            fprintf(config->log,"%s",home);
+            fflush(config->log);
             fflush(stdout);
             return error_openfile;
         }
         while(fgets(ports,256,fileset->vhd)!=0)
         {
 
-            error=resize_portset(fileset,analyce_ports(ports),fileset->file[i]);
+            error=resize_portset(fileset,analyce_ports(ports),fileset->file[i],config);
             if(error!=success)
             {
                 return error;
@@ -155,9 +161,9 @@ char ports_file(files_t *fileset,int filenum,int *portnum, configpath_s *config,
     fileset->vhd=fopen(strcat(home,fileset->file[filenum]),"r");
     if(fileset->vhd==0)
     {
-        perror("error fileset");
-        printf("%s",home);
-        fflush(stdout);
+        fprintf(config->log,"error init fileset %s", strerror(errno));
+        fprintf(config->log,"%s",home);
+        fflush(config->log);
         return error_openfile;
     }
     while(fgets(portsread,256,fileset->vhd)!=0)
@@ -165,7 +171,8 @@ char ports_file(files_t *fileset,int filenum,int *portnum, configpath_s *config,
 
         if((strcmp(analyce_ports(portsread),"IGNORE")!=0))
         {
-            printf("\nPORT %s \n",portsread);
+            fprintf(config->log,"\nPORT %s \n",portsread);
+            fflush(config->log);
             strcpy(ports[i],portsread);
             i++;
         }
@@ -181,7 +188,7 @@ char ports_file(files_t *fileset,int filenum,int *portnum, configpath_s *config,
 char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *config, char ports[][256],int *pinnum,int *anzahl)
 {
     char home[256];
-    strcat(home,config->vhdloutpath);
+    strcpy(home,config->vhdloutpath);
     strcat(home,fileset->file[filenum]);
 
     strtok(home,".");
@@ -194,19 +201,24 @@ char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *con
     fileset->vhd=fopen(home,"r");
     if(fileset->vhd==0)
     {
-        perror("error fileset");
-        printf("%s",home);
-        fflush(stdout);
+        fprintf(config->log,"error init portfile %s", strerror(errno));
+        fprintf(config->log,"%s",home);
+        fflush(config->log);
         return error_openfile;
     }
     while(fgets(portsread,256,fileset->vhd)!=0)
     {
-        if(strstr(portsread,"PAR_TEST_GPIO0_IN : in STD_LOGIC_VECTOR")!=0)
+        for(int i=0;i<256*2;i++)
+        {
+            portsread[i] = toupper(portsread[i]);
+        }
+        if(strstr(portsread,"PAR_TEST_GPIO0_IN : IN STD_LOGIC_VECTOR")!=0)
         {
             int from=0,to=0;
             char temp[256];
             sscanf(portsread,"%*[^0-9]%d %s %d ",&to,temp,&from);
-
+            fprintf(config->log,"GPIO IN from: %d to %d\n",from,to);
+            fflush(config->log);
 
             if(to<from)
             {
@@ -242,12 +254,15 @@ char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *con
 
             }
         }
-        else if(strstr(portsread,"PAR_TEST_GPIO0_OUT : out STD_LOGIC_VECTOR")!=0)
+        else if(strstr(portsread,"PAR_TEST_GPIO0_OUT : OUT STD_LOGIC_VECTOR")!=0)
         {
             int from=0,to=0 ;
-            printf("DRINNEN GPIO_OUT");
-            fflush(stdout);
+
+            fprintf(config->log,"DRINNEN GPIO_OUT\n");
+            fflush(config->log);
             sscanf(portsread,"%*[^0-9]%d %*[^0-9]%d ",&to,&from);
+            fprintf(config->log,"GPIO OUT from: %d to %d\n",from,to);
+            fflush(config->log);
 
             if(to<from)
             {
@@ -285,7 +300,8 @@ char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *con
 
         if((strcmp(analyce_ports(portsread),"IGNORE")!=0))
         {
-            printf("\nPORT %s \n",portsread);
+            fprintf(config->log,"\nPORT %s \n",portsread);
+            fflush(config->log);
             strcpy(ports[i],portsread);
             i++;
         }
@@ -300,7 +316,7 @@ char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *con
 
 
 
-char resize_portset(files_t *fileset, char *portname,char *file)
+char resize_portset(files_t *fileset, char *portname,char *file, configpath_s *config)
 {
     char resice=true;
     files_t hilf;
@@ -336,7 +352,8 @@ char resize_portset(files_t *fileset, char *portname,char *file)
                 }
                 else
                 {
-                    printf("resice port malloc error");
+                    fprintf(config->log,"resice port malloc error");
+                    fflush(config->log);
                     return error_realloc;
                 }
 
@@ -347,7 +364,8 @@ char resize_portset(files_t *fileset, char *portname,char *file)
                 }
                 else
                 {
-                    printf("resice port calloc error");
+                    fprintf(config->log,"resice port calloc error");
+                    fflush(config->log);
                     return error_malloc;
                 }
                 strcpy(fileset->ports[fileset->portsnum-1],portname);
@@ -542,13 +560,15 @@ char modifyentity(files_t *fileset, int currentfile, configpath_s config)
 
     if(config.verbose)
     {
-        printf("input file modent :%s \n",fileset->file[currentfile]);
+        fprintf(config.log,"\nInput File for Modify entity :%s \n",fileset->file[currentfile]);
     }
 
     if(inputfile==0)
     {
-        printf("%s\n",hilf);
-        perror("VHD InputFile nicht lesbar modentity\n");
+        fprintf(config.log,"VHD InputFile nicht lesbar modentity %s\n", strerror(errno));
+        fprintf(config.log,"%s\n",hilf);
+        fflush(config.log);
+
         return error_openfile;
     }
 
@@ -561,8 +581,9 @@ char modifyentity(files_t *fileset, int currentfile, configpath_s config)
 
     if(entityfile==0)
     {
-        printf("%s\n",hilf);
-        perror("VHD Entityfile nicht lesbar\n");
+        fprintf(config.log,"VHD Entityfile nicht lesbar %s\n", strerror(errno));
+        fprintf(config.log,"%s\n",hilf);
+        fflush(config.log);
         return error_openfile;
     }
 
@@ -575,8 +596,9 @@ char modifyentity(files_t *fileset, int currentfile, configpath_s config)
 
     if(outputfile==0)
     {
-        printf("%s\n",hilf);
-        perror("VHD OutputFile nicht schreibbar\n");
+        fprintf(config.log,"VHD OutputFile nicht schreibbar%s\n", strerror(errno));
+        fprintf(config.log,"%s\n",hilf);
+        fflush(config.log);
         return error_openfile;
     }
 
@@ -603,11 +625,6 @@ char modifyentity(files_t *fileset, int currentfile, configpath_s config)
 
         if(strstr(hilf,"END"))
         {
-            if(config.verbose)
-            {
-                printf("End of Entity\n");
-            }
-
             startwriting=true;
         }
     }
@@ -630,7 +647,8 @@ char modifyentity(files_t *fileset, int currentfile, configpath_s config)
 
     if(config.verbose)
     {
-        printf("CPY COMMAND : %s\n",hilf);
+        fprintf(config.log,"Writing copy from original to : %s\n",hilf);
+        fflush(config.log);
     }
     system(hilf);
 
@@ -643,7 +661,8 @@ char modifyentity(files_t *fileset, int currentfile, configpath_s config)
 
     if(config.verbose)
     {
-        printf("Mov finished entity from to : %s \n",hilf);
+        fprintf(config.log,"Mov finished entity from to : %s \n",hilf);
+        fflush(config.log);
     }
 
     return success;
@@ -663,8 +682,9 @@ char modifyentitypar(files_t *fileset, int currentfile, configpath_s config, cha
 
     if(inputfile==0)
     {
-        printf("%s\n",hilf);
-        perror("VHD InputFile nicht lesbar modparentity \n");
+        fprintf(config.log,"VHD InputFile nicht lesbar modparentity %s \n", strerror(errno));
+        fprintf(config.log,"%s\n",hilf);
+        fflush(config.log);
         return error_openfile;
     }
 
@@ -678,8 +698,9 @@ char modifyentitypar(files_t *fileset, int currentfile, configpath_s config, cha
 
     if(entityfile==0)
     {
-        printf("%s\n",hilf);
-        perror("VHD Entityfile nicht lesbar\n");
+        fprintf(config.log,"VHD Entityfile nicht lesbar %s \n", strerror(errno));
+        fprintf(config.log,"%s\n",hilf);
+        fflush(config.log);
         return error_openfile;
     }
 
@@ -692,8 +713,9 @@ char modifyentitypar(files_t *fileset, int currentfile, configpath_s config, cha
 
     if(outputfile==0)
     {
-        printf("%s\n",hilf);
-        perror("VHD OutputFile nicht schreibbar\n");
+        fprintf(config.log,"VHD OutputFile nicht schreibbar %s \n", strerror(errno));
+        fprintf(config.log,"%s\n",hilf);
+        fflush(config.log);
         return error_openfile;
     }
 
@@ -746,7 +768,8 @@ char modifyentitypar(files_t *fileset, int currentfile, configpath_s config, cha
 
     if(config.verbose)
     {
-        printf("Mov finished entity from to : %s \n",hilf);
+        fprintf(config.log,"Mov finished entity from to : %s \n",hilf);
+        fflush(config.log);
     }
     return success;
 }

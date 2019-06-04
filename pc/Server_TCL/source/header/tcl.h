@@ -1,12 +1,14 @@
 #ifndef TCL_H_INCLUDED
 #define TCL_H_INCLUDED
 
+#include <stddef.h>
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
 #include <stddef.h>
+#include <errno.h>
 #include "../header/config.h"
 
 typedef struct tclfiles_s

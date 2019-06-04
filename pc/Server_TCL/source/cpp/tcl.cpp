@@ -1,10 +1,6 @@
 #include "../header/tcl.h"
-#include <dirent.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <iostream>
-#include <stddef.h>
+
+
 
 //char parsices[8]= {6,4,5,2,0,1,3,7};
 //#ifndef pars
@@ -18,7 +14,8 @@ char init_tclfiles(tclfiles_t *tcl,configpath_s *config)
     tcl->inpar=fopen(tcl->tclinpath,"r");
     if(tcl->inpar==0)
     {
-        perror("Error open file synthesice_par.tcl");
+        fprintf(config->log,"Error open file synthesice_par.tcl %s \n",strerror(errno));
+        fflush(config->log);
         return failture_open;
     }
 
@@ -27,7 +24,8 @@ char init_tclfiles(tclfiles_t *tcl,configpath_s *config)
     tcl->inwho=fopen(tcl->tclinpath,"r");
     if(tcl->inwho==0)
     {
-        perror("Error open file synthesice_whole.tcl");
+        fprintf(config->log,"Error open file synthesice_whole.tcl %s ", strerror(errno));
+        fflush(config->log);
         return failture_open;
     }
 
@@ -36,7 +34,8 @@ char init_tclfiles(tclfiles_t *tcl,configpath_s *config)
     tcl->outpar=fopen(tcl->tcloutpath,"w+");
     if(tcl->outpar==0)
     {
-        perror("Error open file sspar.tcl");
+        fprintf(config->log,"Error open file sspar.tcl %s", strerror(errno));
+        fflush(config->log);
         return failture_open;
     }
 
@@ -45,7 +44,8 @@ char init_tclfiles(tclfiles_t *tcl,configpath_s *config)
     tcl->outwho=fopen(tcl->tcloutpath,"w+");
     if(tcl->outwho==0)
     {
-        perror("Error open file sswhole.tcl");
+        fprintf(config->log,"Error open file sswhole.tcl %s", strerror(errno));
+        fflush(config->log);
         return failture_open;
     }
 
@@ -84,9 +84,9 @@ char modifypartcl(tclfiles_t *tcl,char *filename,configpath_s *config)
             strcat(scriptline,config->constrainpath);
             strcat(scriptline,"final.xdc\n");
         }
-        else if(strstr(scriptline,"write_edif ./Dokumente/git/VHDL_Testing_Platform/proj/part.edif")) //TO change
+        else if(strstr(scriptline,"write_edif -force ./Dokumente/git/VHDL_Testing_Platform/proj/part.edif")) //TO change
         {
-            scriptline[11]='\0';
+            scriptline[18]='\0';
             strcat(scriptline,config->dcpoutpath);
             strcat(scriptline,filename);
             char* pointer=strstr(scriptline,"vhd");
@@ -107,9 +107,9 @@ char modifypartcl(tclfiles_t *tcl,char *filename,configpath_s *config)
             strcat(scriptline,filename);
             strcat(scriptline,"\n");
         }
-        else if(strstr(scriptline,"write_checkpoint ./Dokumente/git/VHDL_Testing_Platform/proj/part.dcp"))   //TO change
+        else if(strstr(scriptline,"write_checkpoint -force ./Dokumente/git/VHDL_Testing_Platform/proj/part.dcp"))   //TO change
         {
-            scriptline[17]='\0';
+            scriptline[24]='\0';
             strcat(scriptline,config->dcpoutpath);
             strcat(scriptline,filename);
             char* pointer=strstr(scriptline,"vhd");
@@ -134,8 +134,9 @@ char modifypartcl(tclfiles_t *tcl,char *filename,configpath_s *config)
 char modifywholetcl(tclfiles_t *tcl,char *filename,configpath_s *config, char parnum)
 {
     char scriptline[256*2];
-
-    printf("PARNUM AUSWAHL %d\n",parnum);
+    fprintf(config->log,"Beginning of modifywholetcl\n\n");
+    fprintf(config->log,"\nPARNUM AUSWAHL %d\n",parnum);
+    fflush(config->log);
 
     fseek(tcl->outwho,0,SEEK_SET);
     fseek(tcl->inwho,0,SEEK_SET);
@@ -143,7 +144,8 @@ char modifywholetcl(tclfiles_t *tcl,char *filename,configpath_s *config, char pa
     {
         if(config->verbose)
         {
-            printf("%s\n",scriptline);
+            fprintf(config->log,"%s\n",scriptline);
+            fflush(config->log);
         }
         if(strstr(scriptline,"add_files ./Dokumente/git/VHDL_Testing_Platform/src/constraints/final.xdc"))
         {
@@ -193,7 +195,8 @@ char modifywholetcl(tclfiles_t *tcl,char *filename,configpath_s *config, char pa
             scriptline[48]='\0';
             strcat(scriptline,pars[(int)parnum]);
 
-            printf("\n\n\n\n\n\n PARNUM + PAR AUSWAHL %s %d",pars[(int)parnum],parnum);
+            fprintf(config->log,"\n\n PARNUM + PAR AUSWAHL %s %d",pars[(int)parnum],parnum);
+            fflush(config->log);
             strcat(scriptline,"} -part xc7z020clg400-1 -top top");
             strcat(scriptline,"\n\0");
         }
@@ -247,7 +250,8 @@ char modifywholetcl(tclfiles_t *tcl,char *filename,configpath_s *config, char pa
             strcat(scriptline,config->constrainpath);
             strcat(scriptline,"final.xdc] \n");
         }
-        printf("%s \n", scriptline);
+        fprintf(config->log,"%s \n", scriptline);
+        fflush(config->log);
         fprintf(tcl->outwho,"%s",scriptline);
         fflush(tcl->outwho);
     }

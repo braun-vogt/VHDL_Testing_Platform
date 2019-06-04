@@ -16,6 +16,7 @@
 #include "./source/header/json.h"
 #include "./source/header/managefiles.h"
 #include "./source/header/vivado.h"
+#include "./source/header/waiter.h"
 
 //#define create_products
 
@@ -27,10 +28,9 @@ char reinitfileset(files_t *fileset,configpath_s *config);
 
 void filljson(configpath_s *config, files_t *fileset,json_t *new_user, int currentfile, char *fset,char parnum);
 
-
+void freeall(configpath_s *config,files_t *fileset);
 int main(int argc, char* argv[])
 {
-
     char fset=true;
     configpath config;
     files_t fileset;
@@ -49,9 +49,12 @@ int main(int argc, char* argv[])
     //Init all basic structs
     if(init(&config,&fileset,&tcl, &userinput, &input)!=0)
     {
-        printf("Error initing!!!");
+        fprintf(config.log,"Error initing!!!");
+        fflush(config.log);
         return -1;
     }
+    //void (*fp)(configpath_s &config,files_t &fileset);
+    //atexit( fp);
     char usedpars[8];
     for(int i=0; i<8; i++)
     {
@@ -75,7 +78,8 @@ int main(int argc, char* argv[])
 
             if(parselog(&res,&config,&parnum)==-1)
             {
-                printf("INITAILY UNROUTABLE FATAL ERROR\n");
+                fprintf(config.log,"INITAILY UNROUTABLE FATAL ERROR\n");
+                fflush(config.log);
             }
 
             if(containsport(&fileset,"UART_ZYNQ_RXD") || containsport(&fileset,"UART_ZYNQ_TXD"))
@@ -90,6 +94,7 @@ int main(int argc, char* argv[])
                     if(usedpars[a]==parnum)
                     {
                         parnum=changeparnum(parnum);
+                        fprintf(config.log,"parsice equals %d",parnum);
                         a=0;
                     }
                 }
@@ -110,7 +115,8 @@ int main(int argc, char* argv[])
 
                 if(config.verbose)
                 {
-                    printf("File before modparent :%s \n",fileset.file[i]);
+                    fprintf(config.log,"File before modparent :%s \n",fileset.file[i]);
+                    fflush(config.log);
                 }
 
 
@@ -125,7 +131,8 @@ int main(int argc, char* argv[])
 
                 if(config.verbose)
                 {
-                    printf("\n\n USER :%s  \n DESIGN %s \n, parnum %d\n",fileset.file[i],fileset.file[i],parnum);
+                    fprintf(config.log,"\n\n USER :%s  \n DESIGN %s \n, parnum %d\n",fileset.file[i],fileset.file[i],parnum);
+                    fflush(config.log);
                 }
 
 #ifdef create_products
@@ -134,20 +141,26 @@ int main(int argc, char* argv[])
 
                 if(config.verbose)
                 {
-                    printf("File before managebitfiles :%s \n",fileset.file[i]);
+                    fprintf(config.log,"File before managebitfiles :%s \n",fileset.file[i]);
+                    fflush(config.log);
                 }
                 managebitfiles(&config,&fileset,i);
 
                 if(config.verbose)
                 {
-                    printf("File before filljson :%s \n",fileset.file[i]);
+                    fprintf(config.log,"\nFile before filljson :%s \n",fileset.file[i]);
+                    fflush(config.log);
                 }
                 filljson(&config, &fileset,&new_user, i, &fset, parnum);
                 movefinishedfiles( fileset, config, i );
             }
         }
 
-        sleep(5);
+        if(waitfornewfiles(config)==-1)
+        {
+            fprintf(config.log,"inotifywait watch wurde beendet oder war nicht erfolgreich\n");
+            return 0;
+        }
 
         for(int i=0; i<8; i++)
         {
@@ -156,7 +169,8 @@ int main(int argc, char* argv[])
 
         if(reinitfileset(&fileset,&config)!=0)
         {
-            printf("error initing fileset");
+            fprintf(config.log,"error initing fileset");
+            fflush(config.log);
             return -1;
         }
         fset=true;
@@ -177,39 +191,44 @@ char reinitfileset(files_t *fileset,configpath_s *config)
         free_fileset(fileset);
         if(init_fileset(fileset)!=success)
         {
-            printf("error malloc");
+            fprintf(config->log,"error malloc");
+            fflush(config->log);
             return error_malloc;
         }
 
         if(init_files(fileset,config)!=success)
         {
-            printf("error initfileset");
-            printf("error :%d",init_files(fileset,config));
+            fprintf(config->log,"error initfileset");
+            fprintf(config->log,"error :%d",init_files(fileset,config));
+            fflush(config->log);
             return -1;
         }
 
         if(init_portset(fileset,config)!=success)
         {
-            printf("error init portset");
-            printf("error :%d",init_portset(fileset,config));
+            fprintf(config->log,"error init portset");
+            fprintf(config->log,"error :%d",init_portset(fileset,config));
+            fflush(config->log);
             return -1;
         }
 
 
         if(config->verbose)
         {
-            printf("\nIncluded ports\n");
+            fprintf(config->log,"\nIncluded ports\n");
+            fflush(config->log);
             for(int i=0; i<fileset->portsnum; i++)
             {
-                printf("%s\n",fileset->ports[i]);
+                fprintf(config->log,"%s\n",fileset->ports[i]);
             }
 
-            printf("Included files\n");
+            fprintf(config->log,"Included files\n");
+            fflush(config->log);
             for(int i=0; i<fileset->filenum; i++)
             {
-                printf("%s\n",fileset->file[i]);
+                fprintf(config->log,"%s\n",fileset->file[i]);
             }
-            printf("\n\n");
+            fprintf(config->log,"\n\n");
         }
 
         return 0;
@@ -220,19 +239,22 @@ char init(configpath *config, files_t *fileset,tclfiles_t *tcl,pthread_t *userin
 
     if(getconfig(config)==-1)
     {
-        printf("error opening vonfig");
+        fprintf(config->log,"error opening config");
+        fflush(config->log);
         return -1;
     }
 
     if(init_fileset(fileset)!=success)
     {
-        printf("error malloc");
+        fprintf(config->log,"error malloc");
+        fflush(config->log);
         return error_malloc;
     }
 
     if(init_tclfiles(tcl,config)!=tcl_success)
     {
-        printf("error opentcl");
+        fprintf(config->log,"error opentcl");
+        fflush(config->log);
         return failture_open;
     }
 
@@ -248,51 +270,61 @@ char init(configpath *config, files_t *fileset,tclfiles_t *tcl,pthread_t *userin
         strcat(hilf,"create_project.tcl ");
         strcat(hilf,config->tclinpath);
         strcat(hilf,"dynparrec.tcl \n'");
-        printf("%s", hilf);
+        fprintf(config->log,"%s", hilf);
+        fflush(config->log);
         system(hilf);
     }
 
     if(init_files(fileset,config)!=success)
     {
-        printf("error initfileset");
-        printf("error :%d",init_files(fileset,config));
+        fprintf(config->log,"error initfileset");
+        fprintf(config->log,"error :%d",init_files(fileset,config));
+        fflush(config->log);
         return 1;
     }
 
     if(init_portset(fileset,config)!=success)
     {
-        printf("error init portset");
-        printf("error initfileset");
-        printf("error :%d",init_portset(fileset,config));
+        fprintf(config->log,"error init portset");
+        fprintf(config->log,"error initfileset");
+        fprintf(config->log,"error :%d",init_portset(fileset,config));
+        fflush(config->log);
         return 1;
     }
 
     if(config->verbose)
     {
-        printf("\nIncluded ports\n");
+        fprintf(config->log,"\nIncluded ports\n");
+        fflush(config->log);
         for(int i=0; i<fileset->portsnum; i++)
         {
-            printf("%s\n",fileset->ports[i]);
+            fprintf(config->log,"%s\n",fileset->ports[i]);
+            fflush(config->log);
         }
 
-        printf("Included files\n");
+        fprintf(config->log,"\nIncluded files\n");
+        fflush(config->log);
         for(int i=0; i<fileset->filenum; i++)
         {
-            printf("%s\n",fileset->file[i]);
+            fprintf(config->log,"%s\n",fileset->file[i]);
+            fflush(config->log);
         }
-        printf("\n\n");
+        fprintf(config->log,"\n\n");
+        fflush(config->log);
     }
 
 
     if (pthread_create(userinput, NULL, inputhandling, input) != 0)
     {
-        printf("\ncan't create thread :[%s]", strerror(pthread_create(userinput, NULL, inputhandling, input)));
+        fprintf(config->log,"\ncan't create thread :[%s]", strerror(pthread_create(userinput, NULL, inputhandling, input)));
+        fflush(config->log);
         return -1;
     }
 
     if(config->verbose)
     {
-        printf("\n Thread created successfully\n");
+        fprintf(config->log,"Thread created successfully\n\n");
+        fflush(config->log);
     }
 
     return 0;
@@ -306,6 +338,7 @@ void *inputhandling(void *in)
         scanf("%c",input);
         if(*input=='e')
         {
+            removewatch();
             pthread_exit(0);
         }
     }

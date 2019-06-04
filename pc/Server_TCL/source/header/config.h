@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <unistd.h>
 #include <pthread.h>
+
 typedef struct configpath_s
 {
     char device[256];
@@ -43,6 +44,8 @@ typedef struct configpath_s
     char jsonpath[256];
 
     int verbose;
+
+    char camerapath[1024];
 
 }configpath;
 

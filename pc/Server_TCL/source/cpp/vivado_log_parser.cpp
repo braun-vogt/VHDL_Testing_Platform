@@ -22,7 +22,8 @@ char parselog(resources_t *res,configpath_s *config, char *parnum)
 
     if(config->verbose)
     {
-        printf("\n Logpath :%s\n",config->reportinpath);
+        fprintf(config->log,"\nLogpath :%s\n",config->reportinpath);
+        fflush(config->log);
     }
 
     FILE *LOGFILE;
@@ -46,7 +47,8 @@ char parselog(resources_t *res,configpath_s *config, char *parnum)
             }
             log[35]='\0';
             sscanf(log,"%ld",&(res->LUTS));
-            printf("LUTS: %ld\n",res->LUTS);
+            fprintf(config->log,"LUTS: %ld\n",res->LUTS);
+            fflush(config->log);
         }
 
         if(strstr(log,"| Slice Registers         |"))
@@ -57,7 +59,8 @@ char parselog(resources_t *res,configpath_s *config, char *parnum)
             }
             log[33]='\0';
             sscanf(log,"%ld",&(res->SLICES));
-            printf("SLICES: %ld\n",res->SLICES);
+            fprintf(config->log,"SLICES: %ld\n",res->SLICES);
+            fflush(config->log);
         }
 
         if(strstr(log,"|   RAMB36/FIFO* |"))
@@ -68,7 +71,8 @@ char parselog(resources_t *res,configpath_s *config, char *parnum)
             }
             log[25]='\0';
             sscanf(log,"%ld",&(res->RAM));
-            printf("RAM: %ld\n",res->RAM);
+            fprintf(config->log,"RAM: %ld\n",res->RAM);
+            fflush(config->log);
         }
         if(strstr(log,"| DSPs      |"))
         {
@@ -79,17 +83,20 @@ char parselog(resources_t *res,configpath_s *config, char *parnum)
             log[20]='\0';
 
             sscanf(log,"%ld",&(res->DSP));
-            printf("DSP: %ld\n",res->DSP);
+            fprintf(config->log,"DSP: %ld\n",res->DSP);
+            fflush(config->log);
         }
     }
     selectpar(res,parnum);
     if(*parnum==-1)
     {
-        printf("unroutable");
+        fprintf(config->log,"unroutable");
+        fflush(config->log);
         return -1;
     }
 
-    printf("Partieles file %d \n",*parnum);
+    fprintf(config->log,"Partieles file %d \n",*parnum);
+    fflush(config->log);
     return 1;
 }
 
@@ -127,7 +134,7 @@ char changeparnum(char parnum)
     {
         if(parnum==parsices[i])
         {
-            printf("parsice equals %d",parnum);
+
             break;
         }
     }
