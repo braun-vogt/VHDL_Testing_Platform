@@ -281,7 +281,7 @@ int led_cgi_page(char **getvars, int form_method)
 		//timerScript(2019, (6-1), 4, 15, 4, 0);
 		timerScriptSeconds(300);
 	}
-    printf("<li>User: <a data-toggle=\"modal\" href=\"#userModal\">%s</a></li>\n</ul>\n", user);
+    printf("<li>User: <a data-toggle=\"modal\" href=\"#userModal\" class=\"badge badge-primary\">%s</a></li>\n</ul>\n", user);
 	printf("</div>\n</nav>\n");
 
 	if(strcmp("welcome", user) == 0){
@@ -328,7 +328,9 @@ int led_cgi_page(char **getvars, int form_method)
 	printf("<h6>%s </h6>\n", firstFlash ? "Welcome!" : "Welcome Back!");
 
 	printf("<a role=\"button\" href=gpio?user=%s class=\"btn btn-primary\">Update</a>\n", user);
-	printf("<iframe width=\"660\" height=\"500\" src=\"http://ictsrv012.ict.tuwien.ac.at/videostream.cgi?user=view&pwd=\" frameborder=\"0\" allowfullscreen></iframe>\n");
+	printf("<div class=\"embed-responsive embed-responsive-4by3\">\n"
+			"<iframe class=\"embed-responsive-item\" src=\"http://ictsrv012.ict.tuwien.ac.at/videostream.cgi?user=view&pwd=\" frameborder=\"0\" allowfullscreen></iframe>\n"
+			"</div>\n");
 
 	return 0;
 }
