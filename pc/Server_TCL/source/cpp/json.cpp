@@ -61,14 +61,6 @@ void filljson(configpath_s *config, files_t *fileset,json_t *new_user, int curre
     addconnections(new_user,portsnames,ports,*config);
     new_user->pblock=parnum;
 
-    strcpy(hilf,config->jsonpath);
-    strcat(hilf,"users.json");
-    char hilf2[500];
-    strcpy(hilf2, "scp ");
-    strcat(hilf2, hilf);
-    strcat(hilf2, " ");
-    strcat(hilf2,config->scpbitdestpath);
-    system(hilf2);
 
     strcpy(hilf,fileset->file[currentfile]);
     pointer=strstr(hilf,".vhd");
@@ -97,6 +89,15 @@ void filljson(configpath_s *config, files_t *fileset,json_t *new_user, int curre
 
 
     parse_json(data, hilf);
+
+    strcpy(hilf,config->jsonpath);
+    strcat(hilf,"users.json");
+    char hilf2[500];
+    strcpy(hilf2, "scp ");
+    strcat(hilf2, hilf);
+    strcat(hilf2, " ");
+    strcat(hilf2,config->scpbitdestpath);
+    system(hilf2);
 }
 void addconnections(json_t *config,char connections[][256],int concount,configpath_s conf)
 {

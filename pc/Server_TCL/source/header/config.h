@@ -11,6 +11,8 @@
 
 typedef struct configpath_s
 {
+    int maxportnum;
+    char vivadologpath[256];
     char device[256];
 
     char entitypath[2048];

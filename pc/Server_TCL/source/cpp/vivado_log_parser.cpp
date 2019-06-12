@@ -27,7 +27,7 @@ char parselog(resources_t *res,configpath_s *config, char *parnum)
     }
 
     FILE *LOGFILE;
-    char log[500]="";
+    char log[256*3]="";
     strcpy(log,config->reportinpath);
     strcat(log,"report.txt");
     LOGFILE=fopen(log,"r");
@@ -37,7 +37,7 @@ char parselog(resources_t *res,configpath_s *config, char *parnum)
         return -1;
     }
 
-    while(fgets(log,256*2,LOGFILE)!=0)
+    while(fgets(log,256*3,LOGFILE)!=0)
     {
         if(strstr(log,"| Slice LUTs*             |"))
         {
@@ -134,7 +134,6 @@ char changeparnum(char parnum)
     {
         if(parnum==parsices[i])
         {
-
             break;
         }
     }

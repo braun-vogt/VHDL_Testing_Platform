@@ -2,7 +2,7 @@
 
 void startparvivado(configpath_s *config)
 {
-    char cop[256*2]=" bash -c 'cd ";
+    char cop[256*4]=" bash -c 'cd ";
     strcat(cop,config->projectpath);
     strcat(cop," && source ");
     strcat(cop,config->vivadopath);
@@ -24,11 +24,20 @@ void startparvivado(configpath_s *config)
     {
         fprintf(config->log,"vivado log\n");
         fflush(config->log);
-        strcat(cop,config->logpath);
+        strcat(cop,config->vivadologpath);
         strcat(cop,"'");
         fflush(config->log);
+        if(config->verbose)
+        {
+            fprintf(config->log,"Config log:%s\n",config->logpath);
+            fflush(config->log);
+        }
+        //strcat(cop," && echo done ");
         fclose(config->log);
         system(cop);
+
+
+
         config->log=fopen(config->logpath,"a");
         if(config->log==0)
         {
@@ -62,7 +71,7 @@ void startwhovivado(configpath_s *config)
     {
         fprintf(config->log,"vivado log\n");
         fflush(config->log);
-        strcat(cop,config->logpath);
+        strcat(cop,config->vivadologpath);
         strcat(cop,"'");
         fflush(config->log);
         fclose(config->log);

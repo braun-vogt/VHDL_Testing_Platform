@@ -45,6 +45,7 @@
 		<Unit filename="source/cpp/tcl.cpp" />
 		<Unit filename="source/cpp/vivado.cpp" />
 		<Unit filename="source/cpp/vivado_log_parser.cpp" />
+		<Unit filename="source/cpp/waiter.cpp" />
 		<Unit filename="source/header/config.h">
 			<Option compile="1" />
 		</Unit>
@@ -67,6 +68,9 @@
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="source/header/vivado_log_parser.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="source/header/waiter.h">
 			<Option compile="1" />
 		</Unit>
 		<Extensions>

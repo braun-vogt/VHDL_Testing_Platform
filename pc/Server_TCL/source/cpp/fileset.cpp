@@ -17,6 +17,13 @@ char init_fileset(files_t *fileset)
     fileset->portsnum=0;
     return success;
 }
+char reinit_files(files_t *fileset)
+{
+    fileset->file=(char**)malloc(sizeof(char*));
+    fileset->file[0]=(char*)malloc(sizeof(char)*fnlm);
+    fileset->filenum=0;
+    return success;
+}
 
 char init_files(files_t *fileset, configpath_s *config)
 {
@@ -24,6 +31,7 @@ char init_files(files_t *fileset, configpath_s *config)
     struct dirent *dir;
     d=opendir(config->vhdlinpath);
     char errorcode;
+
     if(d)
     {
         while ((dir = readdir(d)) != NULL)
@@ -208,9 +216,9 @@ char ports_file_num(files_t *fileset,int filenum,int *portnum, configpath_s *con
     }
     while(fgets(portsread,256,fileset->vhd)!=0)
     {
-        for(int i=0;i<256*2;i++)
+        for(int k=0;k<256*2;k++)
         {
-            portsread[i] = toupper(portsread[i]);
+            portsread[k] = toupper(portsread[k]);
         }
         if(strstr(portsread,"PAR_TEST_GPIO0_IN : IN STD_LOGIC_VECTOR")!=0)
         {

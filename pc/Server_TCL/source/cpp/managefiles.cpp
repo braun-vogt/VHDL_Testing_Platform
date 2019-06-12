@@ -54,11 +54,21 @@ char managebitfiles(configpath_s *config, files_t *fileset, int currentfile)
         fprintf(config->log,"scp bitfile path %s",hilf2);
         fflush(config->log);
     }
+    strcat(hilf2," >> ");
+    strcat(hilf2,config->logpath);
+
+    fclose(config->log);
     system(hilf2);
 
     for(int i=0; i<500; i++)
     {
         hilf2[i]='\0';
+    }
+    config->log=fopen(config->logpath,"a");
+    if(config->log==0)
+    {
+        fprintf(config->log,"fatal error log not found");
+        fflush(config->log);
     }
 
     //remove transfered files

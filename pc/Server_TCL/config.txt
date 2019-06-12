@@ -1,3 +1,9 @@
+#set path of vivadolog (its possible to take the same as the normal log file)
+vivadologpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/log
+
+#set max used ports before beginnig a new fileset
+maxportnum=9;
+
 #set logfile location
 logpath=/home/fbraun-lokal/git/VHDL_Testing_Platform/proj/oproduct/log
 

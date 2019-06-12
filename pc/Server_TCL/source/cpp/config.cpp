@@ -23,81 +23,96 @@ char testpath(configpath_s *config)
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->bitoutpath);
         return -1;
     }
-    else if (0 != access(config->constrainpath, F_OK))
+    if (0 != access(config->constrainpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->constrainpath);
         return -1;
     }
-    else if (0 != access(config->dcpinpath, F_OK))
+    if (0 != access(config->dcpinpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->dcpinpath);
         return -1;
     }
-    else if (0 != access(config->dcpoutpath, F_OK))
+    if (0 != access(config->dcpoutpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->dcpoutpath);
         return -1;
     }
-    else if (0 != access(config->dcpsavpath, F_OK))
+    if (0 != access(config->dcpsavpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->dcpsavpath);
         return -1;
     }
-    else if (0 != access(config->jsonpath, F_OK))
+    if (0 != access(config->jsonpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->jsonpath);
         return -1;
     }
-    else if (0 != access(config->projectpath, F_OK))
+    if (0 != access(config->projectpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->projectpath);
         return -1;
     }
-    else if (0 != access(config->reportinpath, F_OK))
+    if (0 != access(config->reportinpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->reportinpath);
         return -1;
     }
-    else if (0 != access(config->reportoutpath, F_OK))
+    if (0 != access(config->reportoutpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->reportoutpath);
         return -1;
     }
-    else if (0 != access(config->scpbitdestpath, F_OK))
+    if (0 != access(config->scpbitdestpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->scpbitdestpath);
         //return -1;
     }
-    else if (0 != access(config->tclinpath, F_OK))
+    if (0 != access(config->tclinpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->tclinpath);
         return -1;
     }
-    else if (0 != access(config->tcloutpath, F_OK))
+    if (0 != access(config->tcloutpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->tcloutpath);
         return -1;
     }
-    else if (0 != access(config->vhdlinpath, F_OK))
+    if (0 != access(config->vhdlinpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->vhdlinpath);
         return -1;
     }
-    else if (0 != access(config->vhdloutpath, F_OK))
+    if (0 != access(config->vhdloutpath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->vhdloutpath);
         return -1;
     }
-    else if (0 != access(config->vivadopath, F_OK))
+    if (0 != access(config->vivadopath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->vivadopath);
         return -1;
     }
-    else if (0 != access(config->entitypath, F_OK))
+    if (0 != access(config->entitypath, F_OK))
     {
         fprintf(config->log,"Pfad nicht erreichbar: %s",config->entitypath);
         return -1;
     }
+
+    fprintf(config->log,"HERER: %s",config->vivadologpath);
+
+    if (0 != access(config->vivadologpath, F_OK))
+    {
+        fprintf(config->log,"Pfad nicht erreichbar: %s",config->vivadologpath);
+        return -1;
+
+    }
+    if(strcmp(config->vivadologpath,"/dev/null"))
+    {
+            strcat(config->vivadologpath,"log.txt");
+            fprintf(config->log,"APPEND: %s",config->vivadologpath);
+    }
+
 
 
     return 0;
@@ -115,6 +130,11 @@ void getpath(char *input, char * dest)
         strcat(pointer,bslh);
     }
     strcpy(dest,pointer);
+
+    if(!strcmp(dest,"/dev/null/"))
+    {
+        dest[strlen(dest)-1]=0;
+    }
 }
 
 void getint(char *input, int * dest)
@@ -142,6 +162,15 @@ char getconfig(configpath *configs)
         if(strstr(input,"device="))
         {
             getpath(input,configs->device);
+        }
+        else if(strstr(input,"vivadologpath="))
+        {
+            getpath(input,configs->vivadologpath);
+        }
+
+        else if(strstr(input,"maxportnum="))
+        {
+            getint(input,&(configs->maxportnum));
         }
         else if(strstr(input,"camera="))
         {
@@ -246,7 +275,10 @@ char getconfig(configpath *configs)
         fprintf(configs->log,"reportoutpath=%s\n",configs->reportoutpath);
         fprintf(configs->log,"bitoutpath=%s\n",configs->bitoutpath);
         fprintf(configs->log,"logpath=%s\n",configs->logpath);
-        fprintf(configs->log,"entitypath=%s\n\n",configs->entitypath);
+        fprintf(configs->log,"entitypath=%s\n",configs->entitypath);
+        fprintf(configs->log,"maxportnum=%d\n",configs->maxportnum);
+        fprintf(configs->log,"vivadologpath=%s\n\n",configs->vivadologpath);
+
 
     }
     fflush(configs->log);
