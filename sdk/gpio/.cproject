@@ -20,7 +20,7 @@
 							<targetPlatform binaryParser="com.xilinx.sdk.managedbuilder.XELF.arm.a53.x32.linux" id="xilinx.armv7.linux.target.gnu.base.debug.1565225938" isAbstract="false" name="Debug Platform" superClass="xilinx.armv7.linux.target.gnu.base.debug"/>
 							<builder buildPath="${workspace_loc:/gpio}/Debug" enableAutoBuild="true" id="xilinx.gnu.armv7.linux.toolchain.builder.debug.373141437" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="GNU make" superClass="xilinx.gnu.armv7.linux.toolchain.builder.debug"/>
 							<tool id="xilinx.gnu.armv7.linux.c.toolchain.assembler.debug.767520839" name="ARM v7 Linux gcc assembler" superClass="xilinx.gnu.armv7.linux.c.toolchain.assembler.debug">
-								<option id="xilinx.gnu.both.asm.option.include.paths.1493365786" name="Include Paths (-I)" superClass="xilinx.gnu.both.asm.option.include.paths" valueType="includePath"/>
+								<option id="xilinx.gnu.both.asm.option.include.paths.1493365786" name="Include Paths (-I)" superClass="xilinx.gnu.both.asm.option.include.paths"/>
 								<inputType id="xilinx.gnu.assembler.input.1510169050" superClass="xilinx.gnu.assembler.input"/>
 							</tool>
 							<tool id="xilinx.gnu.armv7.linux.c.toolchain.compiler.debug.593197858" name="ARM v7 Linux gcc compiler" superClass="xilinx.gnu.armv7.linux.c.toolchain.compiler.debug">
